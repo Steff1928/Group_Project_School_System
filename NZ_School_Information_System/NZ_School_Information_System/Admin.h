@@ -7,12 +7,14 @@ class Admin
 {
 private:
 	std::string userName;
+	std::string password;
 	Parent parent;
 	int classroom;
 
 public:
 	void viewClassRecords();
 	void viewParentRecords();
+	void initialiseAccount();
 	Admin();
 };
 

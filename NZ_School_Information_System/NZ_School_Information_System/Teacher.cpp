@@ -42,3 +42,8 @@ Teacher::Teacher(std::string _fullName, char _gender, std::string _dob, std::str
 	classroomNum = _classroomNum;
 	teachingYear = _teachingYear;
 }
+
+Teacher::Teacher()
+{
+
+}

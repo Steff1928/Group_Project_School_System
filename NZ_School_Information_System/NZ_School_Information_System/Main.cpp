@@ -1,7 +1,13 @@
 #include <iostream>
+#include <filesystem>
+#include <fstream>
 #include "Admin.h"
+#include "Parent.h"
+#include "Teacher.h"
+
 using namespace std;
 
+// Display the initial introduction screen, welcoming the user with a list of options
 void displayIntroScreen()
 {
     cout << "*******************************\n";
@@ -16,5 +22,16 @@ void displayIntroScreen()
 
 int main()
 {
-    displayIntroScreen();
+    // Initilise user objects (admin, teacher, parent)
+    Admin adminUser;
+    Parent parentUser;
+    Teacher teacherUser;
+
+    // Create a directory to store all the login/registration data, and list of classes
+    filesystem::create_directory("Sign_Up_And_Login_Details"); 
+    filesystem::create_directory("Classes"); 
+
+    adminUser.initialiseAccount(); // Initialise login details upon start-up
+
+    displayIntroScreen(); // Display introduction screen
 }
