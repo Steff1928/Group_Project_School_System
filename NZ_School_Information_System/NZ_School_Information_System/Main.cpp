@@ -1,9 +1,10 @@
 #include <iostream>
-
 using namespace std;
 
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    cout << "*******************************\n";
+    cout << "Welcome to Yoobee School System\n";
+    cout << "*******************************\n";
 }
