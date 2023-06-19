@@ -10,6 +10,7 @@ using namespace std;
 // Display the initial introduction screen, welcoming the user with a list of options
 void displayIntroScreen()
 {
+    system("CLS");
     cout << "*******************************\n";
     cout << "Welcome to Yoobee School System\n";
     cout << "*******************************\n";
@@ -18,6 +19,35 @@ void displayIntroScreen()
     // and run in it the main function.
     // This will make it easier to use the main function as a backdoor for accessing certain menu's when doing 
     // later testing :)
+    system("pause");
+}
+
+void displayRegistrationScreen()
+{
+    system("CLS");
+    int choice;
+    cout << "***************************\n";
+    cout << "Yoobee Registration Options\n";
+    cout << "***************************\n";
+
+    cout << "\n1. Sign Up as Parent"
+        << "\n2. Sign Up as Teacher"
+        << "\n3. Back\n";
+
+    cout << "\nEnter corresponding number for selection: ";
+    cin >> choice;
+    switch (choice)
+    {
+    case 1:
+        // TODO: Parent registration
+        break;
+    case 2:
+        // TODO: Teacher registration
+        break;
+    case 3:
+        // TODO: Complete introduction screen
+        displayIntroScreen();
+    }
 }
 
 int main()
@@ -28,10 +58,14 @@ int main()
     Teacher teacherUser;
 
     // Create a directory to store all the login/registration data, and list of classes
-    filesystem::create_directory("Sign_Up_And_Login_Details"); 
-    filesystem::create_directory("Classes"); 
+    filesystem::create_directory("Sign_Up_And_Login_Details");
+    filesystem::create_directory("Classes");
 
-    adminUser.initialiseAccount(); // Initialise login details upon start-up
+    adminUser.initialiseAccount(); // Initialise login details
 
-    displayIntroScreen(); // Display introduction screen
+    while (true)
+    {
+        //displayIntroScreen(); // Display introduction screen on start-up
+        displayRegistrationScreen();
+    }
 }

@@ -12,8 +12,10 @@ private:
 	int classroom;
 
 public:
+	void displayAdminScreen();
 	void viewClassRecords();
 	void viewParentRecords();
+	void generateReportsScreen();
 	void initialiseAccount();
 	Admin();
 };
