@@ -25,6 +25,7 @@ void displayIntroScreen()
 void displayRegistrationScreen()
 {
     system("CLS");
+    Teacher teacherUser;
     int choice;
     cout << "***************************\n";
     cout << "Yoobee Registration Options\n";
@@ -43,6 +44,7 @@ void displayRegistrationScreen()
         break;
     case 2:
         // TODO: Teacher registration
+        teacherUser.teacherSignUp();
         break;
     case 3:
         // TODO: Complete introduction screen
