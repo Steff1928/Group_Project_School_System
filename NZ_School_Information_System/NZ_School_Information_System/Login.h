@@ -4,9 +4,9 @@ class Login
 {
 private:
 	std::string userName;
-	std::string password;
+	std::string password; 
 public:
-	void userLogin(std::string userName);
+	void userLogin();
 	void userLogout();
 };
 

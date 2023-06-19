@@ -11,3 +11,8 @@ void Student::saveData()
 {
 
 }
+
+Student::Student()
+{
+
+}
