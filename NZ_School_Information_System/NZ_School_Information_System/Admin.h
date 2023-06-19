@@ -13,5 +13,6 @@ private:
 public:
 	void viewClassRecords();
 	void viewParentRecords();
+	Admin();
 };
 

@@ -1,4 +1,6 @@
+#include <iostream>
 #include "Parent.h"
+using namespace std;
 
 void Parent::viewChildReport()
 {
@@ -28,4 +30,9 @@ Parent::Parent(std::string _fullName, char _gender, std::string _dob, std::strin
 	emergencyContactName = _emergencyContactName;
 	emergencyContactNum = _emergencyContactNum;
 	userName = _userName;
+}
+
+Parent::Parent()
+{
+
 }

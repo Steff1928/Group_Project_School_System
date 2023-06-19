@@ -19,6 +19,7 @@ public:
 	Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, 
 		std::string _childName, int _childClass, std::string _emergencyContactName,	
 		int _emergencyContactNum, std::string _userName);
+	Parent();
 
 };
 
