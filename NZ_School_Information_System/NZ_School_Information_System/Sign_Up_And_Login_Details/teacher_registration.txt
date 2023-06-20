@@ -1,3 +1,0 @@
-Stephen Prosser,M,01/05/04,email@email.com,02123445235,4,Year 5,userpass,
-Liam Anthony,F,23/05/23,email@email.com,0213214234,5,Year 12,stephenpassword,
-Another One,F,9/05/99,email@exampleemailagain.com',021023425234,10,Year 13,secretnamesecretpass,

@@ -22,6 +22,7 @@ void Teacher::displayTeacherScreen()
 	{
 	case 1:
 		// TODO: Student Record Options Screen
+		displayTeacherScreen();
 		break;
 	case 2:
 		if (!login.userLogout())
