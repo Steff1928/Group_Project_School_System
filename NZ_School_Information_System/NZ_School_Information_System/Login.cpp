@@ -35,6 +35,7 @@ void Login::userLogin()
 	{
 		if (!readTeacher.eof() && !readAdmin.eof() /*&& !readParent.eof()*/ && loginAttempts > 0)
 		{
+			// If there is a match in the "teacher_registration" file, login as a teacher
 			while (getline(readTeacher, line, ','))
 			{
 				if (line == entry)
@@ -47,6 +48,7 @@ void Login::userLogin()
 					break;
 				}
 			}
+			// If there is a match in the "admin_login" file, login as an admin
 			while (getline(readAdmin, line, ','))
 			{
 				if (line == entry)
@@ -73,7 +75,7 @@ void Login::userLogin()
 				}
 			}
 		}
-		else
+		else // If there are no matches, minus a login attempt and notify the user they could find their account
 		{
 			if (loginAttempts <= 0)
 			{
