@@ -24,7 +24,10 @@ void Teacher::displayTeacherScreen()
 		// TODO: Student Record Options Screen
 		break;
 	case 2:
-		login.userLogout();
+		if (!login.userLogout())
+		{
+			displayTeacherScreen();
+		}
 		break;
 	default:
 		cout << "Invalid option, please try again\n\n";

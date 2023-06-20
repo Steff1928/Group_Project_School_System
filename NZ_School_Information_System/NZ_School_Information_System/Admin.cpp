@@ -28,7 +28,10 @@ void Admin::displayAdminScreen()
         generateReportsScreen();
         break;
     case 4:
-        login.userLogout();
+        if (!login.userLogout())
+        {
+            displayAdminScreen();
+        }
         break;
     default:
         cout << "Invalid option, please try again\n\n";

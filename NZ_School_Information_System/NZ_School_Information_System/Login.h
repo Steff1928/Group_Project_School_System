@@ -8,6 +8,6 @@ private:
 	int loginAttempts = 3;
 public:
 	void userLogin();
-	void userLogout();
+	bool userLogout();
 };
 

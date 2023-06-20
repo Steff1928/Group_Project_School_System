@@ -93,11 +93,19 @@ void Login::userLogin()
 	readParent.close();
 }
 
-void Login::userLogout()
+bool Login::userLogout()
 {
-	system("CLS");
-	cout << "					             ***********\n";
-	cout << "					             LOGGING OUT\n";
-	cout << "					             ***********\n";
-	cout << "\n					     Returning to the Main Menu\n\n";
+	char confirmAnswer;
+	cout << "\nAre you sure you want to logout? (y/n): ";
+	cin >> confirmAnswer;
+	if (confirmAnswer == 'y')
+	{
+		system("CLS");
+		cout << "					             ***********\n";
+		cout << "					             LOGGING OUT\n";
+		cout << "					             ***********\n";
+		cout << "\n					     Returning to the Main Menu\n\n";
+		return true;
+	}
+	return false;
 }
