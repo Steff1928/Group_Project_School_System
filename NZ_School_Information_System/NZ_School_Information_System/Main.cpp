@@ -19,12 +19,31 @@ int classroom[5];
 
 void upcomingEvents()
 {
+    system("CLS");
+    cout << "********************\n";
+    cout << "Yoobee School Events\n";
+    cout << "********************\n\n";
 
+    cout << "dd/mm/yyyy: [Event details and additional info]\n";
+    cout << "dd/mm/yyyy: [Event details and additional info]\n";
+    cout << "dd/mm/yyyy: [Event details and additional info]\n\n";
+
+    system("pause");
 }
 
 void termDates()
 {
+    system("CLS");
+    cout << "*****************\n";
+    cout << "Yoobee Term Dates\n";
+    cout << "*****************\n\n";
 
+    cout << "Term 1: 27/02 - 21/04/2023\n";
+    cout << "Term 2: 08/05 - 30/06/2023\n";
+    cout << "Term 3: 24/07 - 15/09/2023\n";
+    cout << "Term 4: 02/10 - 24/11/2023\n\n";
+
+    system("pause");
 }
 
 void displayRegistrationScreen();
@@ -69,34 +88,39 @@ void displayIntroScreen()
 
 void displayRegistrationScreen()
 {
-    system("CLS");
-    int choice;
-    cout << "***************************\n";
-    cout << "Yoobee Registration Options\n";
-    cout << "***************************\n";
+    while (true)
+    {
+        system("CLS");
+        int choice;
+        cout << "***************************\n";
+        cout << "Yoobee Registration Options\n";
+        cout << "***************************\n";
+        cout << "***************************\n";
 
     cout << "\n1. Sign Up as Parent"
         << "\n2. Sign Up as Teacher"
         << "\n3. Back\n";
-
-    cout << "\nEnter corresponding number for selection: ";
-    cin >> choice;
-    switch (choice)
-    {
-    case 1:
-        // TODO: Parent registration
-        break;
-    case 2:
-        teacherUser.teacherSignUp();
-        break;
-    case 3:
-        displayIntroScreen();
-        break;
-    default:
-        cout << "Invalid option, please try again\n\n";
-        system("pause");
+        cout << "\nEnter corresponding number for selection: ";
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            // TODO: Parent registration
+            break;
+        case 2:
+            teacherUser.teacherSignUp();
+            break;
+        case 3:
+            // TODO: Complete rest of introduction screen
+            displayIntroScreen();
+            break;
+        default:
+            cout << "Invalid option, please try again\n\n";
+            system("pause");
+        }
     }
-    
+}
+    }
 }
 
 int main()
