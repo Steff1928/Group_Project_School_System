@@ -19,11 +19,9 @@ void Admin::displayAdminScreen()
     switch (choice)
     {
     case 1:
-        system("pause");
         viewClassRecords(); // TODO: Complete table for display the class records
         break;
     case 2:
-        system("pause");
         viewParentRecords(); // TODO: Complete table for display the parent records
         break;
     case 3:
