@@ -42,7 +42,26 @@ void Admin::displayAdminScreen()
 
 void Admin::viewClassRecords()
 {
-   
+    system("CLS");
+    ifstream readData;
+    string line;
+    cout << "*************\n";
+    cout << "Class Records\n";
+    cout << "*************\n";
+
+    cout << "\nEnter a room number: ";
+    cin >> classroom;
+    readData.open("Classes/room_"+ to_string(classroom) + ".txt");
+    cout << "\nStudent Records for Room " << classroom << ": \n";
+   /* while (getline(readData, line))
+    {
+        cout << line;
+    }*/
+    cout << "\nID    Full Name    Gender    Maths    Science    Writing    Reading    Other    Learning  Progress";
+    //cout << "\n          Name                                                                                             Progress";
+    cout << "\n--------------------------------------------------------------------------------------------------";
+    cout << "\n1     Stephen      Male      50       70         81         79         100      Progressing";
+    cout << "\n      Prosser\n";
 }
 
 void Admin::viewParentRecords()

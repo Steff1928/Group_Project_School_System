@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
+#include <ctime>
 #include "Login.h"
 #include "Teacher.h"
 #include "Admin.h"
@@ -8,8 +9,8 @@ using namespace std;
 
 void Login::userLogin()
 {
+	float seconds = 10.0f - static_cast<time_t>(clock() / 1000);
 	char confirmAnswer = 0;
-
 	loginAttempts == 3;
 
 	ifstream readTeacher;
@@ -86,7 +87,15 @@ void Login::userLogin()
 				loginAttempts--;
 				if (loginAttempts <= 0)
 				{
-					cout << "\nToo many failed attempts, please try again later\n\n";
+					if (seconds > 0)
+					{
+						cout << "\nToo many failed attempts, please try again after "
+							<< seconds << " seconds\n\n";
+					}
+					else
+					{
+						loginAttempts == 3;
+					}
 				}
 				else
 				{

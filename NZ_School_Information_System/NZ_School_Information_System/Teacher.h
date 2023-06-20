@@ -15,7 +15,7 @@ private:
 	std::string teachingYear;
 	Student tempStudentData;
 	std::string userName;
-	std::string password; // STEPHEN: Ask Liam/Lawrence about how to utilise the login class to use password as sign up detail
+	std::string password; 
 	Login login;
 public:
 	void displayTeacherScreen();
