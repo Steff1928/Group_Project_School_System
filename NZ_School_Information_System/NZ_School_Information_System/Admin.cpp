@@ -58,7 +58,6 @@ void Admin::viewClassRecords()
         cout << line;
     }*/
     cout << "\nID    Full Name    Gender    Maths    Science    Writing    Reading    Other    Learning  Progress";
-    //cout << "\n          Name                                                                                             Progress";
     cout << "\n--------------------------------------------------------------------------------------------------";
     cout << "\n1     Stephen      Male      50       70         81         79         100      Progressing";
     cout << "\n      Prosser\n\n";
@@ -68,7 +67,19 @@ void Admin::viewClassRecords()
 
 void Admin::viewParentRecords()
 {
-    
+    system("CLS");
+    ifstream readData;
+    cout << "*************\n";
+    cout << "Parent Records\n";
+    cout << "*************\n";
+
+    cout << "Full Name    Gender    DOB           Email                    Contact       Children   Children Classroom    Emergency";
+    cout << "\n                                                              Number        Names      Number(s)             Contact";
+    cout << "\n-----------------------------------------------------------------------------------------------------------------------";
+    cout << "\nDavid        Male      21/05/89      example@example.co.nz    021457615     Stacy      5                     Liam Anthony";
+    cout << "\nProsser                                                                     Morgan                           0214597134\n\n";
+    system("pause");
+    displayAdminScreen();
 }
 
 void Admin::generateReportsScreen()
