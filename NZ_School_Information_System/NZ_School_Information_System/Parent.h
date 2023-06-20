@@ -7,6 +7,7 @@ private:
 	char gender;
 	std::string dob;
 	std::string email;
+	std::string contactNum;
 	std::string childName;
 	int childClass;
 	std::string emergencyContactName;
@@ -17,7 +18,7 @@ public:
 	void viewChildReport();
 	void viewNotices();
 	void parentSignUp();
-	Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, 
+	Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum, 
 		std::string _childName, int _childClass, std::string _emergencyContactName,	
 		int _emergencyContactNum, std::string _userName);
 	Parent();
