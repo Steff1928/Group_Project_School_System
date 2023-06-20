@@ -17,6 +17,18 @@ Login login;
 // Initialise classrooms
 int classroom[5];
 
+void upcommingEvents()
+{
+
+}
+
+void termDates()
+{
+
+}
+
+void displayRegistrationScreen();
+
 // Display the initial introduction screen, welcoming the user with a list of options
 void displayIntroScreen()
 {
@@ -24,11 +36,36 @@ void displayIntroScreen()
     cout << "*******************************\n";
     cout << "Welcome to Yoobee School System\n";
     cout << "*******************************\n";
+    cout << "\nContact information\n";
+    cout << "--------------------------------\n";
+    cout << "Phone Number: 123 456 789\n";
+    cout << "Email: Example@Example.shool.nz\n";
+    cout << "--------------------------------\n";
+    cout << "\n1. Upcomming/Current Events\n";
+    cout << "2. Term Dates\n";
+    cout << "3. Login\n";
+    cout << "4. Registration\n";
+    cout << "5. Exit\n";
+    int userChoice = 0;
+    
+    cout << "\nEnter corresponding number for selection: ";
+    cin >> userChoice;
+    switch(userChoice)
+    {
+    case 1:
+        upcommingEvents();
+        break;
+    case 2:
+        termDates();
+        break;
+    case 3:
+        login.userLogin();
+        break;
+    case 4:
+        displayRegistrationScreen();
+        break;
+    }
 
-    // LIAM: Put all the code for displaying a certain menu (admin, parent, intro screens, etc) into a function
-    // and run in it the main function.
-    // This will make it easier to use the main function as a backdoor for accessing certain menu's when doing 
-    // later testing :)
     system("pause");
 }
 
@@ -78,6 +115,5 @@ int main()
     while (true)
     {
         displayIntroScreen(); // Display introduction screen on start-up
-        login.userLogin();
     }
 }
