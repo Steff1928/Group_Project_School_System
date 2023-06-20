@@ -7,6 +7,7 @@ private:
 	char gender;
 	std::string dob;
 	std::string email;
+	std::string contactNum;
 	std::string childName;
 	int childClass;
 	std::string emergencyContactName;
@@ -23,13 +24,5 @@ public:
 		int _emergencyContactNum, std::string _userName);
 	Parent();
 
-};
-
-class Child : Parent
-{
-	std::string childName;
-	int childClass;
-	std::string emergencyContactName;
-	int emergencyContactNum;
 };
 
