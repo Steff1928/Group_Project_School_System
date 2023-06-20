@@ -17,14 +17,33 @@ Login login;
 // Initialise classrooms
 int classroom[5];
 
-void upcommingEvents()
+void upcomingEvents()
 {
+    system("CLS");
+    cout << "********************\n";
+    cout << "Yoobee School Events\n";
+    cout << "********************\n\n";
 
+    cout << "dd/mm/yyyy: [Event details and additional info]\n";
+    cout << "dd/mm/yyyy: [Event details and additional info]\n";
+    cout << "dd/mm/yyyy: [Event details and additional info]\n\n";
+
+    system("pause");
 }
 
 void termDates()
 {
+    system("CLS");
+    cout << "*****************\n";
+    cout << "Yoobee Term Dates\n";
+    cout << "*****************\n\n";
 
+    cout << "Term 1: 27/02 - 21/04/2023\n";
+    cout << "Term 2: 08/05 - 30/06/2023\n";
+    cout << "Term 3: 24/07 - 15/09/2023\n";
+    cout << "Term 4: 02/10 - 24/11/2023\n\n";
+
+    system("pause");
 }
 
 void displayRegistrationScreen();
@@ -39,9 +58,9 @@ void displayIntroScreen()
     cout << "\nContact information\n";
     cout << "--------------------------------\n";
     cout << "Phone Number: 123 456 789\n";
-    cout << "Email: Example@Example.shool.nz\n";
+    cout << "Email: Example@Example.school.nz\n";
     cout << "--------------------------------\n";
-    cout << "\n1. Upcomming/Current Events\n";
+    cout << "\n1. Upcoming/Current Events\n";
     cout << "2. Term Dates\n";
     cout << "3. Login\n";
     cout << "4. Registration\n";
@@ -53,7 +72,7 @@ void displayIntroScreen()
     switch(userChoice)
     {
     case 1:
-        upcommingEvents();
+        upcomingEvents();
         break;
     case 2:
         termDates();
@@ -65,42 +84,38 @@ void displayIntroScreen()
         displayRegistrationScreen();
         break;
     }
-
-    system("pause");
 }
 
 void displayRegistrationScreen()
 {
-    while (true)
+
+    system("CLS");
+    int choice;
+    cout << "***************************\n";
+    cout << "Yoobee Registration Options\n";
+    cout << "***************************\n";
+
+    cout << "\n1. Sign Up as Parent"
+        << "\n2. Sign Up as Teacher"
+        << "\n3. Back\n";
+
+    cout << "\nEnter corresponding number for selection: ";
+    cin >> choice;
+    switch (choice)
     {
-        system("CLS");
-        int choice;
-        cout << "***************************\n";
-        cout << "Yoobee Registration Options\n";
-        cout << "***************************\n";
-
-        cout << "\n1. Sign Up as Parent"
-            << "\n2. Sign Up as Teacher"
-            << "\n3. Back\n";
-
-        cout << "\nEnter corresponding number for selection: ";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            // TODO: Parent registration
-            break;
-        case 2:
-            teacherUser.teacherSignUp();
-            break;
-        case 3:
-            // TODO: Complete rest of introduction screen
-            displayIntroScreen();
-            break;
-        default:
-            cout << "Invalid option, please try again\n\n";
-            system("pause");
-        }
+    case 1:
+        // TODO: Parent registration
+        break;
+    case 2:
+        teacherUser.teacherSignUp();
+        break;
+    case 3:
+        // TODO: Complete rest of introduction screen
+        displayIntroScreen();
+        break;
+    default:
+        cout << "Invalid option, please try again\n\n";
+        system("pause");
     }
 }
 
