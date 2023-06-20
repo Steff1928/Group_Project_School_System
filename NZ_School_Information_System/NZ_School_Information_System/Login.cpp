@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <Windows.h>
 #include "Login.h"
 #include "Teacher.h"
 #include "Admin.h"
@@ -30,7 +31,6 @@ void Login::userLogin()
 	Admin adminLogin;
 	Parent parentLogin;
 	string line;
-	// TODO: Fix up login screen (can't figure out functionality)
 	while (readTeacher.is_open() && readAdmin.is_open() /*&& readParent.is_open()*/)
 	{
 		if (!readTeacher.eof() && !readAdmin.eof() /*&& !readParent.eof()*/ && loginAttempts > 0)
@@ -39,7 +39,8 @@ void Login::userLogin()
 			{
 				if (line == entry)
 				{
-					cout << "Successfully logged in!\n\n";
+					cout << "\nSuccessfully logged in!\n\n";
+					loginAttempts = 3;
 					system("pause");
 					teacherLogin.displayTeacherScreen();
 					readTeacher.close();
@@ -50,7 +51,8 @@ void Login::userLogin()
 			{
 				if (line == entry)
 				{
-					cout << "Successfully logged in!\n\n";
+					cout << "\nSuccessfully logged in!\n\n";
+					loginAttempts = 3;
 					system("pause");
 					adminLogin.displayAdminScreen();
 					readAdmin.close();
@@ -62,7 +64,8 @@ void Login::userLogin()
 			{
 				if (line == entry)
 				{
-					cout << "Successfully logged in!\n\n";
+					cout << "\nSuccessfully logged in!\n\n";
+					loginAttempts = 3;
 					system("pause");
 					parentLogin.displayParentScreen();
 					readParent.close();
@@ -72,15 +75,15 @@ void Login::userLogin()
 		}
 		else
 		{
-			loginAttempts--;
 			if (loginAttempts <= 0)
 			{
-				cout << "Too many failed attempts, please try again later\n\n";
+				cout << "\nToo many failed attempts, please try again later\n\n";
 			}
 			else
 			{
-				cout << "Invalid username or password\n\n";
+				cout << "\nInvalid username or password\n\n";
 			}
+			loginAttempts--;
 			break;
 		}
 	}
