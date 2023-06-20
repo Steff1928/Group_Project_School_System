@@ -8,91 +8,105 @@ using namespace std;
 
 void Login::userLogin()
 {
-	system("CLS");
-	cout << "************\n";
-	cout << "Yoobee Login\n";
-	cout << "************\n";
+	char confirmAnswer = 0;
 
-	cout << "\nUsername: ";
-	cin >> userName;
-	cout << "Password: ";
-	cin >> password;
-
-	string entry = userName + password;
+	loginAttempts == 3;
 
 	ifstream readTeacher;
 	ifstream readAdmin;
 	ifstream readParent;
-	readTeacher.open("Sign_Up_And_Login_Details/teacher_registration.txt");
-	readAdmin.open("Sign_Up_And_Login_Details/admin_login.txt");
-	readParent.open("Sign_Up_And_Login_Details/parent_login.txt");
 	
 	Teacher teacherLogin;
 	Admin adminLogin;
 	Parent parentLogin;
 	string line;
-	while (readTeacher.is_open() && readAdmin.is_open() /*&& readParent.is_open()*/)
+	do
 	{
-		if (!readTeacher.eof() && !readAdmin.eof() /*&& !readParent.eof()*/ && loginAttempts > 0)
+		system("CLS");
+		cout << "************\n";
+		cout << "Yoobee Login\n";
+		cout << "************\n";
+		readTeacher.open("Sign_Up_And_Login_Details/teacher_registration.txt");
+		readAdmin.open("Sign_Up_And_Login_Details/admin_login.txt");
+		readParent.open("Sign_Up_And_Login_Details/parent_login.txt");
+
+		cout << "\nUsername: ";
+		cin >> userName;
+		cout << "Password: ";
+		cin >> password;
+		string entry = userName + password;
+		bool loginAgain = false;
+
+		while (readTeacher.is_open() && readAdmin.is_open() /*&& readParent.is_open()*/)
 		{
-			// If there is a match in the "teacher_registration" file, login as a teacher
-			while (getline(readTeacher, line, ','))
+			if (!readTeacher.eof() && !readAdmin.eof() /*&& !readParent.eof()*/ && loginAttempts > 0)
 			{
-				if (line == entry)
+				// If there is a match in the "teacher_registration" file, login as a teacher
+				while (getline(readTeacher, line, ','))
 				{
-					cout << "\nSuccessfully logged in!\n\n";
-					loginAttempts = 3;
-					system("pause");
-					teacherLogin.displayTeacherScreen();
-					readTeacher.close();
-					break;
+					if (line == entry)
+					{
+						cout << "\nSuccessfully logged in!\n\n";
+						loginAttempts = 3;
+						system("pause");
+						teacherLogin.displayTeacherScreen();
+						readTeacher.close();
+						break;
+					}
+				}
+				// If there is a match in the "admin_login" file, login as an admin
+				while (getline(readAdmin, line, ','))
+				{
+					if (line == entry)
+					{
+						cout << "\nSuccessfully logged in!\n\n";
+						loginAttempts = 3;
+						system("pause");
+						adminLogin.displayAdminScreen();
+						readAdmin.close();
+						break;
+					}
+				}
+				// LIAM: Create parent screens and then this can be hooked up to the parent screen if a parent logs in
+				while (getline(readAdmin, line, ','))
+				{
+					if (line == entry)
+					{
+						cout << "\nSuccessfully logged in!\n\n";
+						loginAttempts = 3;
+						system("pause");
+						parentLogin.displayParentScreen();
+						readParent.close();
+						break;
+					}
 				}
 			}
-			// If there is a match in the "admin_login" file, login as an admin
-			while (getline(readAdmin, line, ','))
+			else // If there are no matches, minus a login attempt and notify the user they could find their account
 			{
-				if (line == entry)
+				loginAttempts--;
+				if (loginAttempts <= 0)
 				{
-					cout << "\nSuccessfully logged in!\n\n";
-					loginAttempts = 3;
-					system("pause");
-					adminLogin.displayAdminScreen();
-					readAdmin.close();
-					break;
+					cout << "\nToo many failed attempts, please try again later\n\n";
 				}
-			}
-			// LIAM: Create parent screens and then this can be hooked up to the parent screen if a parent logs in
-			while (getline(readAdmin, line, ','))
-			{
-				if (line == entry)
+				else
 				{
-					cout << "\nSuccessfully logged in!\n\n";
-					loginAttempts = 3;
-					system("pause");
-					parentLogin.displayParentScreen();
-					readParent.close();
-					break;
+					cout << "\nInvalid username or password\n\n";
 				}
+				loginAgain = true;
+				break;
 			}
 		}
-		else // If there are no matches, minus a login attempt and notify the user they could find their account
+		if (loginAgain)
 		{
-			if (loginAttempts <= 0)
-			{
-				cout << "\nToo many failed attempts, please try again later\n\n";
-			}
-			else
-			{
-				cout << "\nInvalid username or password\n\n";
-			}
-			loginAttempts--;
-			break;
+			cout << "Attempt to login again? (y/n): ";
+			cin >> confirmAnswer;
+			readTeacher.close();
+			readAdmin.close();
+			readParent.close();
 		}
-	}
+	} while (confirmAnswer == 'y');
+	cout << "\n";
 	system("pause");
-	readTeacher.close();
-	readAdmin.close();
-	readParent.close();
 }
 
 bool Login::userLogout()

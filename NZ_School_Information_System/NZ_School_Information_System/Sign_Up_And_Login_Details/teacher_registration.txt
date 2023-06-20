@@ -1,2 +1,3 @@
-Stephen Prosser,M,3/06/04,prossersteve151@gmail.com,02102934576,5,Year 8,userpass,
-Liam Anthony,F,23/05/98,liam.anthony@stuff.co.nz,0291283786,3,Year 7,liamiskewl23secret123,
+Stephen Prosser,M,01/05/04,email@email.com,02123445235,4,Year 5,userpass,
+Liam Anthony,F,23/05/23,email@email.com,0213214234,5,Year 12,stephenpassword,
+Another One,F,9/05/99,email@exampleemailagain.com',021023425234,10,Year 13,secretnamesecretpass,

@@ -89,8 +89,6 @@ void Teacher::teacherSignUp()
 	cin >> classroomNum;
 	cout << "Assigned Year Group: ";
 	getline(cin >> ws, teachingYear);
-	writeFile << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "," << classroomNum
-		<< "," << teachingYear << ",";
 	cout << "\n\n";
 
 	system("pause");
@@ -111,7 +109,10 @@ void Teacher::teacherSignUp()
 		if (password == confirmPassword)
 		{
 			cout << "Successfully signed up as a teacher!\n\n";
-			writeFile << userName << password << ",\n";
+			writeFile << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "," << classroomNum
+				<< "," << teachingYear << "," << userName << password << ",\n";
+			writeFile.close();
+			system("pause");
 			displayTeacherScreen();
 			break;
 		}
