@@ -6,9 +6,31 @@
 
 using namespace std;
 
-void Teacher::teacherScreen()
+void Teacher::displayTeacherScreen()
 {
+	system("CLS");
+	int choice;
 
+	cout << "************************************\n";
+	cout << "Yoobee Portal - Logged in as Teacher\n";
+	cout << "************************************\n";
+	cout << "\n1. Student Record Options"
+		<< "\n2. Logout\n";
+	cout << "\nEnter corresponding number for selection: ";
+	cin >> choice;
+	switch (choice)
+	{
+	case 1:
+		// TODO: Student Record Options Screen
+		break;
+	case 2:
+		login.userLogout();
+		break;
+	default:
+		cout << "Invalid option, please try again\n\n";
+		system("pause");
+		displayTeacherScreen();
+	}
 }
 
 void Teacher::recordsScreen()
@@ -65,7 +87,7 @@ void Teacher::teacherSignUp()
 	cout << "Assigned Year Group: ";
 	getline(cin >> ws, teachingYear);
 	writeFile << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "," << classroomNum
-		<< "," << teachingYear << '\n';
+		<< "," << teachingYear << ",";
 	cout << "\n\n";
 
 	system("pause");
@@ -86,8 +108,8 @@ void Teacher::teacherSignUp()
 		if (password == confirmPassword)
 		{
 			cout << "Successfully signed up as a teacher!\n\n";
-			writeFile << userName << "," << password << "\n";
-			// teacherScreen(); // TODO: Complete teacher screen 
+			writeFile << userName << password << ",\n";
+			displayTeacherScreen();
 			break;
 		}
 		else

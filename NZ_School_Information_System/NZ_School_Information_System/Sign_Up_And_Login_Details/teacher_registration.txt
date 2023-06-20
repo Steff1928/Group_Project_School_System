@@ -1,6 +1,2 @@
-Stephen Prosser,m,3/06/04,prossersteve151@gmail.com,02102934576,8,Year 9
-gamerdevil28,secret123
-Liam Anthony,o,23/05/99,liam.anthony@yoobee.ac.nz,0251134975,4,Year 6
-liamiskewl25,ireallyamnot26
-Lauren Balls,f,16/14,laurenorsomething21@gmail.com,021587443,10,Year 12
-laurenthechicken25,bigballs69
+Stephen Prosser,M,3/06/04,prossersteve151@gmail.com,02102934576,5,Year 8,userpass,
+Liam Anthony,F,23/05/98,liam.anthony@stuff.co.nz,0291283786,3,Year 7,liamiskewl23secret123,

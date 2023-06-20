@@ -13,6 +13,7 @@ private:
 	int emergencyContactNum;
 	std::string userName;
 public:
+	void displayParentScreen();
 	void viewChildReport();
 	void viewNotices();
 	void parentSignUp();

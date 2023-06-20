@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include "Student.h"
+#include "Login.h"
+
 class Teacher
 {
 private:
@@ -13,9 +15,10 @@ private:
 	std::string teachingYear;
 	Student tempStudentData;
 	std::string userName;
-	std::string password; // TODO: Ask Liam/Lawrence about how to utilise the login class to use password as sign up detail
+	std::string password; // STEPHEN: Ask Liam/Lawrence about how to utilise the login class to use password as sign up detail
+	Login login;
 public:
-	void teacherScreen();
+	void displayTeacherScreen();
 	void recordsScreen();
 	void addStudent();
 	void editStudent();

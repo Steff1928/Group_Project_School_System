@@ -11,7 +11,7 @@ private:
 	int reading;
 	int other;
 	std::string learningProgress;
-	int studentId = 1;
+	int studentId;
 public:
 	void getRecord();
 	void saveData();

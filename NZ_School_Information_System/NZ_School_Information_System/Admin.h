@@ -9,6 +9,7 @@ private:
 	std::string userName;
 	std::string password;
 	Parent parent;
+	Login login;
 	int classroom;
 
 public:

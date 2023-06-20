@@ -8,11 +8,14 @@
 
 using namespace std;
 
-// Initilise user and login objects
+// Initilise user and login objects (temporary)
 Admin adminUser;
 Parent parentUser;
 Teacher teacherUser;
 Login login;
+
+// Initialise classrooms
+int classroom[5];
 
 // Display the initial introduction screen, welcoming the user with a list of options
 void displayIntroScreen()
@@ -54,8 +57,12 @@ void displayRegistrationScreen()
             teacherUser.teacherSignUp();
             break;
         case 3:
-            // TODO: Complete introduction screen
+            // TODO: Complete rest of introduction screen
             displayIntroScreen();
+            break;
+        default:
+            cout << "Invalid option, please try again\n\n";
+            system("pause");
         }
     }
 }
@@ -66,11 +73,11 @@ int main()
     filesystem::create_directory("Sign_Up_And_Login_Details");
     filesystem::create_directory("Classes");
 
-    adminUser.initialiseAccount(); // Initialise login details
+    adminUser.initialiseAccount(); // Initialise login details for the admin user
 
     while (true)
     {
-        //displayIntroScreen(); // Display introduction screen on start-up
+        displayIntroScreen(); // Display introduction screen on start-up
         login.userLogin();
     }
 }

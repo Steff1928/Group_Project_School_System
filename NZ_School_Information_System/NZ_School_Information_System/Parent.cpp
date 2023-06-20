@@ -2,6 +2,11 @@
 #include "Parent.h"
 using namespace std;
 
+void Parent::displayParentScreen()
+{
+
+}
+
 void Parent::viewChildReport()
 {
 
