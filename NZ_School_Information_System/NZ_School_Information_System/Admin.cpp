@@ -61,7 +61,9 @@ void Admin::viewClassRecords()
     //cout << "\n          Name                                                                                             Progress";
     cout << "\n--------------------------------------------------------------------------------------------------";
     cout << "\n1     Stephen      Male      50       70         81         79         100      Progressing";
-    cout << "\n      Prosser\n";
+    cout << "\n      Prosser\n\n";
+    system("pause");
+    displayAdminScreen();
 }
 
 void Admin::viewParentRecords()

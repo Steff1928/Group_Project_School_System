@@ -95,7 +95,6 @@ void displayRegistrationScreen()
         cout << "***************************\n";
         cout << "Yoobee Registration Options\n";
         cout << "***************************\n";
-        cout << "***************************\n";
 
     cout << "\n1. Sign Up as Parent"
         << "\n2. Sign Up as Teacher"
@@ -118,8 +117,6 @@ void displayRegistrationScreen()
             cout << "Invalid option, please try again\n\n";
             system("pause");
         }
-    }
-}
     }
 }
 
