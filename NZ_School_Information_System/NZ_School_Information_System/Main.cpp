@@ -57,7 +57,7 @@ void displayIntroScreen()
     cout << "*******************************\n";
     cout << "\nContact Info\n";
     cout << "--------------------------------\n";
-    cout << "Phone Number: 0800 665 544\n";
+    cout << "Phone Number: 0800-665-544\n";
     cout << "Email: yoobee@yoobeecolleges.com\n";
     cout << "--------------------------------\n";
     cout << "\n1. Upcoming/Current Events\n";

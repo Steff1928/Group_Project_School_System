@@ -57,8 +57,8 @@ void Admin::viewClassRecords()
     {
         cout << line;
     }*/
-    cout << "\nID    Full Name    Gender    Maths    Science    Writing    Reading    Other    Learning  Progress";
-    cout << "\n--------------------------------------------------------------------------------------------------";
+    cout << "\nID    Full Name    Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
+    cout << "\n-------------------------------------------------------------------------------------------------";
     cout << "\n1     Stephen      Male      50       70         81         79         100      Progressing";
     cout << "\n      Prosser\n\n";
     system("pause");
@@ -79,7 +79,13 @@ void Admin::viewParentRecords()
     cout << "\n-----------------------------------------------------------------------------------------------------------------";
     cout << "\nDavid        Male      21/05/89      example@example.co.nz    02145761574     Stacy       5            Liam";
     cout << "\nProsser                                                                       Morgan                   Anthony";
-    cout << "\n                                                                                                       0214597134\n\n";
+    cout << "\n                                                                                                       0214597134\n";
+    cout << "\n                                                                              John        3            Mark";
+    cout << "\n                                                                              Doe                      Robinson";
+    cout << "\n                                                                                                       0213871295\n";
+    cout << "\n                                                                              Max         3            Jonathan";
+    cout << "\n                                                                              Douglas                  Brown";
+    cout << "\n                                                                                                       0278145936\n\n";
     system("pause");
     displayAdminScreen();
 }
@@ -109,7 +115,7 @@ void Admin::generateReportsScreen()
         generateReportsScreen();
         break;
     case 3:
-        generateReportsScreen();
+        displayAdminScreen(); // Take the user back to the initial admin screen 
         break;
     default:
         cout << "Invalid option, please try again\n\n";

@@ -113,8 +113,7 @@ void Teacher::viewRecords()
 void Teacher::teacherSignUp()
 {
 	system("CLS");
-	ofstream writeFile;
-	writeFile.open("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
+	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
 	
 	cout << "********************\n";
 	cout << "Teacher Registration\n";
