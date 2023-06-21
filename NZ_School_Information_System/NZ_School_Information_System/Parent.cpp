@@ -59,6 +59,7 @@ void Parent::viewChildReport()
 	cout << "Reading: " << "Temp Score" << "\n";
 	cout << "Writing: " << "Temp Score" << "\n";
 	cout << "Other: " << "Temp Score" << "\n";
+	system("pause");
 }
 
 void Parent::viewNotices()

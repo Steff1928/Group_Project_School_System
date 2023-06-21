@@ -73,12 +73,13 @@ void Admin::viewParentRecords()
     cout << "Parent Records\n";
     cout << "**************\n";
 
-    cout << "\nFull Name    Gender    DOB           Email                    Contact       Children   Children Classroom    Emergency";
-    cout << "\n                                                              Number        Names      Number(s)             Contact";
-    cout << "\n----------------------------------------------------------------------------------------------------------------------";
-    cout << "\nDavid        Male      21/05/89      example@example.co.nz    021457615     Stacy      5                     Liam";
-    cout << "\nProsser                                                                     Morgan                           Anthony";
-    cout << "\n                                                                                                             0214597134\n\n";
+    cout << "\nFull Name    Gender    DOB           Email                    Contact         Children    Children     Emergency";
+    cout << "\n                                                              Number          Names       Classroom    Contact";
+    cout << "\n                                                                                          Number(s)";
+    cout << "\n-----------------------------------------------------------------------------------------------------------------";
+    cout << "\nDavid        Male      21/05/89      example@example.co.nz    02145761574     Stacy       5            Liam";
+    cout << "\nProsser                                                                       Morgan                   Anthony";
+    cout << "\n                                                                                                       0214597134\n\n";
     system("pause");
     displayAdminScreen();
 }
@@ -101,12 +102,13 @@ void Admin::generateReportsScreen()
     {
     case 1:
         // TODO: Progressing students report (perhaps extract in a function)
+        generateReportsScreen();
         break;
     case 2:
         // TODO: Students needing help report (perhaps extract in a function)
         break;
     case 3:
-        displayAdminScreen();
+        generateReportsScreen();
         break;
     default:
         cout << "Invalid option, please try again\n\n";

@@ -7,10 +7,11 @@
 #include "Admin.h"
 using namespace std;
 
+// TODO: Add login timer (Use temp function for now that resets loginAttempts each time the user goes to the menu
 void Login::userLogin()
 {
 	char confirmAnswer;
-	float seconds;
+	//float seconds;
 	ifstream readTeacher;
 	ifstream readAdmin;
 	ifstream readParent;
@@ -19,6 +20,13 @@ void Login::userLogin()
 	Admin adminLogin;
 	Parent parentLogin;
 	string line;
+
+	// Temp function to reset login attempts once the user exits back to the menu and has no login attempts left
+	if (loginAttempts <= 0) 
+	{
+		loginAttempts = 3;
+	}
+
 	do
 	{
 		/*float seconds = 10.0f - static_cast<time_t>(clock() / 1000);
