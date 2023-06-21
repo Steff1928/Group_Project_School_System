@@ -7,33 +7,21 @@
 #include "Admin.h"
 using namespace std;
 
-// TODO: Add login timer (Use temp function for now that resets loginAttempts each time the user goes to the menu
+// TODO: Fix login timer
 void Login::userLogin()
 {
 	char confirmAnswer;
-	//float seconds;
 	ifstream readTeacher;
 	ifstream readAdmin;
 	ifstream readParent;
-	
+
 	Teacher teacherLogin;
 	Admin adminLogin;
 	Parent parentLogin;
 	string line;
 
-	// Temp function to reset login attempts once the user exits back to the menu and has no login attempts left
-	if (loginAttempts <= 0) 
-	{
-		loginAttempts = 3;
-	}
-
 	do
-	{
-		/*float seconds = 10.0f - static_cast<time_t>(clock() / 1000);
-		if (seconds <= 0)
-		{
-			loginAttempts = 3;
-		}*/
+	{	
 		system("CLS");
 		// Set confirmAnswer back to no by default so the loop does not run again after the user is finished in 
 		// their screen
@@ -99,9 +87,25 @@ void Login::userLogin()
 			else // If there are no matches, minus a login attempt and notify the user they could find their account
 			{
 				loginAttempts--;
-				if (loginAttempts <= 0)
+				if (loginAttempts <= 0 && start == 0)
 				{
-					cout << "\nToo many failed attempts, please try again later.\n";
+					start = clock();
+					beginTimer = true;
+				}
+
+				if (beginTimer && loginAttempts <= 0)
+				{
+					seconds = 10.0f - static_cast<time_t>((clock() - start) / 1000);
+					if (seconds < 1)
+					{
+						start = 0;
+						beginTimer = false;
+						loginAttempts = 3;
+					}
+					else
+					{
+						cout << "\nToo many failed attempts, please wait " << seconds << " more seconds.\n";
+					}
 				}
 				else
 				{
