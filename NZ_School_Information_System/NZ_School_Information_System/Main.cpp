@@ -83,40 +83,44 @@ void displayIntroScreen()
     case 4:
         displayRegistrationScreen();
         break;
+    case 5:
+        cout << "Exiting Program... Goodbye!\n";
+        exit(0);
+    default:
+        cout << "Invalid option, please try again\n\n";
+        system("pause");
+        displayIntroScreen();
     }
 }
 
 void displayRegistrationScreen()
 {
-    while (true)
-    {
-        system("CLS");
-        int choice;
-        cout << "***************************\n";
-        cout << "Yoobee Registration Options\n";
-        cout << "***************************\n";
+    system("CLS");
+    int choice;
+    cout << "***************************\n";
+    cout << "Yoobee Registration Options\n";
+    cout << "***************************\n";
 
     cout << "\n1. Sign Up as Parent"
         << "\n2. Sign Up as Teacher"
         << "\n3. Back\n";
-        cout << "\nEnter corresponding number for selection: ";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            // TODO: Parent registration
-            break;
-        case 2:
-            teacherUser.teacherSignUp();
-            break;
-        case 3:
-            // TODO: Complete rest of introduction screen
-            displayIntroScreen();
-            break;
-        default:
-            cout << "Invalid option, please try again\n\n";
-            system("pause");
-        }
+    cout << "\nEnter corresponding number for selection: ";
+    cin >> choice;
+    switch (choice)
+    {
+    case 1:
+        parentUser.parentSignUp();
+        break;
+    case 2:
+        teacherUser.teacherSignUp();
+        break;
+    case 3:
+        // TODO: Complete rest of introduction screen
+        displayIntroScreen();
+        break;
+    default:
+        cout << "Invalid option, please try again\n\n";
+        system("pause");
     }
 }
 

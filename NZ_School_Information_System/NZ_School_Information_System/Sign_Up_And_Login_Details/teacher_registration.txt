@@ -1,1 +1,3 @@
 Stephen Prosser,M,3/06/04,prossersteve151@gmail.com,02102934576,5,Year 13,userpass,
+Michael Jackson,f,18/05/75,michael.jackson@school.nz,0271256399,5,Year 5,micok23idek22,
+Liam Anthony,m,23/05/23,liamanthony29@gmail.com,0293476611,2,Year 8,liamiskewlpassword123,

@@ -69,15 +69,16 @@ void Admin::viewParentRecords()
 {
     system("CLS");
     ifstream readData;
-    cout << "*************\n";
+    cout << "**************\n";
     cout << "Parent Records\n";
-    cout << "*************\n";
+    cout << "**************\n";
 
-    cout << "Full Name    Gender    DOB           Email                    Contact       Children   Children Classroom    Emergency";
+    cout << "\nFull Name    Gender    DOB           Email                    Contact       Children   Children Classroom    Emergency";
     cout << "\n                                                              Number        Names      Number(s)             Contact";
-    cout << "\n-----------------------------------------------------------------------------------------------------------------------";
-    cout << "\nDavid        Male      21/05/89      example@example.co.nz    021457615     Stacy      5                     Liam Anthony";
-    cout << "\nProsser                                                                     Morgan                           0214597134\n\n";
+    cout << "\n----------------------------------------------------------------------------------------------------------------------";
+    cout << "\nDavid        Male      21/05/89      example@example.co.nz    021457615     Stacy      5                     Liam";
+    cout << "\nProsser                                                                     Morgan                           Anthony";
+    cout << "\n                                                                                                             0214597134\n\n";
     system("pause");
     displayAdminScreen();
 }

@@ -124,7 +124,6 @@ void Teacher::teacherSignUp()
 		}
 	}
 	writeFile.close();
-	system("pause");
 }
 
 Teacher::Teacher(std::string _fullName, char _gender, std::string _dob, std::string _email, 

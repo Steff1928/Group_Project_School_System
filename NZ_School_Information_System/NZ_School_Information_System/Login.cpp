@@ -9,10 +9,14 @@ using namespace std;
 
 void Login::userLogin()
 {
-	float seconds = 10.0f - static_cast<time_t>(clock() / 1000);
-	char confirmAnswer = 0;
-	loginAttempts == 3;
-
+	clock_t time = clock();
+	float seconds = 10.0f - static_cast<time_t>((clock() - time) / 1000);
+	if (seconds <= 0)
+	{
+		loginAttempts = 3;
+	}
+	char confirmAnswer;
+	
 	ifstream readTeacher;
 	ifstream readAdmin;
 	ifstream readParent;
@@ -24,12 +28,15 @@ void Login::userLogin()
 	do
 	{
 		system("CLS");
+		// Set confirmAnswer back to no by default so the loop does not run again after the user is finished in 
+		// their screen
+		confirmAnswer = 'n'; 
 		cout << "************\n";
 		cout << "Yoobee Login\n";
 		cout << "************\n";
 		readTeacher.open("Sign_Up_And_Login_Details/teacher_registration.txt");
 		readAdmin.open("Sign_Up_And_Login_Details/admin_login.txt");
-		readParent.open("Sign_Up_And_Login_Details/parent_login.txt");
+		readParent.open("Sign_Up_And_Login_Details/parent_registration.txt");
 
 		cout << "\nUsername: ";
 		cin >> userName;
@@ -38,9 +45,9 @@ void Login::userLogin()
 		string entry = userName + password;
 		bool loginAgain = false;
 
-		while (readTeacher.is_open() && readAdmin.is_open() /*&& readParent.is_open()*/)
+		while (readTeacher.is_open() && readAdmin.is_open() && readParent.is_open())
 		{
-			if (!readTeacher.eof() && !readAdmin.eof() /*&& !readParent.eof()*/ && loginAttempts > 0)
+			if (!readTeacher.eof() && !readAdmin.eof() && !readParent.eof() && loginAttempts > 0)
 			{
 				// If there is a match in the "teacher_registration" file, login as a teacher
 				while (getline(readTeacher, line, ','))
@@ -69,7 +76,7 @@ void Login::userLogin()
 					}
 				}
 				// LIAM: Create parent screens and then this can be hooked up to the parent screen if a parent logs in
-				while (getline(readAdmin, line, ','))
+				while (getline(readParent, line, ','))
 				{
 					if (line == entry)
 					{
@@ -89,12 +96,7 @@ void Login::userLogin()
 				{
 					if (seconds > 0)
 					{
-						cout << "\nToo many failed attempts, please try again after "
-							<< seconds << " seconds\n\n";
-					}
-					else
-					{
-						loginAttempts == 3;
+						cout << "\nToo many failed attempts, please try again after " << seconds << " seconds.\n";
 					}
 				}
 				else
@@ -115,7 +117,6 @@ void Login::userLogin()
 		}
 	} while (confirmAnswer == 'y');
 	cout << "\n";
-	system("pause");
 }
 
 bool Login::userLogout()
@@ -130,6 +131,7 @@ bool Login::userLogout()
 		cout << "					             LOGGING OUT\n";
 		cout << "					             ***********\n";
 		cout << "\n					     Returning to the Main Menu\n\n";
+		system("pause");
 		return true;
 	}
 	return false;
