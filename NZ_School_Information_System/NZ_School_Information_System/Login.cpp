@@ -9,14 +9,8 @@ using namespace std;
 
 void Login::userLogin()
 {
-	clock_t time = clock();
-	float seconds = 10.0f - static_cast<time_t>((clock() - time) / 1000);
-	if (seconds <= 0)
-	{
-		loginAttempts = 3;
-	}
 	char confirmAnswer;
-	
+	float seconds;
 	ifstream readTeacher;
 	ifstream readAdmin;
 	ifstream readParent;
@@ -27,6 +21,11 @@ void Login::userLogin()
 	string line;
 	do
 	{
+		/*float seconds = 10.0f - static_cast<time_t>(clock() / 1000);
+		if (seconds <= 0)
+		{
+			loginAttempts = 3;
+		}*/
 		system("CLS");
 		// Set confirmAnswer back to no by default so the loop does not run again after the user is finished in 
 		// their screen
@@ -94,10 +93,7 @@ void Login::userLogin()
 				loginAttempts--;
 				if (loginAttempts <= 0)
 				{
-					if (seconds > 0)
-					{
-						cout << "\nToo many failed attempts, please try again after " << seconds << " seconds.\n";
-					}
+					cout << "\nToo many failed attempts, please try again later.\n";
 				}
 				else
 				{
