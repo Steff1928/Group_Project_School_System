@@ -115,7 +115,6 @@ void displayRegistrationScreen()
         teacherUser.teacherSignUp();
         break;
     case 3:
-        // TODO: Complete rest of introduction screen
         displayIntroScreen();
         break;
     default:

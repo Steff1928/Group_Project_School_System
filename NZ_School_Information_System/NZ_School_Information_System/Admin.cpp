@@ -106,6 +106,7 @@ void Admin::generateReportsScreen()
         break;
     case 2:
         // TODO: Students needing help report (perhaps extract in a function)
+        generateReportsScreen();
         break;
     case 3:
         generateReportsScreen();

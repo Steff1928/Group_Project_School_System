@@ -14,15 +14,14 @@ void Teacher::displayTeacherScreen()
 	cout << "************************************\n";
 	cout << "Yoobee Portal - Logged in as Teacher\n";
 	cout << "************************************\n";
-	cout << "\n1. Student Record Options"
+	cout << "\n1. Student Records Options"
 		<< "\n2. Logout\n";
 	cout << "\nEnter corresponding number for selection: ";
 	cin >> choice;
 	switch (choice)
 	{
 	case 1:
-		// TODO: Student Record Options Screen
-		displayTeacherScreen();
+		recordsScreen();
 		break;
 	case 2:
 		if (!login.userLogout())
@@ -39,7 +38,51 @@ void Teacher::displayTeacherScreen()
 
 void Teacher::recordsScreen()
 {
+	system("CLS");
+	int choice;
 
+	cout << "***************\n";
+	cout << "Student Records\n";
+	cout << "***************\n";
+
+	cout << "\n1. Add Student"
+		<< "\n2. Edit Record"
+		<< "\n3. Delete Record"
+		<< "\n4. Update Record"
+		<< "\n5. View Records"
+		<< "\n6. Back\n";
+	cout << "\nEnter corresponding number for selection: ";
+	cin >> choice;
+
+	switch (choice)
+	{
+	case 1:
+		addStudent(); // TODO: Allow teachers to add students to their class and save data in a file
+		recordsScreen();
+		break;
+	case 2:
+		editRecord(); // TODO: Allow teachers to edit student records and modify data
+		recordsScreen();
+		break;
+	case 3:
+		removeStudent(); // TODO: Allow teachers to remove a student and all of their data from their class
+		recordsScreen();
+		break;
+	case 4:
+		updateRecord(); // TODO: Allow teachers to add new/update a students learning progress for each term
+		recordsScreen();
+		break;
+	case 5:
+		viewRecords(); // TODO: Allow the teacher to view all the records of students in their class
+		recordsScreen();
+		break;
+	case 6:
+		displayTeacherScreen();
+		break;
+	default:
+		cout << "Invalid option, please try again\n\n";
+		system("pause");
+	}
 }
 
 void Teacher::addStudent()
@@ -47,7 +90,7 @@ void Teacher::addStudent()
 
 }
 
-void Teacher::editStudent()
+void Teacher::editRecord()
 {
 
 }
@@ -57,12 +100,12 @@ void Teacher::removeStudent()
 
 }
 
-void Teacher::updateStudent()
+void Teacher::updateRecord()
 {
 
 }
 
-void Teacher::viewRecord()
+void Teacher::viewRecords()
 {
 
 }

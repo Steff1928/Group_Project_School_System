@@ -21,10 +21,10 @@ public:
 	void displayTeacherScreen();
 	void recordsScreen();
 	void addStudent();
-	void editStudent();
+	void editRecord();
 	void removeStudent();
-	void updateStudent();
-	void viewRecord();
+	void updateRecord();
+	void viewRecords();
 	void teacherSignUp();
 	Teacher(std::string _fullName, char _gender, std::string _dob, std::string _email, 
 		std::string _contactNum, int _classroomNum, std::string _teachingYear, 
