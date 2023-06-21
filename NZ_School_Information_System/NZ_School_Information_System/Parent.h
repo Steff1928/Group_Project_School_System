@@ -1,19 +1,22 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "Login.h"
 class Parent
 {
 private:
 	std::string fullName;
-	char gender;
+	char gender = 0;
 	std::string dob;
 	std::string email;
 	std::string contactNum;
-	std::string childName;
-	int childClass;
-	std::string emergencyContactName;
-	int emergencyContactNum;
 	std::string userName;
 	std::string password;
+	std::string childName;
+	int childClass = 0;
+	std::string emergencyContactName;
+	std::string emergencyContactNum;
+	Login login;
 public:
 	void displayParentScreen();
 	void viewChildReport();
@@ -21,7 +24,7 @@ public:
 	void parentSignUp();
 	Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum, 
 		std::string _childName, int _childClass, std::string _emergencyContactName,	
-		int _emergencyContactNum, std::string _userName);
+		std::string _emergencyContactNum, std::string _userName);
 	Parent();
 
 };

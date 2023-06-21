@@ -1,27 +1,83 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "Parent.h"
+#include "Login.h"
 using namespace std;
 
 void Parent::displayParentScreen()
 {
-
+	int choice;
+	system("CLS");
+	cout << "***********************************\n";
+	cout << "Yoobee Portal - Logged in as Parent\n";
+	cout << "***********************************\n\n";
+	cout << "1. View Child Record\n" 
+		 << "2. View School notices\n" 
+		 << "3. Logout\n";
+	cout << "Enter corresponding number for the selection: ";
+	cin >> choice;
+	switch (choice) 
+	{
+	case 1:
+		Parent::viewChildReport();
+		break;
+	case 2:
+		Parent::viewNotices();
+		break;
+	case 3:
+		if (!login.userLogout())
+		{
+			displayParentScreen();
+		}
+		break;
+	default:
+		cout << "Invalid option, please try again\n\n";
+		system("pause");
+		displayParentScreen();
+	}
 }
+
 
 void Parent::viewChildReport()
 {
+	string childName;
+	system("CLS");
+	cout << "************\n";
+	cout << "Child Record\n";
+	cout << "************\n\n";
+	cout << "Enter Child's Full name: ";
+	getline(cin >> ws, childName);
+	cout << "\nChild Name: "<<  "Temp Name" << "\n";
+	cout << "Gender: " << "Temp Gender" << "\n\n";
 
+	cout << "Marks";
+	cout << "------------------";
+	cout << "Maths: " << "Temp Score" << "\n";
+	cout << "Science: " << "Temp Score" << "\n";
+	cout << "Reading: " << "Temp Score" << "\n";
+	cout << "Writing: " << "Temp Score" << "\n";
+	cout << "Other: " << "Temp Score" << "\n";
 }
 
 void Parent::viewNotices()
 {
-
+	system("CLS");
+	cout << "**************\n";
+	cout << "School Notices\n";
+	cout << "**************\n\n";
+	cout << "Current Notices:\n\n";
+	cout << "[Notice of Information Details]\n";
+	cout << "[Notice of Information Details]\n";
+	cout << "[Notice of Information Details]\n\n";
+	system("pause");
 }
 
 void Parent::parentSignUp()
 {
 	int childAmount = 0;
+	string userInput;
 	system("CLS");
 	ofstream writeFile;
 	writeFile.open("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app);
@@ -54,7 +110,7 @@ void Parent::parentSignUp()
 	{
 		cout << "Child" << i;
 		cout << "Child's full name: ";
-		getline(cin >> ws, childName);
+		getline(cin >> ws, userInput);
 		cout << "Child's classroom number: ";
 		cin >> childClass;
 		cout << "Emergency Contact Caregiver's Full Name: ";
@@ -62,11 +118,44 @@ void Parent::parentSignUp()
 		cout << "Emergency Contact Number: ";
 		cin >> emergencyContactNum;
 	}
+	system("pause");
+
+	while (true)
+	{
+		system("CLS");
+		cout << "***********************************\n";
+		cout << "Parent Registration - Account Info\n";
+		cout << "***********************************\n";
+		cout << "\nUsername: ";
+		cin >> userName;
+		cout << "Password: ";
+		cin >> password;
+		string confirmPassword;
+		cout << "Confirm Password: ";
+		cin >> confirmPassword;
+		if (password == confirmPassword)
+		{
+			cout << "Successfully signed up as a teacher!\n\n";
+			writeFile << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "\n" << childName
+				<< "," << childClass << "," << emergencyContactName <<  "," << emergencyContactNum <<  "," << userName << password << ",\n";
+			writeFile.close();
+			system("pause");
+			displayParentScreen();
+			break;
+		}
+		else
+		{
+			cout << "Passwords do not match, please re-enter account info\n\n";
+			system("pause");
+		}
+	}
+	writeFile.close();
+	system("pause");
 }
 
 Parent::Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum,
 	std::string _childName, int _childClass, std::string _emergencyContactName, 
-	int _emergencyContactNum, std::string _userName)
+	std::string _emergencyContactNum, std::string _userName)
 {
 	fullName = _fullName;
 	gender = _gender;
