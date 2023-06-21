@@ -79,6 +79,7 @@ void Parent::viewNotices()
 
 void Parent::parentSignUp()
 {
+	Child child;
 	int childAmount = 0;
 	string userInput;
 	system("CLS");
@@ -115,11 +116,11 @@ void Parent::parentSignUp()
 		cout << "Child's full name: ";
 		getline(cin >> ws, userInput);
 		cout << "Child's classroom number: ";
-		cin >> childClass;
+		cin >> child.childClass;
 		cout << "Emergency Contact Caregiver's Full Name: ";
-		cin >> emergencyContactName;
+		cin >> child.emergencyContactName;
 		cout << "Emergency Contact Number: ";
-		cin >> emergencyContactNum;
+		cin >> child.emergencyContactNum;
 	}
 	system("pause");
 
@@ -138,9 +139,9 @@ void Parent::parentSignUp()
 		cin >> confirmPassword;
 		if (password == confirmPassword)
 		{
-			cout << "Successfully signed up as a teacher!\n\n";
-			writeFile << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "\n" << childName
-				<< "," << childClass << "," << emergencyContactName <<  "," << emergencyContactNum <<  "," << userName << password << ",\n";
+			cout << "Successfully signed up as a parent!\n\n";
+			writeFile << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "\n" << child.childName
+				<< "," << child.childClass << "," << child.emergencyContactName <<  "," << child.emergencyContactNum <<  "," << userName << password << ",\n";
 			writeFile.close();
 			system("pause");
 			displayParentScreen();

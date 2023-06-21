@@ -12,10 +12,13 @@ private:
 	std::string contactNum;
 	std::string userName;
 	std::string password;
-	std::string childName;
-	int childClass = 0;
-	std::string emergencyContactName;
-	std::string emergencyContactNum;
+	struct Child
+	{
+		std::string childName;
+		int childClass = 0;
+		std::string emergencyContactName;
+		std::string emergencyContactNum;
+	};
 	Login login;
 public:
 	void displayParentScreen();
