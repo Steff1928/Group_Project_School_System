@@ -16,15 +16,17 @@ void Parent::displayParentScreen()
 	cout << "1. View Child Record\n" 
 		 << "2. View School notices\n" 
 		 << "3. Logout\n";
-	cout << "Enter corresponding number for the selection: ";
+	cout << "\nEnter corresponding number for the selection: ";
 	cin >> choice;
 	switch (choice) 
 	{
 	case 1:
-		Parent::viewChildReport();
+		viewChildReport();
+		displayParentScreen();
 		break;
 	case 2:
-		Parent::viewNotices();
+		viewNotices();
+		displayParentScreen();
 		break;
 	case 3:
 		if (!login.userLogout())
@@ -52,13 +54,13 @@ void Parent::viewChildReport()
 	cout << "\nChild Name: "<<  "Temp Name" << "\n";
 	cout << "Gender: " << "Temp Gender" << "\n\n";
 
-	cout << "Marks";
-	cout << "------------------";
-	cout << "Maths: " << "Temp Score" << "\n";
+	cout << "Marks\n";
+	cout << "------------------\n";
+	cout << "Maths: " << "  Temp Score" << "\n";
 	cout << "Science: " << "Temp Score" << "\n";
 	cout << "Reading: " << "Temp Score" << "\n";
 	cout << "Writing: " << "Temp Score" << "\n";
-	cout << "Other: " << "Temp Score" << "\n";
+	cout << "Other: " << "  Temp Score" << "\n\n";
 	system("pause");
 }
 

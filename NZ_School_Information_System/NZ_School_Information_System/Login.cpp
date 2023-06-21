@@ -126,7 +126,7 @@ void Login::userLogin()
 bool Login::userLogout()
 {
 	char confirmAnswer;
-	cout << "\nAre you sure you want to logout? (y/n): ";
+	cout << "Are you sure you want to logout? (y/n): ";
 	cin >> confirmAnswer;
 	if (confirmAnswer == 'y')
 	{
