@@ -18,6 +18,9 @@ private:
 		int childClass = 0;
 		std::string emergencyContactName;
 		std::string emergencyContactNum;
+		Child(std::string _childName, int _childClass, std::string _emergencyContactName,
+			std::string _emergencyContactNum);
+		Child();
 	};
 	Login login;
 public:
@@ -25,10 +28,8 @@ public:
 	void viewChildReport();
 	void viewNotices();
 	void parentSignUp();
-	Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum, 
-		std::string _childName, int _childClass, std::string _emergencyContactName,	
-		std::string _emergencyContactNum, std::string _userName);
-	Parent();
+	Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum, std::string _userName);
 
+	Parent();
 };
 

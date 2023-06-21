@@ -80,6 +80,7 @@ void Parent::viewNotices()
 void Parent::parentSignUp()
 {
 	Child child;
+	vector<Child> childData;
 	int childAmount = 0;
 	string userInput;
 	system("CLS");
@@ -112,15 +113,17 @@ void Parent::parentSignUp()
 
 	for (int i = 0; i < childAmount; i++)
 	{
-		cout << "Child" << i;
+		cout << "Child " << i+1 << "\n";
 		cout << "Child's full name: ";
-		getline(cin >> ws, userInput);
+		getline(cin >> ws, child.childName);
 		cout << "Child's classroom number: ";
 		cin >> child.childClass;
 		cout << "Emergency Contact Caregiver's Full Name: ";
-		cin >> child.emergencyContactName;
+		getline(cin >> ws, child.emergencyContactName);
 		cout << "Emergency Contact Number: ";
 		cin >> child.emergencyContactNum;
+		cout << "\n";
+		childData.push_back({ child.childName,child.childClass,child.emergencyContactName,child.emergencyContactNum });
 	}
 	system("pause");
 
@@ -140,8 +143,13 @@ void Parent::parentSignUp()
 		if (password == confirmPassword)
 		{
 			cout << "Successfully signed up as a parent!\n\n";
-			writeFile << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "\n" << child.childName
-				<< "," << child.childClass << "," << child.emergencyContactName <<  "," << child.emergencyContactNum <<  "," << userName << password << ",\n";
+			writeFile << userName << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum;
+			for (int i = 0; i < size(childData); i++)
+			{
+				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
+					"," << childData[i].emergencyContactNum;
+			}
+			writeFile << endl <<"*";
 			writeFile.close();
 			system("pause");
 			displayParentScreen();
@@ -154,26 +162,31 @@ void Parent::parentSignUp()
 		}
 	}
 	writeFile.close();
-	system("pause");
 }
 
-Parent::Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum,
-	std::string _childName, int _childClass, std::string _emergencyContactName, 
-	std::string _emergencyContactNum, std::string _userName)
+Parent::Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum, std::string _userName)
 {
 	fullName = _fullName;
 	gender = _gender;
 	dob = _dob;
 	email = _email;
 	contactNum = _contactNum;
-	childName = _childName;
-	childClass = _childClass;
-	emergencyContactName = _emergencyContactName;
-	emergencyContactNum = _emergencyContactNum;
 	userName = _userName;
 }
 
 Parent::Parent()
 {
 
+}
+
+Parent::Child::Child(std::string _childName, int _childClass, std::string _emergencyContactName, std::string _emergencyContactNum)
+{
+	childName = _childName;
+	childClass = _childClass;
+	emergencyContactName = _emergencyContactName;
+	emergencyContactNum = _emergencyContactNum;
+}
+
+Parent::Child::Child()
+{
 }
