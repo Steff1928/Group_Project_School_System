@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
 #include "Teacher.h"
 #include "Login.h"
 
@@ -123,10 +124,11 @@ void Teacher::removeStudent()
 	system("CLS");
 	ifstream readFile;
 	string line;
-	readFile.open("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
+	readFile.open("Sign_Up_And_Login_Details/teacher_registration.txt");
 	while (getline(readFile, line, '*'))
 	{
-		if (line == "user")
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == "foxyboi123")
 		{	
 			for (int i = 0; i < 7; i++)
 			{
