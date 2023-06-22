@@ -7,7 +7,27 @@
 #include "Admin.h"
 using namespace std;
 
-// TODO: Fix login timer
+void Login::manageLoginAttempts(bool& loginAgain)
+{
+	loginAttempts--;
+
+	if (loginAttempts <= 0 && start == 0)
+	{
+		start = clock();
+		beginTimer = true;
+	}
+
+	if (loginAttempts > 0)
+	{
+		cout << "\nInvalid username or password\n\n";
+	}
+	else
+	{
+		cout << "\nToo many failed attempts, you have been locked out for " << seconds << " seconds.\n";
+	}
+	loginAgain = true;
+}
+
 void Login::userLogin()
 {
 	char confirmAnswer;
@@ -40,6 +60,21 @@ void Login::userLogin()
 		string entry = userName + password;
 		bool loginAgain = false;
 
+		// Start a timer if the user has no login attempts left
+		if (beginTimer && loginAttempts <= 0)
+		{
+			seconds = 10.0f - static_cast<time_t>((clock() - start) / 1000);
+		}
+
+		if (seconds <= 0)
+		{
+			start = 0;
+			seconds = 10.0f;
+			beginTimer = false;
+			loginAttempts = 3;
+		}
+
+		// Read through each registration/login file for each user to find a 
 		while (readTeacher.is_open() && readAdmin.is_open() && readParent.is_open())
 		{
 			if (!readTeacher.eof() && !readAdmin.eof() && !readParent.eof() && loginAttempts > 0)
@@ -86,32 +121,7 @@ void Login::userLogin()
 			}
 			else // If there are no matches, minus a login attempt and notify the user they could find their account
 			{
-				loginAttempts--;
-				if (loginAttempts <= 0 && start == 0)
-				{
-					start = clock();
-					beginTimer = true;
-				}
-
-				if (beginTimer && loginAttempts <= 0)
-				{
-					seconds = 10.0f - static_cast<time_t>((clock() - start) / 1000);
-					if (seconds < 1)
-					{
-						start = 0;
-						beginTimer = false;
-						loginAttempts = 3;
-					}
-					else
-					{
-						cout << "\nToo many failed attempts, please wait " << seconds << " more seconds.\n";
-					}
-				}
-				else
-				{
-					cout << "\nInvalid username or password\n\n";
-				}
-				loginAgain = true;
+				manageLoginAttempts(loginAgain);
 				break;
 			}
 		}

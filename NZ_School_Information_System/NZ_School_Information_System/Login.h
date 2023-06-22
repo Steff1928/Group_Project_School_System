@@ -10,6 +10,7 @@ private:
 	float seconds = 10.0f;
 	clock_t start = 0;
 public:
+	void manageLoginAttempts(bool& loginAgain);
 	void userLogin();
 	bool userLogout();
 };
