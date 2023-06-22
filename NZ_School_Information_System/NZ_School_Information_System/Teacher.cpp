@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <filesystem>
 #include <algorithm>
 #include "Teacher.h"
 #include "Login.h"
@@ -143,7 +144,9 @@ void Teacher::removeStudent()
 {
 	system("CLS");
 	ifstream readFile;
-	string line;
+	ofstream writeFile;
+	string line, name;
+	string path;
 	readFile.open("Sign_Up_And_Login_Details/teacher_registration.txt");
 	while (getline(readFile, line, '*'))
 	{
@@ -160,12 +163,30 @@ void Teacher::removeStudent()
 	}
 	//readFile.open("Classroom_Number_" + line);
 	int studentID = 0;
+	path = "Classes/room_" + line + ".txt";
 	cout << "*******************************\n";
 	cout << "Student Records - Delete Record\n";
 	cout << "*******************************\n\n";
 	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
 	cout << "Enter a student ID to remove from your class: ";
-	cin >> studentID;
+	//cin >> studentID;
+	getline(cin >> ws, name);
+	readFile.open(path);
+	writeFile.open("Classes/temp.txt");
+	while (getline(readFile, line, '*'))
+	{
+		if (line.substr(0, name.size()) != name)
+		{
+			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+			writeFile << "*" << line   << endl;
+		}
+	}
+	readFile.close();
+	writeFile.close();
+	remove(path.c_str());
+	if(rename("Classes/temp.txt", path.c_str())!=0);
+	system("pause");
+	return;
 }
 
 void Teacher::updateRecord()
