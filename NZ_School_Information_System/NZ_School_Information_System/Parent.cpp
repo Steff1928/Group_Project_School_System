@@ -149,7 +149,7 @@ void Parent::parentSignUp()
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
 					"," << childData[i].emergencyContactNum;
 			}
-			writeFile << endl <<"*";
+			writeFile << endl << "*" << endl << ",";
 			writeFile.close();
 			system("pause");
 			displayParentScreen();
