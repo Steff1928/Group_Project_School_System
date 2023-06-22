@@ -2,6 +2,7 @@
 #include <fstream>
 #include <Windows.h>
 #include <ctime>
+#include <algorithm>
 #include "Login.h"
 #include "Teacher.h"
 #include "Admin.h"
@@ -63,7 +64,7 @@ void Login::userLogin()
 		cin >> userName;
 		cout << "Password: ";
 		cin >> password;
-		string entry = userName + "*" + password;
+		string entry = userName+password;
 		bool loginAgain = false;
 
 		// Start a timer if the user has no login attempts left
@@ -88,6 +89,8 @@ void Login::userLogin()
 				// If there is a match in the "teacher_registration" file, login as a teacher
 				while (getline(readTeacher, line, ','))
 				{
+					line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+					line.erase(remove(line.begin(), line.end(), '*'), line.end());
 					if (line == entry)
 					{
 						cout << "\nSuccessfully logged in!\n\n";
@@ -101,6 +104,8 @@ void Login::userLogin()
 				// If there is a match in the "admin_login" file, login as an admin
 				while (getline(readAdmin, line, ','))
 				{
+					line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+					line.erase(remove(line.begin(), line.end(), '*'), line.end());
 					if (line == entry)
 					{
 						cout << "\nSuccessfully logged in!\n\n";
@@ -114,6 +119,8 @@ void Login::userLogin()
 				// LIAM: Create parent screens and then this can be hooked up to the parent screen if a parent logs in
 				while (getline(readParent, line, ','))
 				{
+					line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+					line.erase(remove(line.begin(), line.end(), '*'), line.end());
 					if (line == entry)
 					{
 						cout << "\nSuccessfully logged in!\n\n";
