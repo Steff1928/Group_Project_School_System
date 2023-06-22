@@ -7,6 +7,11 @@
 #include "Admin.h"
 using namespace std;
 
+/// <summary>
+/// If there are no username/password matches in any file, minus an attempt and if the user has no attempts left,
+/// lock them out of their account for 10 seconds
+/// </summary>
+/// <param name="loginAgain"> - Boolean to determine whether a prompt should be given to the user to login again </param>
 void Login::manageLoginAttempts(bool& loginAgain)
 {
 	loginAttempts--;
@@ -28,6 +33,7 @@ void Login::manageLoginAttempts(bool& loginAgain)
 	loginAgain = true;
 }
 
+// Manage login data to take users to their required screen
 void Login::userLogin()
 {
 	char confirmAnswer;
@@ -61,7 +67,7 @@ void Login::userLogin()
 		bool loginAgain = false;
 
 		// Start a timer if the user has no login attempts left
-		if (beginTimer && loginAttempts <= 0)
+		if (beginTimer)
 		{
 			seconds = 10.0f - static_cast<time_t>((clock() - start) / 1000);
 		}
@@ -119,7 +125,8 @@ void Login::userLogin()
 					}
 				}
 			}
-			else // If there are no matches, minus a login attempt and notify the user they could find their account
+			// If there are no matches in any file, run the manageLoginAttempts function to control the users login attempts
+			else 
 			{
 				manageLoginAttempts(loginAgain);
 				break;
