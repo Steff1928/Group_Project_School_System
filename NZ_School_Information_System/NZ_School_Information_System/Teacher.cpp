@@ -176,11 +176,11 @@ void Teacher::teacherSignUp()
 		if (password == confirmPassword)
 		{
 			cout << "Successfully signed up as a teacher!\n\n";
-			writeFile << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "," << classroomNum
-				<< "," << teachingYear << "," << userName << password << ",\n";
+			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "," << classroomNum
+				<< "," << teachingYear << "," << "\n";
 			writeFile.close();
 			system("pause");
-			displayTeacherScreen();
+			displayTeacherScreen();	
 			break;
 		}
 		else

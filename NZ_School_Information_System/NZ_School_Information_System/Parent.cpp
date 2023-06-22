@@ -143,7 +143,7 @@ void Parent::parentSignUp()
 		if (password == confirmPassword)
 		{
 			cout << "Successfully signed up as a parent!\n\n";
-			writeFile << userName << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum;
+			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum;
 			for (int i = 0; i < size(childData); i++)
 			{
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<

@@ -129,7 +129,7 @@ void Admin::initialiseAccount()
     // Write the intial login details for the admin to a file
     ofstream writeFile;
     writeFile.open("Sign_Up_And_Login_Details/admin_login.txt");
-    writeFile << userName << password;
+    writeFile << userName << "*" << password;
     writeFile.close();
 }
 
