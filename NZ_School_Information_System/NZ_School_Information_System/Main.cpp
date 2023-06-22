@@ -24,9 +24,9 @@ void upcomingEvents()
     cout << "Yoobee School Events\n";
     cout << "********************\n\n";
 
-    cout << "dd/mm/yyyy: [Event details and additional info]\n";
-    cout << "dd/mm/yyyy: [Event details and additional info]\n";
-    cout << "dd/mm/yyyy: [Event details and additional info]\n\n";
+    cout << "12/06/2023: Pride Month Event for week of 12/06 to 16/06.\n";
+    cout << "01/06/2023: Yoobee Celebrates Pride Month.\n";
+    cout << "08/05/2023: Term 2 has started.\n\n";
 
     system("pause");
 }
