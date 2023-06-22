@@ -37,16 +37,28 @@ void Student::saveData(string line)
 	cout << "Learning Progress (Achieved/Progressing/Needs Help): ";
 	getline(cin >> ws, learningProgress);
 
-	ofstream writeClass;
-	writeClass.open("Classes/room_" + line + ".txt", ios_base::app);
+	ofstream writeClassroom;
+	writeClassroom.open("Classes/room_" + line + ".txt", ios_base::app);
 
-	writeClass << fullName << "," << gender << "," << math << "," << science << "," << writing << ","
+	writeClassroom << studentId << "," << fullName << "," << gender << "," << math << "," << science << "," << writing << ","
 		<< reading << "," << other << "," << learningProgress << "\n" << "*";
+	
+	writeClassroom.close();
 
-	writeClass.close();
+	ifstream readClassroom("Classes/room_" + line + ".txt");
+	string lineTwo;
+
+	while (getline(readClassroom, lineTwo, ','))
+	{
+		if (lineTwo == to_string(studentId))
+		{
+			studentId++;
+		}
+	}	
+	readClassroom.close();
 }
 
 Student::Student()
 {
-
+	studentId = 1;
 }

@@ -1,3 +1,0 @@
-someone cool,f,1,2,3,4,100,Needs Help
-*Johnny Depp,F,25,32,98,95,71,Progressing
-*

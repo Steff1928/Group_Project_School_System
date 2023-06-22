@@ -21,7 +21,7 @@ void Teacher::displayTeacherScreen()
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 		if (line == login.savedUser)
 		{
-			for (int i = 0; i < 2; i++)
+			for (int i = 0; i < 2; i++) // Fixed number used here to loop to a certain line we need in a file
 			{
 				getline(readFile, line, ',');
 			}
@@ -223,7 +223,7 @@ void Teacher::teacherSignUp()
 			cout << "Successfully signed up as a teacher!\n\n";
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," 
 				<< dob << "," << email << "," << contactNum << "," << classroomNum
-				<< "," << teachingYear << "\n" << "*";
+				<< "," << teachingYear << "," << "\n" << "*";
 			writeFile.close();
 			system("pause");
 			displayTeacherScreen();	
