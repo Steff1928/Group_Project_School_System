@@ -101,11 +101,11 @@ void Teacher::removeStudent()
 	ifstream readFile;
 	string line;
 	readFile.open("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
-	while (getline(readFile, line, ','))
+	while (getline(readFile, line, '*'))
 	{
-		if (line == "userpass")
+		if (line == "user")
 		{	
-			for (int i = 0; i < 6; i++)
+			for (int i = 0; i < 7; i++)
 			{
 				getline(readFile, line, ',');
 			}
@@ -118,9 +118,9 @@ void Teacher::removeStudent()
 	cout << "*******************************\n";
 	cout << "Student Records - Delete Record\n";
 	cout << "*******************************\n\n";
+	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
 	cout << "Enter a student ID to remove from your class: ";
 	cin >> studentID;
-	cout << "Class Number: " << line; //Temp output to track classroom number.
 }
 
 void Teacher::updateRecord()

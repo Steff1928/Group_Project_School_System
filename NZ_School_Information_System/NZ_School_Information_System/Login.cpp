@@ -63,7 +63,7 @@ void Login::userLogin()
 		cin >> userName;
 		cout << "Password: ";
 		cin >> password;
-		string entry = userName + password;
+		string entry = userName + "*" + password;
 		bool loginAgain = false;
 
 		// Start a timer if the user has no login attempts left
