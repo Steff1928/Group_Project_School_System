@@ -88,7 +88,29 @@ void Teacher::recordsScreen()
 
 void Teacher::addStudent()
 {
+	system("CLS");
+	cout << "*****************************\n";
+	cout << "Student Records - Add Student\n";
+	cout << "*****************************\n";
 
+	tempStudentData.saveData();
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
+	string line;
+
+	while (getline(readFile, line, '*'))
+	{
+		if (line == "teach")
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				getline(readFile, line, ',');
+			}
+			readFile.close();
+			break;
+		}
+	}
+	cout << "Student details have been added to your class (Room " << line << ")\n";
+	system("pause");
 }
 
 void Teacher::editRecord()
