@@ -97,7 +97,30 @@ void Teacher::editRecord()
 
 void Teacher::removeStudent()
 {
-
+	system("CLS");
+	ifstream readFile;
+	string line;
+	readFile.open("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
+	while (getline(readFile, line, ','))
+	{
+		if (line == "userpass")
+		{	
+			for (int i = 0; i < 6; i++)
+			{
+				getline(readFile, line, ',');
+			}
+			readFile.close();
+			break;
+		}
+	}
+	//readFile.open("Classroom_Number_" + line);
+	int studentID = 0;
+	cout << "*******************************\n";
+	cout << "Student Records - Delete Record\n";
+	cout << "*******************************\n\n";
+	cout << "Enter a student ID to remove from your class: ";
+	cin >> studentID;
+	cout << "Class Number: " << line; //Temp output to track classroom number.
 }
 
 void Teacher::updateRecord()
@@ -114,6 +137,7 @@ void Teacher::teacherSignUp()
 {
 	system("CLS");
 	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
+	int classNum = 0;
 	
 	cout << "********************\n";
 	cout << "Teacher Registration\n";

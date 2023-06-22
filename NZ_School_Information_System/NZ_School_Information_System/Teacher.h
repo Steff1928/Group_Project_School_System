@@ -7,11 +7,11 @@ class Teacher
 {
 private:
 	std::string fullName;
-	char gender;
+	char gender = 0;
 	std::string dob;
 	std::string email;
 	std::string contactNum;
-	int classroomNum;
+	int classroomNum = 0;
 	std::string teachingYear;
 	Student tempStudentData;
 	std::string userName;
