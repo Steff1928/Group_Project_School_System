@@ -1,2 +1,4 @@
-user*pass,Stephen Prosser,M,3/06/23,243@gmail.com,0213124,5,Year 12,
-teach*1234,Michael Jackson,m,23/05/23,sfedsd@gmail.com,9213123,3,Year 8,
+user*pass,Stephen Prosser,m,3/06/04,prossersteve151@gmail.com,02102934576,5,Year 13
+,teach*1234,Michael Jackson,m,23/05/87,michaeljackson@hotmail.com,02112345786,3,Year 8
+,foxyboi123*password321,Michelle Brown,F,18/11/99,michellebrown@gmail.com,02198137651,2,Year 7
+,

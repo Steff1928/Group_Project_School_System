@@ -10,8 +10,8 @@ void Parent::displayParentScreen()
 {
 	int choice;
 	system("CLS");
-	cout << "***********************************\n";
-	cout << "Yoobee Portal - Logged in as Parent\n";
+	cout << "***********************************           Welcome: [Parent Name]\n";
+	cout << "Yoobee Portal - Logged in as Parent           ----------------------\n";
 	cout << "***********************************\n\n";
 	cout << "1. View Child Record\n" 
 		 << "2. View School notices\n" 

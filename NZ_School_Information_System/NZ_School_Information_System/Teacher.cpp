@@ -9,10 +9,11 @@ using namespace std;
 void Teacher::displayTeacherScreen()
 {
 	system("CLS");
+	login.userName = userName;
 	int choice;
 
-	cout << "************************************\n";
-	cout << "Yoobee Portal - Logged in as Teacher\n";
+	cout << "************************************           Welcome: [Teacher Name]\n";
+	cout << "Yoobee Portal - Logged in as Teacher           -----------------------\n";
 	cout << "************************************\n";
 	cout << "\n1. Student Records Options"
 		<< "\n2. Logout\n";
@@ -176,8 +177,9 @@ void Teacher::teacherSignUp()
 		if (password == confirmPassword)
 		{
 			cout << "Successfully signed up as a teacher!\n\n";
-			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << "," << classroomNum
-				<< "," << teachingYear << "," << "\n";
+			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," 
+				<< dob << "," << email << "," << contactNum << "," << classroomNum
+				<< "," << teachingYear << "\n" << ",";
 			writeFile.close();
 			system("pause");
 			displayTeacherScreen();	
