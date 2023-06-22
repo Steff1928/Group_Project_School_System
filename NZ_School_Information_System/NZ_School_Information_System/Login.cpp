@@ -64,7 +64,7 @@ void Login::userLogin()
 		cin >> userName;
 		cout << "Password: ";
 		cin >> password;
-		string entry = userName+password;
+		string entry = userName + password;
 		bool loginAgain = false;
 
 		// Start a timer if the user has no login attempts left
@@ -95,6 +95,7 @@ void Login::userLogin()
 					{
 						cout << "\nSuccessfully logged in!\n\n";
 						loginAttempts = 3;
+						savedUser = userName;
 						system("pause");
 						teacherLogin.displayTeacherScreen();
 						readTeacher.close();
@@ -110,6 +111,7 @@ void Login::userLogin()
 					{
 						cout << "\nSuccessfully logged in!\n\n";
 						loginAttempts = 3;
+						savedUser = userName;
 						system("pause");
 						adminLogin.displayAdminScreen();
 						readAdmin.close();

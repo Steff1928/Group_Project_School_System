@@ -14,7 +14,7 @@ private:
 	int studentId;
 public:
 	void getRecord();
-	void saveData();
+	void saveData(std::string line);
 	Student();
 };
 

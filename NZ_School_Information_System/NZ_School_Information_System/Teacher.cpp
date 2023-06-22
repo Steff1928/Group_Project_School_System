@@ -4,17 +4,34 @@
 #include <algorithm>
 #include "Teacher.h"
 #include "Login.h"
+#include "Main.h"
 
 using namespace std;
 
 void Teacher::displayTeacherScreen()
 {
 	system("CLS");
-	login.userName = userName;
 	int choice;
 
-	cout << "************************************           Welcome: [Teacher Name]\n";
-	cout << "Yoobee Portal - Logged in as Teacher           -----------------------\n";
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
+	string line;
+
+	while (getline(readFile, line, '*'))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == login.savedUser)
+		{
+			for (int i = 0; i < 2; i++)
+			{
+				getline(readFile, line, ',');
+			}
+			readFile.close();
+			break;
+		}
+	}
+
+	cout << "************************************           Welcome: " << line << "\n";
+	cout << "Yoobee Portal - Logged in as Teacher           --------------------------\n";
 	cout << "************************************\n";
 	cout << "\n1. Student Records Options"
 		<< "\n2. Logout\n";
@@ -94,13 +111,13 @@ void Teacher::addStudent()
 	cout << "Student Records - Add Student\n";
 	cout << "*****************************\n";
 
-	tempStudentData.saveData();
 	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
 	string line;
 
 	while (getline(readFile, line, '*'))
 	{
-		if (line == "teach")
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == login.savedUser)
 		{
 			for (int i = 0; i < 7; i++)
 			{
@@ -110,6 +127,9 @@ void Teacher::addStudent()
 			break;
 		}
 	}
+
+	tempStudentData.saveData(line);
+
 	cout << "Student details have been added to your class (Room " << line << ")\n";
 	system("pause");
 }
@@ -128,7 +148,7 @@ void Teacher::removeStudent()
 	while (getline(readFile, line, '*'))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		if (line == "foxyboi123")
+		if (line == "cool")
 		{	
 			for (int i = 0; i < 7; i++)
 			{
@@ -203,7 +223,7 @@ void Teacher::teacherSignUp()
 			cout << "Successfully signed up as a teacher!\n\n";
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," 
 				<< dob << "," << email << "," << contactNum << "," << classroomNum
-				<< "," << teachingYear << "\n" << ",";
+				<< "," << teachingYear << "\n" << "*";
 			writeFile.close();
 			system("pause");
 			displayTeacherScreen();	

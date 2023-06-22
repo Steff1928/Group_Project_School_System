@@ -4,7 +4,7 @@
 #include "Admin.h"
 #include "Parent.h"
 #include "Teacher.h"
-#include "Login.h"
+#include "Main.h"
 
 using namespace std;
 

@@ -16,7 +16,6 @@ private:
 	Student tempStudentData;
 	std::string userName;
 	std::string password; 
-	Login login;
 public:
 	void displayTeacherScreen();
 	void recordsScreen();

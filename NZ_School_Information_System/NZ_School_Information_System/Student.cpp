@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 #include "Student.h"
 using namespace std;
 
@@ -11,7 +12,7 @@ void Student::getRecord()
 	
 }
 
-void Student::saveData()
+void Student::saveData(string line)
 {
 	cout << "\nStudent Name: ";
 	getline(cin >> ws, fullName);
@@ -34,9 +35,15 @@ void Student::saveData()
 	cout << "\nTerm 1 Observations\n";
 	cout << "-------------------\n";
 	cout << "Learning Progress (Achieved/Progressing/Needs Help): ";
-	cin >> learningProgress;
+	getline(cin >> ws, learningProgress);
 
+	ofstream writeClass;
+	writeClass.open("Classes/room_" + line + ".txt", ios_base::app);
 
+	writeClass << fullName << "," << gender << "," << math << "," << science << "," << writing << ","
+		<< reading << "," << other << "," << learningProgress << "\n" << "*";
+
+	writeClass.close();
 }
 
 Student::Student()
