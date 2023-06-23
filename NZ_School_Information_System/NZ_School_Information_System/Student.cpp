@@ -40,22 +40,27 @@ void Student::saveData(string line)
 	ofstream writeClassroom;
 	writeClassroom.open("Classes/room_" + line + ".txt", ios_base::app);
 
+	ifstream readCount("student_count.txt");
+	string count;
+	int idCount;
+
+	while (getline(readCount, count))
+	{
+		idCount = stoi(count);
+		idCount++;
+		count = to_string(idCount);
+	}
+	readCount.close();
+
+	studentId = idCount;
 	writeClassroom << studentId << "," << fullName << "," << gender << "," << math << "," << science << "," << writing << ","
 		<< reading << "," << other << "," << learningProgress << "\n" << "*";
 	
 	writeClassroom.close();
 
-	ifstream readClassroom("Classes/room_" + line + ".txt");
-	string lineTwo;
-
-	while (getline(readClassroom, lineTwo, ','))
-	{
-		if (lineTwo == to_string(studentId))
-		{
-			studentId++;
-		}
-	}	
-	readClassroom.close();
+	ofstream writeCount("student_count.txt");
+	writeCount << count;
+	writeCount.close();
 }
 
 Student::Student()

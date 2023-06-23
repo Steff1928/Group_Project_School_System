@@ -245,6 +245,7 @@ void Teacher::teacherSignUp()
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," 
 				<< dob << "," << email << "," << contactNum << "," << classroomNum
 				<< "," << teachingYear << "," << "\n" << "*";
+			login.savedUser = userName;
 			writeFile.close();
 			system("pause");
 			displayTeacherScreen();	
