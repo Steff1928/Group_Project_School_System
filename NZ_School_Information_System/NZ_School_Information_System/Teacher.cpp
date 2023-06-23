@@ -8,6 +8,11 @@
 
 using namespace std;
 
+/// <summary>
+/// Get the data in the teacher_registration.txt file, read it and display it to the console when necessary
+/// </summary>
+/// <param name="line"> - Holds the data for the current line in the file</param>
+/// <param name="lineNum"> - Tells the program which line to read out</param>
 void Teacher::checkLineInFile(string& line, int lineNum)
 {
 	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
@@ -26,6 +31,7 @@ void Teacher::checkLineInFile(string& line, int lineNum)
 	}
 }
 
+// Display restricted options for users logged in as a teacher 
 void Teacher::displayTeacherScreen()
 {
 	system("CLS");
@@ -33,7 +39,7 @@ void Teacher::displayTeacherScreen()
 
 	string line;
 
-	checkLineInFile(line, 2);
+	checkLineInFile(line, 2); // Get the value of line from the file to display it later
 
 	cout << "************************************           Welcome: " << line << "\n";
 	cout << "Yoobee Portal - Logged in as Teacher           --------------------------\n";
@@ -45,7 +51,7 @@ void Teacher::displayTeacherScreen()
 	switch (choice)
 	{
 	case 1:
-		recordsScreen();
+		recordsScreen(); 
 		break;
 	case 2:
 		if (!login.userLogout())
@@ -60,6 +66,7 @@ void Teacher::displayTeacherScreen()
 	}
 }
 
+// Display options for creating a student record
 void Teacher::recordsScreen()
 {
 	system("CLS");
@@ -81,23 +88,23 @@ void Teacher::recordsScreen()
 	switch (choice)
 	{
 	case 1:
-		addStudent(); // TODO: Allow teachers to add students to their class and save data in a file
+		addStudent();
 		recordsScreen();
 		break;
 	case 2:
-		editRecord(); // TODO: Allow teachers to edit student records and modify data
+		editRecord(); // TODO: Make the editRecord function prompts and functionality
 		recordsScreen();
 		break;
 	case 3:
-		removeStudent(); // TODO: Allow teachers to remove a student and all of their data from their class
+		removeStudent(); 
 		recordsScreen();
 		break;
 	case 4:
-		updateRecord(); // TODO: Allow teachers to add new/update a students learning progress for each term
+		updateRecord(); // TODO: Make the updateRecord function prompts and functionality
 		recordsScreen();
 		break;
 	case 5:
-		viewRecords(); // TODO: Allow the teacher to view all the records of students in their class
+		viewRecords(); // TODO: Make the viewRecord function prompts and functionality
 		recordsScreen();
 		break;
 	case 6:
@@ -109,6 +116,7 @@ void Teacher::recordsScreen()
 	}
 }
 
+// Allow teachers to add students to their class and save data to a file
 void Teacher::addStudent()
 {
 	system("CLS");
@@ -124,11 +132,13 @@ void Teacher::addStudent()
 	system("pause");
 }
 
+// Allow teachers to edit student records and modify data
 void Teacher::editRecord()
 {
 
 }
 
+// Allow teachers to remove a student and all of their data from their class
 void Teacher::removeStudent()
 {
 	system("CLS");
@@ -180,22 +190,26 @@ void Teacher::removeStudent()
 	return;
 }
 
+// Allow teachers to add new/update a students learning progress for each term
 void Teacher::updateRecord()
 {
 
 }
 
+// Allow the teacher to view all the records of students in their class
 void Teacher::viewRecords()
 {
 
 }
 
+// Function to manage teacher registration
 void Teacher::teacherSignUp()
 {
 	system("CLS");
 	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
-	int classNum = 0;
+	int classNum;
 	
+	// Prompt the user to enter all the inital data for teacher registration
 	cout << "********************\n";
 	cout << "Teacher Registration\n";
 	cout << "********************\n";
@@ -217,6 +231,7 @@ void Teacher::teacherSignUp()
 
 	system("pause");
 	
+	// Prompt the user to enter data for account info (loop through until password matches confirm password)
 	while (true)
 	{
 		system("CLS");
@@ -230,7 +245,7 @@ void Teacher::teacherSignUp()
 		string confirmPassword;
 		cout << "Confirm Password: ";
 		cin >> confirmPassword;
-		if (password == confirmPassword)
+		if (password == confirmPassword) // Only save the data if confirm password matches the initial password
 		{
 			cout << "Successfully signed up as a teacher!\n\n";
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," 
@@ -244,13 +259,14 @@ void Teacher::teacherSignUp()
 		}
 		else
 		{
-			cout << "Passwords do not match, please re-enter account info\n\n";
+			cout << "Confirm Password is not the same as Password, please re-enter account info\n\n";
 			system("pause");
 		}
 	}
 	writeFile.close();
 }
 
+// Initialise all the values
 Teacher::Teacher(std::string _fullName, char _gender, std::string _dob, std::string _email, 
 	std::string _contactNum, int _classroomNum, std::string _teachingYear, 
 	std::string _userName, std::string _password)

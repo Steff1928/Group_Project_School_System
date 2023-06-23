@@ -37,6 +37,7 @@ void Login::manageLoginAttempts(bool& loginAgain)
 // Manage login data to take users to their required screen
 void Login::userLogin()
 {
+	// Initialise variables to be used when carrying out actions in the login
 	char confirmAnswer;
 	ifstream readTeacher;
 	ifstream readAdmin;
@@ -47,25 +48,28 @@ void Login::userLogin()
 	Parent parentLogin;
 	string line;
 
+	// Loop through the login function until a match is found in a file
 	do
 	{	
 		system("CLS");
 		// Set confirmAnswer back to no by default so the loop does not run again after the user is finished in 
 		// their screen
-		confirmAnswer = 'n'; 
+		confirmAnswer = 'n'; // Set confirmAnswer to no by default
 		cout << "************\n";
 		cout << "Yoobee Login\n";
 		cout << "************\n";
+		// Open each of the files to read data from
 		readTeacher.open("Sign_Up_And_Login_Details/teacher_registration.txt");
 		readAdmin.open("Sign_Up_And_Login_Details/admin_login.txt");
 		readParent.open("Sign_Up_And_Login_Details/parent_registration.txt");
 
+		// Prompt the user to enter their username and password
 		cout << "\nUsername: ";
 		cin >> userName;
 		cout << "Password: ";
 		cin >> password;
-		string entry = userName + password;
-		bool loginAgain = false;
+		string entry = userName + password; // Concatenate the two strings into a single string to be compared against
+		bool loginAgain = false; // Check to see if the user should be prompted to login again (false by default) 
 
 		// Start a timer if the user has no login attempts left
 		if (beginTimer)
@@ -81,7 +85,7 @@ void Login::userLogin()
 			loginAttempts = 3;
 		}
 
-		// Read through each registration/login file for each user to find a 
+		// Read through each registration/login file for each user to search for a match
 		while (readTeacher.is_open() && readAdmin.is_open() && readParent.is_open())
 		{
 			if (!readTeacher.eof() && !readAdmin.eof() && !readParent.eof() && loginAttempts > 0)
@@ -89,16 +93,18 @@ void Login::userLogin()
 				// If there is a match in the "teacher_registration" file, login as a teacher
 				while (getline(readTeacher, line, ','))
 				{
+					// Remove any \n or * characters so they are not read by the compiler when checking for valid matches
 					line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 					line.erase(remove(line.begin(), line.end(), '*'), line.end());
 					if (line == entry)
 					{
 						cout << "\nSuccessfully logged in!\n\n";
-						loginAttempts = 3;
-						savedUser = userName;
+						loginAttempts = 3; // Set login attempts back to 3 so the user isn't punished for logging in correctly
+						savedUser = userName; // Set the logged in username to a variable to save that data from the user
 						system("pause");
-						teacherLogin.displayTeacherScreen();
-						readTeacher.close();
+						teacherLogin.displayTeacherScreen(); // Display the designated user screen if a match in a file is confirmed
+						// One the user is finished in their account, close the file and break out of the loop
+						readTeacher.close(); 
 						break;
 					}
 				}
@@ -118,7 +124,7 @@ void Login::userLogin()
 						break;
 					}
 				}
-				// LIAM: Create parent screens and then this can be hooked up to the parent screen if a parent logs in
+				// If there is a match in the "parent_registration" file, login as a parent
 				while (getline(readParent, line, ','))
 				{
 					line.erase(remove(line.begin(), line.end(), '\n'), line.end());
@@ -142,6 +148,8 @@ void Login::userLogin()
 				break;
 			}
 		}
+		// If the user did not login correctly, ask if they want to login again.
+		// If not, send them back to the main menu
 		if (loginAgain)
 		{
 			cout << "Attempt to login again? (y/n): ";
@@ -150,16 +158,18 @@ void Login::userLogin()
 			readAdmin.close();
 			readParent.close();
 		}
-	} while (confirmAnswer == 'y');
+	} while (confirmAnswer == 'y'); // If the user says yes, end the loop
 	cout << "\n";
 }
 
+// Display brief information that tells the user they've successfully logged out
+// This has a return value of bool to check if the user confirms that they logged out
 bool Login::userLogout()
 {
 	char confirmAnswer;
 	cout << "Are you sure you want to logout? (y/n): ";
 	cin >> confirmAnswer;
-	if (confirmAnswer == 'y')
+	if (confirmAnswer == 'y') // Only log the user out if their answer is yes
 	{
 		system("CLS");
 		cout << "					             ***********\n";
@@ -167,7 +177,7 @@ bool Login::userLogout()
 		cout << "					             ***********\n";
 		cout << "\n					     Returning to the Main Menu\n\n";
 		system("pause");
-		return true;
+		return true; // Return the value of true to be evaluated against
 	}
-	return false;
+	return false; // If the user entered no, return false since the user did not logout
 }

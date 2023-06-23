@@ -12,6 +12,11 @@ void Student::getRecord()
 	
 }
 
+/// <summary>
+/// Prompt the user to enter data for a student and save it to a class file.
+/// (This will be called when a teacher wants to add a student so their data will be saved to that class)
+/// </summary>
+/// <param name="line">- Gets the designated class number from the teacher registration file to write the data in a class file</param>
 void Student::saveData(string line)
 {
 	cout << "\nStudent Name: ";
@@ -63,6 +68,7 @@ void Student::saveData(string line)
 	writeCount.close();
 }
 
+// Intialise the values for Student
 Student::Student()
 {
 	gender = 0;

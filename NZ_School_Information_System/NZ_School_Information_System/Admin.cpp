@@ -3,6 +3,7 @@
 #include "Admin.h"
 using namespace std;
 
+// Display restricted options for users logged in as an administrator
 void Admin::displayAdminScreen()
 {
     system("CLS");
@@ -25,7 +26,7 @@ void Admin::displayAdminScreen()
         viewParentRecords(); // TODO: Complete table for display the parent records
         break;
     case 3:
-        generateReportsScreen();
+        generateReportsScreen(); 
         break;
     case 4:
         if (!login.userLogout())
@@ -40,6 +41,7 @@ void Admin::displayAdminScreen()
     }
 }
 
+// Display all the student records from a selected class
 void Admin::viewClassRecords()
 {
     system("CLS");
@@ -49,6 +51,7 @@ void Admin::viewClassRecords()
     cout << "Class Records\n";
     cout << "*************\n";
 
+    // Prompt the user to enter a room number and display all of the data from that room in a table format
     cout << "\nEnter a room number: ";
     cin >> classroom;
     readData.open("Classes/room_"+ to_string(classroom) + ".txt");
@@ -57,14 +60,16 @@ void Admin::viewClassRecords()
     {
         cout << line;
     }*/
+    // TEMP: Structure for displaying student data in a table
     cout << "\nID    Full Name    Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
     cout << "\n-------------------------------------------------------------------------------------------------";
     cout << "\n1     Stephen      Male      50       70         81         79         100      Progressing";
     cout << "\n      Prosser\n\n";
     system("pause");
-    displayAdminScreen();
+    displayAdminScreen(); // Go back to the admin screen once finished
 }
 
+// Display all of the records for parents who are registered in the system
 void Admin::viewParentRecords()
 {
     system("CLS");
@@ -73,6 +78,7 @@ void Admin::viewParentRecords()
     cout << "Parent Records\n";
     cout << "**************\n";
 
+    // TEMP: Structure for displaying student data in a table
     cout << "\nFull Name    Gender    DOB           Email                    Contact         Children    Children     Emergency";
     cout << "\n                                                              Number          Names       Classroom    Contact";
     cout << "\n                                                                                          Number(s)";
@@ -90,6 +96,7 @@ void Admin::viewParentRecords()
     displayAdminScreen();
 }
 
+// Generate reports for students depending on their learning progress
 void Admin::generateReportsScreen()
 {
     int choice;
@@ -124,6 +131,19 @@ void Admin::generateReportsScreen()
     }
 }
 
+// Display reports of students who need help
+void Admin::generateProgressionReports()
+{
+
+}
+
+// Display reports of students who are progressing
+void Admin::generateHelpReports()
+{
+
+}
+
+// Intialise data for the admin account (this will run on start-up)
 void Admin::initialiseAccount()
 {
     // Write the intial login details for the admin to a file

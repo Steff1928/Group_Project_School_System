@@ -3,9 +3,11 @@
 #include "Student.h"
 #include "Login.h"
 
+// Intialise the Teacher class for teacher registration and classroom initialisation
 class Teacher
 {
 private:
+	// Define variables, exclusively used for teacher registration
 	std::string fullName;
 	char gender = 0;
 	std::string dob;
@@ -17,6 +19,7 @@ private:
 	std::string userName;
 	std::string password; 
 public:
+	// Declare functions to be used elsewhere when deemed necessary
 	void checkLineInFile(std::string& line, int lineNum);
 	void displayTeacherScreen();
 	void recordsScreen();
@@ -31,4 +34,3 @@ public:
 		std::string _userName, std::string _password);
 	Teacher();
 };
-

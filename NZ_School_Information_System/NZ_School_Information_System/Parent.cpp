@@ -6,34 +6,44 @@
 #include "Main.h"
 using namespace std;
 
+/// <summary>
+/// Get the data in the parent_registration.txt file, read it and display it to the console when necessary
+/// </summary>
+/// <param name="line"> - Holds the data for the current line in the file</param>
+/// <param name="lineNum"> - Tells the program which line to read out</param>
 void Parent::checkLineInFile(std::string& line, int lineNum)
 {
-	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt");
-	while (getline(readFile, line, '*'))
+	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Opens a file in read mode 
+	// Loops through the designated file storing each value in "line"
+	// (Use "*" as a delimeter so it is not read by the program
+	while (getline(readFile, line, '*')) 
 	{
-		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		// Remove any \n characters so they are not read
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end()); 
+		// Use this if statement to only read out the line of the current user logged in
 		if (line == login.savedUser)
 		{
-			for (int i = 0; i < lineNum; i++) // Fixed number used here to loop to a certain line we require in a file
+			for (int i = 0; i < lineNum; i++) // Number used here to loop to a certain line we require in a file
 			{
 				getline(readFile, line, ',');
 			}
-			readFile.close();
-			break;
+			readFile.close(); // Close the file once we're done with it to save memory
+			break; // Once we have our data, exit the loop so we do not read any more lines
 		}
 	}
 }
 
+// Display restricted options for users logged in as a parent
 void Parent::displayParentScreen()
 {
 	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt");
 	string line;
 
-	checkLineInFile(line, 2);
+	checkLineInFile(line, 2); // Run the function to get the value of "fullName" in the file to display it later
 
 	int choice;
 	system("CLS");
-	cout << "***********************************           Welcome: " << line << "\n";
+	cout << "***********************************           Welcome: " << line << "\n"; 
 	cout << "Yoobee Portal - Logged in as Parent           --------------------------\n";
 	cout << "***********************************\n\n";
 	cout << "1. View Child Record\n" 
@@ -44,15 +54,15 @@ void Parent::displayParentScreen()
 	switch (choice) 
 	{
 	case 1:
-		viewChildReport();
+		viewChildReport(); // TODO: Add data from file to the child report
 		displayParentScreen();
 		break;
 	case 2:
-		viewNotices();
+		viewNotices(); // TODO: Add notices
 		displayParentScreen();
 		break;
 	case 3:
-		if (!login.userLogout())
+		if (!login.userLogout()) // Get the value of userLogout and if false, don't logout and re-display the parent screen
 		{
 			displayParentScreen();
 		}
@@ -64,11 +74,12 @@ void Parent::displayParentScreen()
 	}
 }
 
-
+// Allow the parent user to view the data for each of there children
 void Parent::viewChildReport()
 {
-	string childName;
 	system("CLS");
+	string childName;
+
 	cout << "************\n";
 	cout << "Child Record\n";
 	cout << "************\n\n";
@@ -87,6 +98,7 @@ void Parent::viewChildReport()
 	system("pause");
 }
 
+// Allow the parent to view the current day's school notices
 void Parent::viewNotices()
 {
 	system("CLS");
@@ -100,16 +112,17 @@ void Parent::viewNotices()
 	system("pause");
 }
 
+// Function to manage parent registration
 void Parent::parentSignUp()
 {
 	Child child;
-	vector<Child> childData;
-	int childAmount = 0;
+	vector<Child> childData; // Take in a vector of type Child to store multiple children in one parent registration
+	int childAmount;
 	string userInput;
 	system("CLS");
-	ofstream writeFile;
-	writeFile.open("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app);
+	ofstream writeFile("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app);
 
+	// Initial personal details
 	cout << "*******************\n";
 	cout << "Parent Registration\n";
 	cout << "*******************\n";
@@ -128,17 +141,19 @@ void Parent::parentSignUp()
 	system("pause");
 	system("CLS");
 
+	// Child registration and info
 	cout << "********************************\n";
 	cout << "Parent Registration - Child Info\n";
 	cout << "********************************\n";
 	cout << "\nNumber of children attending Yoobee: ";
-	cin >> childAmount;
+	cin >> childAmount; // Prompt the user to input the number of children they have
 
+	// Loop up to till the number of children they have and prompt the user to enter information for each child
 	for (int i = 0; i < childAmount; i++)
 	{
-		cout << "Child " << i+1 << "\n";
+		cout << "\nChild " << i + 1 << "\n";
 		cout << "Child's full name: ";
-		getline(cin >> ws, child.childName);
+		getline(cin >> ws, child.childName); // Use getline to allow the user to enter a string with spaces (doesn't seperate strings)
 		cout << "Child's classroom number: ";
 		cin >> child.childClass;
 		cout << "Emergency Contact Caregiver's Full Name: ";
@@ -150,7 +165,7 @@ void Parent::parentSignUp()
 	}
 	system("pause");
 
-	while (true)
+	while (true) // Loop through this screen until the password and confirm password matches
 	{
 		system("CLS");
 		cout << "***********************************\n";
@@ -163,31 +178,37 @@ void Parent::parentSignUp()
 		string confirmPassword;
 		cout << "Confirm Password: ";
 		cin >> confirmPassword;
-		if (password == confirmPassword)
+		if (password == confirmPassword) // Only register the user if there password and confirm password matches
 		{
 			cout << "Successfully signed up as a parent!\n\n";
+			
+			// Replace "cout" with the filename in write mode to write data to the file.
+			// Here we write each of the data seperated by commas (and an asterisk between username and password)
+			// to use them as delimeters and seperate the data into individual lines
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum;
-			for (int i = 0; i < size(childData); i++)
+			// Loop through the child data and add everything from the vector into the file
+			for (int i = 0; i < size(childData); i++) 
 			{
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
 					"," << childData[i].emergencyContactNum;
 			}
-			writeFile << "," << "\n" << "*";
-			login.savedUser = userName;
+			writeFile << "," << "\n" << "*" << "\n";
+			login.savedUser = userName; // Save the username so it is remembered by the program while the user is logged in
 			writeFile.close();
 			system("pause");
-			displayParentScreen();
+			displayParentScreen(); // Go to the parent screen once signed in
 			break;
 		}
 		else
 		{
-			cout << "Passwords do not match, please re-enter account info\n\n";
+			cout << "Confirm Password is not the same as Password, please re-enter account info\n\n";
 			system("pause");
 		}
 	}
 	writeFile.close();
 }
 
+// Initialise all the values
 Parent::Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum, std::string _userName)
 {
 	fullName = _fullName;
@@ -203,7 +224,8 @@ Parent::Parent()
 
 }
 
-Parent::Child::Child(std::string _childName, int _childClass, std::string _emergencyContactName, std::string _emergencyContactNum)
+Parent::Child::Child(std::string _childName, int _childClass, std::string _emergencyContactName, 
+	std::string _emergencyContactNum)
 {
 	childName = _childName;
 	childClass = _childClass;
