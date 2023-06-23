@@ -19,7 +19,7 @@ void Student::saveData(string line)
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
 
-	cout << "\nMarks\n";
+	cout << "\nMarks (0 - 100)\n";
 	cout << "----------\n";
 	cout << "Maths: ";
 	cin >> math;
@@ -42,7 +42,7 @@ void Student::saveData(string line)
 
 	ifstream readCount("student_count.txt");
 	string count;
-	int idCount;
+	int idCount = 0;
 
 	while (getline(readCount, count))
 	{
@@ -65,5 +65,12 @@ void Student::saveData(string line)
 
 Student::Student()
 {
+	gender = 'm';
+	math = 0;
+	science = 0;
+	writing = 0;
+	reading = 0;
+	other = 0;
 	studentId = 1;
+
 }

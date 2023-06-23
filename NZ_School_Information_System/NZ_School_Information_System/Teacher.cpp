@@ -151,7 +151,7 @@ void Teacher::removeStudent()
 	while (getline(readFile, line, '*'))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		if (line == "cool")
+		if (line == login.savedUser)
 		{	
 			for (int i = 0; i < 7; i++)
 			{
@@ -184,7 +184,10 @@ void Teacher::removeStudent()
 	readFile.close();
 	writeFile.close();
 	remove(path.c_str());
-	if(rename("Classes/temp.txt", path.c_str())!=0);
+	if (rename("Classes/temp.txt", path.c_str()) != 0)
+	{
+		cout << "Record Removed"; // TEMP
+	}
 	system("pause");
 	return;
 }
