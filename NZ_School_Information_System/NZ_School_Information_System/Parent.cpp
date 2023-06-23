@@ -3,15 +3,38 @@
 #include <string>
 #include <vector>
 #include "Parent.h"
-#include "Login.h"
+#include "Main.h"
 using namespace std;
+
+void Parent::checkLineInFile(std::string& line, int lineNum)
+{
+	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt");
+	while (getline(readFile, line, '*'))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == login.savedUser)
+		{
+			for (int i = 0; i < lineNum; i++) // Fixed number used here to loop to a certain line we require in a file
+			{
+				getline(readFile, line, ',');
+			}
+			readFile.close();
+			break;
+		}
+	}
+}
 
 void Parent::displayParentScreen()
 {
+	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt");
+	string line;
+
+	checkLineInFile(line, 2);
+
 	int choice;
 	system("CLS");
-	cout << "***********************************           Welcome: [Parent Name]\n";
-	cout << "Yoobee Portal - Logged in as Parent           ----------------------\n";
+	cout << "***********************************           Welcome: " << line << "\n";
+	cout << "Yoobee Portal - Logged in as Parent           --------------------------\n";
 	cout << "***********************************\n\n";
 	cout << "1. View Child Record\n" 
 		 << "2. View School notices\n" 
@@ -149,7 +172,8 @@ void Parent::parentSignUp()
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
 					"," << childData[i].emergencyContactNum;
 			}
-			writeFile << endl << "*" << endl << ",";
+			writeFile << "," << "\n" << "*";
+			login.savedUser = userName;
 			writeFile.close();
 			system("pause");
 			displayParentScreen();
@@ -189,4 +213,5 @@ Parent::Child::Child(std::string _childName, int _childClass, std::string _emerg
 
 Parent::Child::Child()
 {
+
 }

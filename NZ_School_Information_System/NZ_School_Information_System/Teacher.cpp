@@ -4,25 +4,19 @@
 #include <filesystem>
 #include <algorithm>
 #include "Teacher.h"
-#include "Login.h"
 #include "Main.h"
 
 using namespace std;
 
-void Teacher::displayTeacherScreen()
+void Teacher::checkLineInFile(string& line, int lineNum)
 {
-	system("CLS");
-	int choice;
-
 	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
-	string line;
-
 	while (getline(readFile, line, '*'))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 		if (line == login.savedUser)
 		{
-			for (int i = 0; i < 2; i++) // Fixed number used here to loop to a certain line we need in a file
+			for (int i = 0; i < lineNum; i++) // Fixed number used here to loop to a certain line we require in a file
 			{
 				getline(readFile, line, ',');
 			}
@@ -30,6 +24,16 @@ void Teacher::displayTeacherScreen()
 			break;
 		}
 	}
+}
+
+void Teacher::displayTeacherScreen()
+{
+	system("CLS");
+	int choice;
+
+	string line;
+
+	checkLineInFile(line, 2);
 
 	cout << "************************************           Welcome: " << line << "\n";
 	cout << "Yoobee Portal - Logged in as Teacher           --------------------------\n";
@@ -112,23 +116,8 @@ void Teacher::addStudent()
 	cout << "Student Records - Add Student\n";
 	cout << "*****************************\n";
 
-	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
 	string line;
-
-	while (getline(readFile, line, '*'))
-	{
-		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		if (line == login.savedUser)
-		{
-			for (int i = 0; i < 7; i++)
-			{
-				getline(readFile, line, ',');
-			}
-			readFile.close();
-			break;
-		}
-	}
-
+	checkLineInFile(line, 7);
 	tempStudentData.saveData(line);
 
 	cout << "Student details have been added to your class (Room " << line << ")\n";
@@ -143,11 +132,10 @@ void Teacher::editRecord()
 void Teacher::removeStudent()
 {
 	system("CLS");
-	ifstream readFile;
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
 	ofstream writeFile;
 	string line, name;
 	string path;
-	readFile.open("Sign_Up_And_Login_Details/teacher_registration.txt");
 	while (getline(readFile, line, '*'))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());

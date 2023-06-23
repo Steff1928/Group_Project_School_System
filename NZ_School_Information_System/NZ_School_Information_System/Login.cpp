@@ -127,6 +127,7 @@ void Login::userLogin()
 					{
 						cout << "\nSuccessfully logged in!\n\n";
 						loginAttempts = 3;
+						savedUser = userName;
 						system("pause");
 						parentLogin.displayParentScreen();
 						readParent.close();

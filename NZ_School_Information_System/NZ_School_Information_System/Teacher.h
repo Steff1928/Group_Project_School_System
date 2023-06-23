@@ -17,6 +17,7 @@ private:
 	std::string userName;
 	std::string password; 
 public:
+	void checkLineInFile(std::string& line, int lineNum);
 	void displayTeacherScreen();
 	void recordsScreen();
 	void addStudent();

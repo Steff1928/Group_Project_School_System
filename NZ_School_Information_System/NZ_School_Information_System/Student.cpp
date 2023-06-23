@@ -65,12 +65,11 @@ void Student::saveData(string line)
 
 Student::Student()
 {
-	gender = 'm';
+	gender = 0;
 	math = 0;
 	science = 0;
 	writing = 0;
 	reading = 0;
 	other = 0;
 	studentId = 1;
-
 }

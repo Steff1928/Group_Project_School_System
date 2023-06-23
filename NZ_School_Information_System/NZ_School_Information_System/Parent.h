@@ -22,8 +22,8 @@ private:
 			std::string _emergencyContactNum);
 		Child();
 	};
-	Login login;
 public:
+	void checkLineInFile(std::string& line, int lineNum);
 	void displayParentScreen();
 	void viewChildReport();
 	void viewNotices();
