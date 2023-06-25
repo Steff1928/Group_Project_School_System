@@ -28,8 +28,8 @@ void eventDetails()
     cout << "Yoobee School Events\n";
     cout << "********************\n\n";
 
+    cout << "01/06/2023: National Open Day for Yoobee Campuses around New Zealand.\n";
     cout << "12/06/2023: Pride Month Event for week of 12/06 to 16/06.\n";
-    cout << "01/06/2023: Yoobee Celebrates Pride Month.\n";
     cout << "08/05/2023: Term 2 has started.\n\n";
     
     // Pause the console before continuing so the screen isn't cleared immediately before the user sees the ouput

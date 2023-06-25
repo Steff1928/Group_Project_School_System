@@ -207,7 +207,7 @@ void Teacher::teacherSignUp()
 {
 	system("CLS");
 	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
-	int classNum;
+	int classNum = 0;
 	
 	// Prompt the user to enter all the inital data for teacher registration
 	cout << "********************\n";

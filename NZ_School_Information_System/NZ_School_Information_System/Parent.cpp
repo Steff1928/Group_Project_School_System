@@ -106,9 +106,9 @@ void Parent::viewNotices()
 	cout << "School Notices\n";
 	cout << "**************\n\n";
 	cout << "Current Notices:\n\n";
-	cout << "[Notice of Information Details]\n";
-	cout << "[Notice of Information Details]\n";
-	cout << "[Notice of Information Details]\n\n";
+	cout << "Guest Speaker today in Life Drawing Room at 12 PM.\n";
+	cout << "Beautiful selection of Fruits up for grabs on the Help Yourself Shelf Today!\n";
+	cout << "2023 Design Contest Entries are now open!\n\n";
 	system("pause");
 }
 
