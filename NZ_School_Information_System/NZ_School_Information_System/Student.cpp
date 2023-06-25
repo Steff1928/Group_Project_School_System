@@ -24,8 +24,8 @@ void Student::saveData(string line)
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
 
-	cout << "\nMarks (0 - 100)\n";
-	cout << "----------\n";
+	cout << "\nMarks (0 - 100)";
+	cout << "\n---------------\n";
 	cout << "Maths: ";
 	cin >> math;
 	cout << "Science: ";
@@ -59,7 +59,7 @@ void Student::saveData(string line)
 
 	studentId = idCount;
 	writeClassroom << studentId << "," << fullName << "," << gender << "," << math << "," << science << "," << writing << ","
-		<< reading << "," << other << "," << learningProgress << "\n" << "*";
+		<< reading << "," << other << "," << learningProgress << "," << "\n" << "*";
 	
 	writeClassroom.close();
 

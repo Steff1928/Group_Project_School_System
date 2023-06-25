@@ -13,7 +13,7 @@ using namespace std;
 /// </summary>
 /// <param name="line"> - Holds the data for the current line in the file</param>
 /// <param name="lineNum"> - Tells the program which line to read out</param>
-void Teacher::checkLineInFile(string& line, int lineNum)
+void Teacher::checkLineInTeacherFile(string& line, int lineNum)
 {
 	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
 	while (getline(readFile, line, '*'))
@@ -39,7 +39,7 @@ void Teacher::displayTeacherScreen()
 
 	string line;
 
-	checkLineInFile(line, 2); // Get the value of line from the file to display it later
+	checkLineInTeacherFile(line, 2); // Get the value of line from the file to display it later
 
 	cout << "************************************           Welcome: " << line << "\n";
 	cout << "Yoobee Portal - Logged in as Teacher           --------------------------\n";
@@ -113,6 +113,22 @@ void Teacher::recordsScreen()
 	default:
 		cout << "Invalid option, please try again\n\n";
 		system("pause");
+		recordsScreen();
+	}
+}
+
+string Teacher::displayGender(char gender)
+{
+	switch (gender)
+	{
+	case 'm':
+		return "Male";
+	case 'f':
+		return "Female";
+	case 'o':
+		return "Other";
+	default:
+		return "N/A";
 	}
 }
 
@@ -125,7 +141,7 @@ void Teacher::addStudent()
 	cout << "*****************************\n";
 
 	string line;
-	checkLineInFile(line, 7);
+	checkLineInTeacherFile(line, 7);
 	tempStudentData.saveData(line);
 
 	cout << "Student details have been added to your class (Room " << line << ")\n";
@@ -135,6 +151,144 @@ void Teacher::addStudent()
 // Allow teachers to edit student records and modify data
 void Teacher::editRecord()
 {
+	system("CLS");
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
+	ofstream writeFile;
+	string line, id, path, studentName, gender, matMarks, sciMarks, readMarks, writeMarks, otherMarks, detail, newDetail;
+	while (getline(readFile, line, '*'))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == login.savedUser)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				getline(readFile, line, ',');
+			}
+			readFile.close();
+			break;
+		}
+	}
+
+	path = "Classes/room_" + line + ".txt";
+
+	cout << "*****************************\n";
+	cout << "Student Records - Edit Record\n";
+	cout << "*****************************\n";
+
+	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
+
+	cout << "\nEnter a Student ID to edit in your class: ";
+	getline(cin >> ws, id);
+	readFile.open(path);
+	while (getline(readFile, line, ','))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		line.erase(remove(line.begin(), line.end(), '*'), line.end());
+
+		if (line == id)
+		{
+			getline(readFile, studentName, ',');
+			getline(readFile, gender, ',');
+			getline(readFile, matMarks, ',');
+			getline(readFile, sciMarks, ',');
+			getline(readFile, readMarks, ',');
+			getline(readFile, writeMarks, ',');
+			getline(readFile, otherMarks, ',');
+
+			// Display Record Data for Editing
+			cout << "\nStudent ID: " << id;
+			cout << "\nStudent Name: " << studentName;
+			const char* fullGender = gender.c_str();
+			cout << "\nGender: " << displayGender(*fullGender);
+			cout << "\n\nMarks";
+			cout << "\n-----------------";
+			cout << "\nMaths: " << matMarks;
+			cout << "\nScience: " << sciMarks;
+			cout << "\nWriting: " << writeMarks;
+			cout << "\nReading: " << readMarks;
+			cout << "\nOther: " << otherMarks << "\n";
+			readFile.close();
+			break;
+		}
+	}
+	cout << "\nEnter a detail to modify: ";
+	cin >> detail;
+	cout << "Change To: ";
+	cin >> newDetail;
+
+	readFile.open(path);
+	writeFile.open(path, ios_base::app);
+	string studentInfo[9];
+
+	if (detail == "id")
+	{
+		detail = "Student ID";
+		studentInfo[0] = newDetail;
+	}
+	else if (detail == "name")
+	{
+		detail = "Student Full Name";
+		studentInfo[1] = newDetail;
+	}
+	else if (detail == "gender")
+	{
+		detail = "Gender";
+		newDetail = gender;
+	}
+	else if (detail == "maths")
+	{
+		detail = "Maths Mark: ";
+		newDetail = matMarks;
+	}
+	else if (detail == "science")
+	{
+		detail = "Science Mark: ";
+		newDetail = sciMarks;
+	}
+	else if (detail == "writing")
+	{
+		detail = "Writing Mark: ";
+		newDetail = writeMarks;
+	}
+	else if (detail == "reading")
+	{
+		detail = "Read Mark: ";
+		newDetail = readMarks;
+	}
+	else if (detail == "other")
+	{
+		detail = "Other Mark: ";
+		newDetail = otherMarks;
+	}
+
+	while (getline(readFile, line, ','))
+	{
+		if (line == id)
+		{
+			studentInfo[0] += line;
+			for (int i = 1; i < 9; i++)
+			{
+				getline(readFile, line, ',');
+				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+				line.erase(remove(line.begin(), line.end(), ','), line.end());
+				studentInfo[i] += line;
+			}
+		}
+	}
+
+	if (line.substr(0, line.size()) == line)
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		for (int i = 0; i < size(studentInfo); i++)
+		{
+			writeFile << studentInfo[i] << ",";
+		}
+		
+		cout << "\n";
+	}
+	
+	cout << "\n\n" << detail << " has now been changed to " << newDetail << ".";
+	system("pause");
 
 }
 

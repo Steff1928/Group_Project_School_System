@@ -20,9 +20,10 @@ private:
 	std::string password; 
 public:
 	// Declare functions to be used elsewhere when deemed necessary
-	void checkLineInFile(std::string& line, int lineNum);
+	void checkLineInTeacherFile(std::string& line, int lineNum);
 	void displayTeacherScreen();
 	void recordsScreen();
+	std::string displayGender(char gender);
 	void addStudent();
 	void editRecord();
 	void removeStudent();
