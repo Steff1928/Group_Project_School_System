@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "Parent.h"
 #include "Main.h"
 using namespace std;
@@ -74,27 +75,66 @@ void Parent::displayParentScreen()
 	}
 }
 
+void Parent::readParent(std::string& line, std::string& classNum, std::string& childName)
+{
+	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt");
+	while (getline(readParentFile, line, '*'))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == login.savedUser)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+				getline(readParentFile, line, ',');
+			}
+			getline(readParentFile, classNum, ',');
+			childName = line;
+			readParentFile.close();
+			break;
+		}
+	}
+}
+
 // Allow the parent user to view the data for each of there children
 void Parent::viewChildReport()
 {
 	system("CLS");
-	string childName;
+	string classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks;
 
 	cout << "************\n";
 	cout << "Child Record\n";
 	cout << "************\n\n";
-	cout << "Enter Child's Full name: ";
-	getline(cin >> ws, childName);
-	cout << "\nChild Name: "<<  "Temp Name" << "\n";
-	cout << "Gender: " << "Temp Gender" << "\n\n";
+	readParent(line, classNum, childName);
+	cout << "\nChild Name: " << childName << "\n";
+	ifstream readClassFile("Classes/room_" + classNum + ".txt");
+	while (getline(readClassFile, line, ','))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == line)
+		{
+			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+			getline(readClassFile, line, ',');
+			getline(readClassFile, gender, ',');
+			getline(readClassFile, mathMarks, ',');
+			getline(readClassFile, scienceMarks, ',');
+			getline(readClassFile, readingMarks, ',');
+			getline(readClassFile, writingMarks, ',');
+			getline(readClassFile, otherMarks, ',');
+			break;
+		}
+		readClassFile.close();
+	}
+	cout << "Gender: " << gender << "\n\n";
 
 	cout << "Marks\n";
 	cout << "------------------\n";
-	cout << "Maths: " << "  Temp Score" << "\n";
-	cout << "Science: " << "Temp Score" << "\n";
-	cout << "Reading: " << "Temp Score" << "\n";
-	cout << "Writing: " << "Temp Score" << "\n";
-	cout << "Other: " << "  Temp Score" << "\n\n";
+	cout << "Maths: " << "  " << mathMarks << "\n";
+	cout << "Science: " << scienceMarks << "\n";
+	cout << "Reading: " << readingMarks << "\n";
+	cout << "Writing: " << writingMarks << "\n";
+	cout << "Other: " << "  "<< otherMarks << "\n\n";
+	//readParentFile.close();
 	system("pause");
 }
 
