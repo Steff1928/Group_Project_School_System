@@ -88,6 +88,7 @@ void Parent::readParent(std::string& line, std::string& classNum, std::string& c
 				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 				getline(readParentFile, line, ',');
 			}
+			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 			getline(readParentFile, classNum, ',');
 			childName = line;
 			readParentFile.close();
@@ -104,17 +105,17 @@ void Parent::viewChildReport()
 
 	cout << "************\n";
 	cout << "Child Record\n";
-	cout << "************\n\n";
+	cout << "************\n";
 	readParent(line, classNum, childName);
 	cout << "\nChild Name: " << childName << "\n";
 	ifstream readClassFile("Classes/room_" + classNum + ".txt");
 	while (getline(readClassFile, line, ','))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		if (line == line)
+		line.erase(remove(line.begin(), line.end(), '*'), line.end());
+		if (line == childName)
 		{
 			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-			getline(readClassFile, line, ',');
 			getline(readClassFile, gender, ',');
 			getline(readClassFile, mathMarks, ',');
 			getline(readClassFile, scienceMarks, ',');
@@ -123,10 +124,9 @@ void Parent::viewChildReport()
 			getline(readClassFile, otherMarks, ',');
 			break;
 		}
-		readClassFile.close();
 	}
+	readClassFile.close();
 	cout << "Gender: " << gender << "\n\n";
-
 	cout << "Marks\n";
 	cout << "------------------\n";
 	cout << "Maths: " << "  " << mathMarks << "\n";

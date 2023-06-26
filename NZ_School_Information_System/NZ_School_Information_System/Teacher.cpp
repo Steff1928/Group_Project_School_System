@@ -281,7 +281,7 @@ void Teacher::editRecord()
 	ofstream outfile(path);
 	outfile << str;
 	
-	cout << "\n\n" << detail << " has now been changed to " << newDetail << ".";
+	cout << "\n\n" << detail << " has now been changed to " << newDetail << ".\n";
 	system("pause");
 
 }
