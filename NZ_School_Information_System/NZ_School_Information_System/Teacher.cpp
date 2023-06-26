@@ -348,7 +348,64 @@ void Teacher::updateRecord()
 // Allow the teacher to view all the records of students in their class
 void Teacher::viewRecords()
 {
+	system("CLS");
+	int studentCount = 0;
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
+	string line, id, path, studentName, gender, matMarks, sciMarks, readMarks, writeMarks, otherMarks, learningProgress;
 
+	while (getline(readFile, line, '*'))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == login.savedUser)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				getline(readFile, line, ',');
+			}
+			readFile.close();
+			break;
+		}
+	}
+
+	path = "Classes/room_" + line + ".txt";
+	readFile.open(path);
+
+	const char* fullGender = gender.c_str();
+
+	cout << "******************************\n";
+	cout << "Student Records - View Records\n";
+	cout << "******************************\n";
+
+	cout << "\nThere are a total of [Student Count] students in your class\n";
+	cout << "\nID    Full Name         Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
+	cout << "\n-------------------------------------------------------------------------------------------------";
+	while (readFile.is_open())
+	{
+		while (getline(readFile, line, ','))
+		{
+			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+			line.erase(remove(line.begin(), line.end(), '*'), line.end());
+
+			getline(readFile, studentName, ',');
+			getline(readFile, gender, ',');
+			getline(readFile, matMarks, ',');
+			getline(readFile, sciMarks, ',');
+			getline(readFile, readMarks, ',');
+			getline(readFile, writeMarks, ',');
+			getline(readFile, otherMarks, ',');
+			getline(readFile, learningProgress, ',');
+
+			break;
+		}
+		cout << "\n" << line << "    " << studentName << "    " << displayGender(*fullGender) << "    " << matMarks << "    " << sciMarks << "    " << readMarks << "    " << writeMarks << "    " << otherMarks << "    " << learningProgress;
+		cout << "\n-------------------------------------------------------------------------------------------------";
+		if (readFile.eof())
+		{
+			readFile.close();
+		}
+	}
+	cout << "\n\n";
+	system("pause");
 }
 
 // Function to manage teacher registration
