@@ -214,9 +214,9 @@ void Teacher::editRecord()
 		}
 	}
 	cout << "\nEnter a detail to modify: ";
-	cin >> detail;
+	getline(cin >> ws, detail);
 	cout << "Change To: ";
-	cin >> newDetail;
+	getline(cin >> ws, newDetail);
 
 	readFile.open(path);
 	writeFile.open(path, ios_base::app);
@@ -244,31 +244,31 @@ void Teacher::editRecord()
 	}
 	else if (detail == "maths")
 	{
-		detail = "Maths Mark: ";
+		detail = "Maths Mark";
 		str_search = matMarks;
 		str_replace = newDetail;
 	}
 	else if (detail == "science")
 	{
-		detail = "Science Mark: ";
+		detail = "Science Mark";
 		str_search = sciMarks;
 		str_replace = newDetail;
 	}
 	else if (detail == "writing")
 	{
-		detail = "Writing Mark: ";
+		detail = "Writing Mark";
 		str_search = writeMarks;
 		str_replace = newDetail;
 	}
 	else if (detail == "reading")
 	{
-		detail = "Read Mark: ";
+		detail = "Read Mark";
 		str_search = readMarks;
 		str_replace = newDetail;
 	}
 	else if (detail == "other")
 	{
-		detail = "Other Mark: ";
+		detail = "Other Mark";
 		str_search = otherMarks;
 		str_replace = newDetail;
 	}
