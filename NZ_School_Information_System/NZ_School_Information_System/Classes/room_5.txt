@@ -1,5 +1,6 @@
-*1,Stephen Prosser,f,100,75,73,74,75,Progressing,
+*1,Stephen Prosser,M,100,75,73,84,75,Progressing,
 *3,Tony Hawke,m,75,89,100,100,50,Progressing,
 *4,Michael Jackson,o,50,10,29,32,85,Needs Help,
 *5,Jeffery Dhalmer,o,29,45,69,38,45,Needs Help,
+*6,Mark Smith,m,100,94,67,83,49,Progressing,
 *

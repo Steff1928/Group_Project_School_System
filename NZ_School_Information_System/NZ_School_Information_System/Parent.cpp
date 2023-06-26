@@ -75,6 +75,22 @@ void Parent::displayParentScreen()
 	}
 }
 
+string Parent::displayGender(char gender)
+{
+	gender = tolower(gender);
+	switch (gender)
+	{
+	case 'm':
+		return "Male";
+	case 'f':
+		return "Female";
+	case 'o':
+		return "Other";
+	default:
+		return "N/A";
+	}
+}
+
 void Parent::readParent(std::string& line, std::string& classNum, std::string& childName)
 {
 	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt");
@@ -126,7 +142,8 @@ void Parent::viewChildReport()
 		}
 	}
 	readClassFile.close();
-	cout << "Gender: " << gender << "\n\n";
+	const char* fullGender = gender.c_str();
+	cout << "Gender: " << displayGender(*fullGender) << "\n\n";
 	cout << "Marks\n";
 	cout << "------------------\n";
 	cout << "Maths: " << "  " << mathMarks << "\n";
@@ -157,8 +174,9 @@ void Parent::parentSignUp()
 {
 	Child child;
 	vector<Child> childData; // Take in a vector of type Child to store multiple children in one parent registration
-	int childAmount;
 	string userInput;
+	int childAmount;
+
 	system("CLS");
 	ofstream writeFile("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app);
 
@@ -225,14 +243,14 @@ void Parent::parentSignUp()
 			// Replace "cout" with the filename in write mode to write data to the file.
 			// Here we write each of the data seperated by commas (and an asterisk between username and password)
 			// to use them as delimeters and seperate the data into individual lines
-			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum;
+			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << ",";
 			// Loop through the child data and add everything from the vector into the file
 			for (int i = 0; i < size(childData); i++) 
 			{
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
-					"," << childData[i].emergencyContactNum;
+					"," << childData[i].emergencyContactNum << ",";
 			}
-			writeFile << "," << "\n" << "*" << "\n";
+			writeFile << "\n" << "*" << "\n";
 			login.savedUser = userName; // Save the username so it is remembered by the program while the user is logged in
 			writeFile.close();
 			system("pause");

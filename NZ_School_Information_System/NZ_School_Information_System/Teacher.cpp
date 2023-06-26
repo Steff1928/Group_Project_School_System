@@ -120,6 +120,7 @@ void Teacher::recordsScreen()
 
 string Teacher::displayGender(char gender)
 {
+	gender = tolower(gender);
 	switch (gender)
 	{
 	case 'm':
