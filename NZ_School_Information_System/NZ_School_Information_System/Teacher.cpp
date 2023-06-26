@@ -209,7 +209,6 @@ void Teacher::editRecord()
 			cout << "\nWriting: " << writeMarks;
 			cout << "\nReading: " << readMarks;
 			cout << "\nOther: " << otherMarks << "\n";
-			readFile.close();
 			break;
 		}
 	}
