@@ -3,4 +3,5 @@
 *4,Michael Jackson,o,50,10,29,32,85,1:Needs Help,2:n/a,3:n/a,:n/a,
 *5,Jeffery Dhalmer,o,29,45,69,38,45,1:Needs Help,2:n/a,3:n/a,:n/a,
 *6,Mark Smith,m,100,94,67,83,49,1:Progressing,2:n/a,3:n/a,:n/a,
-*
+*17,Back to Normal,o,M:75,S:100,W:75,R:95,O:95,Needs Help,
+*,

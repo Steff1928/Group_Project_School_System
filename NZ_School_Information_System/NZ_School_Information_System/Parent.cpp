@@ -176,6 +176,7 @@ void Parent::parentSignUp()
 	getline(cin >> ws, fullName);
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
+	gender = tolower(gender);
 	cout << "DOB (dd/mm/yy): ";
 	cin >> dob;
 	cout << "Email: ";

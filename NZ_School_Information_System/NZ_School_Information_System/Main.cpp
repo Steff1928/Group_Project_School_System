@@ -17,7 +17,6 @@ Parent parent;
 
 std::string displayGender(char gender)
 {
-    gender = tolower(gender);
     switch (gender)
     {
     case 'm':

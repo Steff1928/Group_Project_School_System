@@ -23,6 +23,7 @@ void Student::saveData(string line)
 	getline(cin >> ws, fullName);
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
+	gender = tolower(gender);
 
 	cout << "\nMarks (0 - 100)";
 	cout << "\n---------------\n";
@@ -58,8 +59,8 @@ void Student::saveData(string line)
 	readCount.close();
 
 	studentId = idCount;
-	writeClassroom << studentId << "," << fullName << "," << gender << "," << math << "," << science << "," << writing << ","
-		<< reading << "," << other << "," << learningProgress << "," << "\n" << "*";
+	writeClassroom << studentId << "," << fullName << "," << gender << "," << "M:" << math << "," << "S:" << science << "," << "W:" << writing << ","
+		<< "R:" << reading << "," << "O:" << other << "," << learningProgress << "," << "\n" << "*";
 	
 	writeClassroom.close();
 

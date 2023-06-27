@@ -179,21 +179,30 @@ void Teacher::editRecord()
 			getline(readFile, gender, ',');
 			getline(readFile, matMarks, ',');
 			getline(readFile, sciMarks, ',');
-			getline(readFile, readMarks, ',');
 			getline(readFile, writeMarks, ',');
+			getline(readFile, readMarks, ',');
 			getline(readFile, otherMarks, ',');
 
 			// Display Record Data for Editing
-			cout << "\nStudent ID: " << id;
 			cout << "\nStudent Name: " << studentName;
 			const char* fullGender = gender.c_str();
 			cout << "\nGender: " << displayGender(*fullGender);
 			cout << "\n\nMarks";
 			cout << "\n-----------------";
+			matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
+			matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
 			cout << "\nMaths: " << matMarks;
+			sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
+			sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
 			cout << "\nScience: " << sciMarks;
+			writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
+			writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
 			cout << "\nWriting: " << writeMarks;
+			readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
+			readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
 			cout << "\nReading: " << readMarks;
+			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
+			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
 			cout << "\nOther: " << otherMarks << "\n";
 			break;
 		}
@@ -205,19 +214,14 @@ void Teacher::editRecord()
 	cout << "Change To: ";
 	getline(cin >> ws, newDetail);
 
-	readFile.open(path);
-	writeFile.open(path, ios_base::app);
-	ifstream infile(path);
+	ifstream infile;
+	infile.open(path);
 	string str_search;
 	string str_replace;
+	string str_temp;
 
-	if (detail == "id")
-	{
-		detail = "Student ID";
-		str_search = id;
-		str_replace = newDetail;
-	}
-	else if (detail == "name")
+	
+	if (detail == "name")
 	{
 		detail = "Student Full Name";
 		str_search = studentName;
@@ -232,49 +236,74 @@ void Teacher::editRecord()
 	else if (detail == "maths")
 	{
 		detail = "Maths Mark";
-		str_search = matMarks;
-		str_replace = newDetail;
+		str_search = "M:" + matMarks;
+		str_replace = "M:" + newDetail;
 	}
 	else if (detail == "science")
 	{
 		detail = "Science Mark";
-		str_search = sciMarks;
-		str_replace = newDetail;
+		str_search = "S:" + sciMarks;
+		str_replace = "S:" + newDetail;
 	}
 	else if (detail == "writing")
 	{
 		detail = "Writing Mark";
-		str_search = writeMarks;
-		str_replace = newDetail;
+		str_search = "W:" + writeMarks;
+		str_replace = "W:" + newDetail;
 	}
 	else if (detail == "reading")
 	{
 		detail = "Read Mark";
-		str_search = readMarks;
-		str_replace = newDetail;
+		str_search = "R:" + readMarks;
+		str_replace = "R:" + newDetail;
 	}
 	else if (detail == "other")
 	{
 		detail = "Other Mark";
-		str_search = otherMarks;
-		str_replace = newDetail;
+		str_search = "O:" + otherMarks;
+		str_replace = "O:" + newDetail;
 	}
-	ostringstream text;
-	text << infile.rdbuf();
-	string str = text.str();
-	size_t pos = str.find(str_search);
-	if (pos != string::npos)
+
+	ofstream outfile("Classes/temp.txt");
+
+	while (getline(infile, str_temp, ','))
 	{
-		str.replace(pos, string(str_search).length(), str_replace);
+		line = str_temp;
+		while (str_temp == "\n*" + id)
+		{
+			line += ",";
+			outfile << line;
+			getline(infile, line, ',');
+			if (line == str_search)
+			{
+				str_temp = str_replace;
+				break;
+			}
+		}
+		if (!outfile.eof())
+		{
+			str_temp += ",";
+		}
+		outfile << str_temp;
+		if (str_temp == "*" + id)
+		{
+			str_temp += "\n";
+			break;
+		}
 	}
-	infile.close();
-
-	ofstream outfile(path);
-	outfile << str;
-	
 	cout << "\n\n" << detail << " has now been changed to " << newDetail << ".\n";
-	system("pause");
 
+	infile.close();
+	outfile.close();
+
+	remove(path.c_str());
+	if (rename("Classes/temp.txt", path.c_str()) != 0)
+	{
+		cout << "Record Removed"; // TEMP
+	}
+
+	system("pause");
+	return;
 }
 
 // Allow teachers to remove a student and all of their data from their class
@@ -528,6 +557,7 @@ void Teacher::teacherSignUp()
 	getline(cin >> ws, fullName);
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
+	gender = tolower(gender);
 	cout << "DOB (dd/mm/yy): ";
 	cin >> dob;
 	cout << "Email: ";
