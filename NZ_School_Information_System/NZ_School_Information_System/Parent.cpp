@@ -97,17 +97,8 @@ void Parent::readParent(std::string& line, std::string& classNum, std::string& c
 	}
 }
 
-// Allow the parent user to view the data for each of there children
-void Parent::viewChildReport()
+void Parent::readChildInfo(std::string& classNum, std::string& line, std::string& childName, std::string& gender, std::string& mathMarks, std::string& scienceMarks, std::string& readingMarks, std::string& writingMarks, std::string& otherMarks)
 {
-	system("CLS");
-	string classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks;
-
-	cout << "************\n";
-	cout << "Child Record\n";
-	cout << "************\n";
-	readParent(line, classNum, childName);
-	cout << "\nChild Name: " << childName << "\n";
 	ifstream readClassFile("Classes/room_" + classNum + ".txt");
 	while (getline(readClassFile, line, ','))
 	{
@@ -134,10 +125,24 @@ void Parent::viewChildReport()
 	cout << "Science: " << scienceMarks << "\n";
 	cout << "Reading: " << readingMarks << "\n";
 	cout << "Writing: " << writingMarks << "\n";
-	cout << "Other: " << "  "<< otherMarks << "\n\n";
-	//readParentFile.close();
+	cout << "Other: " << "  " << otherMarks << "\n\n";
+}
+
+// Allow the parent user to view the data for each of there children
+void Parent::viewChildReport()
+{
+	system("CLS");
+	string classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks;
+	
+	cout << "************\n";
+	cout << "Child Record\n";
+	cout << "************\n";
+	readParent(line, classNum, childName);
+	cout << "\nChild Name: " << childName << "\n";
+	readChildInfo(classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks);
 	system("pause");
 }
+
 
 // Allow the parent to view the current day's school notices
 void Parent::viewNotices()
