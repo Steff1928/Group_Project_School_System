@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <algorithm>
 #include <sstream>
+#include <iomanip>
 #include "Teacher.h"
 #include "Main.h"
 
@@ -40,7 +41,7 @@ void Teacher::displayTeacherScreen()
 
 	string line;
 
-	checkLineInTeacherFile(line, 2); // Get the value of line from the file to display it later
+	checkLineInTeacherFile(line, 2); // Get the value of line from the file to display the name of the teacher in the home screen
 
 	cout << "************************************           Welcome: " << line << "\n";
 	cout << "Yoobee Portal - Logged in as Teacher           --------------------------\n";
@@ -115,22 +116,6 @@ void Teacher::recordsScreen()
 		cout << "Invalid option, please try again\n\n";
 		system("pause");
 		recordsScreen();
-	}
-}
-
-string Teacher::displayGender(char gender)
-{
-	gender = tolower(gender);
-	switch (gender)
-	{
-	case 'm':
-		return "Male";
-	case 'f':
-		return "Female";
-	case 'o':
-		return "Other";
-	default:
-		return "N/A";
 	}
 }
 
@@ -213,6 +198,8 @@ void Teacher::editRecord()
 			break;
 		}
 	}
+	readFile.close();
+
 	cout << "\nEnter a detail to modify: ";
 	getline(cin >> ws, detail);
 	cout << "Change To: ";
@@ -276,7 +263,10 @@ void Teacher::editRecord()
 	text << infile.rdbuf();
 	string str = text.str();
 	size_t pos = str.find(str_search);
-	str.replace(pos, string(str_search).length(), str_replace);
+	if (pos != string::npos)
+	{
+		str.replace(pos, string(str_search).length(), str_replace);
+	}
 	infile.close();
 
 	ofstream outfile(path);
@@ -369,23 +359,30 @@ void Teacher::viewRecords()
 
 	path = "Classes/room_" + line + ".txt";
 	readFile.open(path);
-
 	const char* fullGender = gender.c_str();
 
 	cout << "******************************\n";
 	cout << "Student Records - View Records\n";
 	cout << "******************************\n";
 
-	cout << "\nThere are a total of [Student Count] students in your class\n";
-	cout << "\nID    Full Name         Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
-	cout << "\n-------------------------------------------------------------------------------------------------";
+	while (getline(readFile, line))
+	{
+		studentCount++;
+	}
+	readFile.close();
+
+	cout << "\nThere are a total of " << studentCount - 1 << " students in your class\n";
+	cout << "\nID    Full Name                Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
+	cout << "\n-------------------------------------------------------------------------------------------------------------";
+	
+	readFile.open(path);
 	while (readFile.is_open())
 	{
 		while (getline(readFile, line, ','))
 		{
-			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 			line.erase(remove(line.begin(), line.end(), '*'), line.end());
-
+			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+			
 			getline(readFile, studentName, ',');
 			getline(readFile, gender, ',');
 			getline(readFile, matMarks, ',');
@@ -397,8 +394,13 @@ void Teacher::viewRecords()
 
 			break;
 		}
-		cout << "\n" << line << "    " << studentName << "    " << displayGender(*fullGender) << "    " << matMarks << "    " << sciMarks << "    " << readMarks << "    " << writeMarks << "    " << otherMarks << "    " << learningProgress;
-		cout << "\n-------------------------------------------------------------------------------------------------";
+		if (line != "")
+		{
+			cout << "\n" << left << setw(6) << line << setw(25) << studentName << setw(10) 
+				<< displayGender(*fullGender) << setw(9) << matMarks << setw(11) << sciMarks << setw(11) 
+				<< readMarks << setw(11) << writeMarks << setw(9) << otherMarks << learningProgress;
+			cout << "\n-------------------------------------------------------------------------------------------------------------";
+		}
 		if (readFile.eof())
 		{
 			readFile.close();

@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <fstream>
 #include "Admin.h"
-#include "Parent.h"
 #include "Teacher.h"
 #include "Main.h"
 
@@ -12,10 +11,25 @@ using namespace std;
 Admin adminUser;
 Parent parentUser;
 Teacher teacherUser;
-Login login; // Define the Login variable here to use the same instance in every source file
 
-// Initialise classrooms
-int classroom[5];
+Login login; // Define the Login variable here to use the same instance in every source file
+Parent parent;
+
+std::string displayGender(char gender)
+{
+    gender = tolower(gender);
+    switch (gender)
+    {
+    case 'm':
+        return "Male";
+    case 'f':
+        return "Female";
+    case 'o':
+        return "Other";
+    default:
+        return "N/A";
+    }
+}
 
 // Display the upcoming/current event details on a seperate screen
 void eventDetails()

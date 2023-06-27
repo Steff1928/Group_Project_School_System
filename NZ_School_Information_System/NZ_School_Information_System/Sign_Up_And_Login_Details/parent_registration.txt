@@ -15,3 +15,8 @@ smithy123*smithy321,John Smith,O,23/05/97,john@john.com,0213124124,
 Chris Rock,3,Michelle Smith,01231233232,
 Will Smith,3,Michelle Smith,021321312,
 *
+marky*moo,Mark Rosen,m,23/0589,markyboi@markymoo.com,91123124,
+Stephy McGraire,5,Michelle Obama,012341243,
+Marcus Mirellius,4,Michelle Obama,12345321,
+Michael Smithy,3,Michelle,324324234,
+*

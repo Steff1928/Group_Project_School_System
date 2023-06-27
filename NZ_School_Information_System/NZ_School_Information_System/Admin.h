@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include "Parent.h"
 #include "Login.h"
+#include "Parent.h"
 
 // Intialise the Admin class to be able to view all data from registered users
 class Admin
@@ -10,7 +10,6 @@ private:
 	// Define variables to be used exclusively for admin purposes
 	std::string userName;
 	std::string password;
-	Parent parent;
 	Login login;
 	int classroom;
 

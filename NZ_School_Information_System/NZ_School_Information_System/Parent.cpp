@@ -75,22 +75,6 @@ void Parent::displayParentScreen()
 	}
 }
 
-string Parent::displayGender(char gender)
-{
-	gender = tolower(gender);
-	switch (gender)
-	{
-	case 'm':
-		return "Male";
-	case 'f':
-		return "Female";
-	case 'o':
-		return "Other";
-	default:
-		return "N/A";
-	}
-}
-
 void Parent::readParent(std::string& line, std::string& classNum, std::string& childName)
 {
 	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt");
@@ -175,7 +159,6 @@ void Parent::parentSignUp()
 	Child child;
 	vector<Child> childData; // Take in a vector of type Child to store multiple children in one parent registration
 	string userInput;
-	int childAmount;
 
 	system("CLS");
 	ofstream writeFile("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app);
