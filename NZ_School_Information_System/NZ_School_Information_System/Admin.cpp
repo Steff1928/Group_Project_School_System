@@ -109,12 +109,10 @@ void Admin::viewParentRecords()
     ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt");
     string line, parentName, gender, dob, email, contactNum;
     string childName, childClassroomNum, emergencyContactName, emergencyContactNum;
-    int childAmount = 0;
     cout << "**************\n";
     cout << "Parent Records\n";
     cout << "**************\n";
 
-    // TEMP: Structure for displaying student data in a table
     cout << "\nFull Name    Gender    DOB           Email                    Contact         Children    Children     Emergency";
     cout << "\n                                                              Number          Names       Classroom    Contact";
     cout << "\n                                                                                          Number(s)";
@@ -122,21 +120,6 @@ void Admin::viewParentRecords()
 
     while (readFile.is_open())
     {
-        while (getline(readFile, line))
-        {
-            getline(readFile, line);
-
-            line.erase(remove(line.begin(), line.end(), '*'), line.end());
-            line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-
-            childAmount++;
-
-            if (line == "")
-            {
-                break;
-            }
-        }
-
         while (getline(readFile, line, ','))
         {
             line.erase(remove(line.begin(), line.end(), '*'), line.end());
@@ -147,12 +130,34 @@ void Admin::viewParentRecords()
             getline(readFile, dob, ',');
             getline(readFile, email, ',');
             getline(readFile, contactNum, ',');
-            for (int i = 0; i < childAmount; i++)
+
+            break;
+        }
+
+        if (line != "")
+        {
+            cout << "\n" << parentName << " " << gender << " " << dob << " " << email << " " << contactNum
+                << " ";
+            
+            while (line != "")
             {
                 getline(readFile, childName, ',');
+                childName.erase(remove(childName.begin(), childName.end(), '\n'), childName.end());
                 getline(readFile, childClassroomNum, ',');
-                getline(readFile, contactNum, ',');
+                getline(readFile, emergencyContactName, ',');
+                getline(readFile, emergencyContactNum, ',');
+
+                if (line != "*")
+                {
+                    cout << childName << " " << childClassroomNum << " " << emergencyContactName << " " << emergencyContactNum << "\n";
+                }
             }
+
+            cout << "\n-----------------------------------------------------------------------------------------------------------------";
+        }
+        if (readFile.eof())
+        {
+            readFile.close();
         }
     }
     
@@ -166,8 +171,9 @@ void Admin::viewParentRecords()
     cout << "\n                                                                              Max         3            Jonathan";
     cout << "\n                                                                              Douglas                  Brown";
     cout << "\n                                                                                                       0278145936\n\n";*/
+    cout << "\n\n";
     system("pause");
-    displayAdminScreen();
+    displayAdminScreen(); // Go back to the admin screen once finished
 }
 
 // Generate reports for students depending on their learning progress
