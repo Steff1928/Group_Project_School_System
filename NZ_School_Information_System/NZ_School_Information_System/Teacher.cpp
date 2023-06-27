@@ -342,7 +342,110 @@ void Teacher::removeStudent()
 // Allow teachers to add new/update a students learning progress for each term
 void Teacher::updateRecord()
 {
+	system("CLS");
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
+	ofstream writeFile;
+	string line, id, path, termChoice, learningProgress, termOne, termTwo, termThree, termFour;
+	while (getline(readFile, line, '*'))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		if (line == login.savedUser)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				getline(readFile, line, ',');
+			}
+			readFile.close();
+			break;
+		}
+	}
 
+	path = "Classes/room_" + line + ".txt";
+
+	cout << "*******************************\n";
+	cout << "Student Records - Update Record\n";
+	cout << "*******************************\n\n";
+	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
+
+	cout << "\nEnter a Student ID to update their learning progression: ";
+	getline(cin >> ws, id);
+	readFile.open(path);
+	while (getline(readFile, line, ','))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		line.erase(remove(line.begin(), line.end(), '*'), line.end());
+		if (line == id)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				getline(readFile, line, ',');
+			}
+			getline(readFile, termOne, ',');
+			termOne.erase(remove(termOne.begin(), termOne.end(), ':'), termOne.end());
+			termOne.erase(remove(termOne.begin(), termOne.end(), '1'), termOne.end());
+			cout << "Term 1: " << termOne << "\n";
+			getline(readFile, termTwo, ',');
+			termTwo.erase(remove(termTwo.begin(), termTwo.end(), ':'), termTwo.end());
+			termTwo.erase(remove(termTwo.begin(), termTwo.end(), '2'), termTwo.end());
+			cout << "Term 2: " << termTwo << "\n";
+			getline(readFile, termThree, ',');
+			termThree.erase(remove(termThree.begin(), termThree.end(), ':'), termThree.end());
+			termThree.erase(remove(termThree.begin(), termThree.end(), '3'), termThree.end());
+			cout << "Term 3: " << termThree << "\n";
+			getline(readFile, termFour, ',');
+			termFour.erase(remove(termFour.begin(), termFour.end(), ':'), termFour.end());
+			termFour.erase(remove(termFour.begin(), termFour.end(), '4'), termFour.end());
+			cout << "Term 4: " << termFour << "\n";
+		}
+		else
+		{
+			cout << "Sorry, this student does not exist.\n";
+			break;
+		}
+		readFile.close();
+	}
+	cout << "Choose a Term Number: ";
+	cin >> termChoice;
+	cout << "Learning Progress (Achieved, Progressing, Needs Help): ";
+	getline(cin >> ws, learningProgress);
+	ifstream infile(path);
+	string str_search;
+	string str_replace;
+	if (termChoice == "1")
+	{
+		str_search = "1:"+termOne;
+		str_replace = learningProgress;
+		termChoice = "Term 1";
+	}
+	else if (termChoice == "2")
+	{
+		str_search = "2:" + termTwo;
+		str_replace = learningProgress;
+		termChoice = "Term 2";
+	}
+	else if (termChoice == "3")
+	{
+		str_search = "3:" + termThree;
+		str_replace = learningProgress;
+		termChoice = "Term 3";
+	}
+	else if (termChoice == "4")
+	{
+		str_search = "4:" + termFour;
+		str_replace = learningProgress;
+		termChoice = "Term 4";
+	}
+	ostringstream text;
+	text << infile.rdbuf();
+	string str = text.str();
+	size_t pos = str.find(str_search);
+	str.replace(pos, string(str_search).length(), str_replace);
+	infile.close();
+
+	ofstream outfile(path);
+	outfile << str;
+
+	system("pause");
 }
 
 // Allow the teacher to view all the records of students in their class

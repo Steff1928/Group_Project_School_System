@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <fstream>
 #include <vector>
 
 // Intialise the Parent class to store all the data for parent registration and details for their children
@@ -35,6 +36,7 @@ public:
 	std::string displayGender(char gender);
 	void readParent(std::string& line, std::string& classNum, std::string& childName);
 	void viewChildReport();
+	void readChildInfo(std::string& classNum, std::string& line, std::string& childName, std::string& gender, std::string& mathMarks, std::string& scienceMarks, std::string& readingMarks, std::string& writingMarks, std::string& otherMarks);
 	void viewNotices();
 	void parentSignUp();
 	Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum, std::string _userName);
