@@ -50,6 +50,7 @@ void Admin::viewClassRecords()
     system("CLS");
     ifstream readFile;
     string line, id, path, studentName, gender, matMarks, sciMarks, readMarks, writeMarks, otherMarks, learningProgress;
+    int totalMarks = 0;
 
     cout << "*************\n";
     cout << "Class Records\n";
@@ -77,20 +78,34 @@ void Admin::viewClassRecords()
             getline(readFile, gender, ',');
             getline(readFile, matMarks, ',');
             getline(readFile, sciMarks, ',');
-            getline(readFile, readMarks, ',');
             getline(readFile, writeMarks, ',');
+            getline(readFile, readMarks, ',');
             getline(readFile, otherMarks, ',');
-            getline(readFile, learningProgress, ',');
 
-            learningProgress.erase(remove(learningProgress.begin(), learningProgress.end(), ','), learningProgress.end());
+            matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
+            matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
+            sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
+            sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
+            writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
+            writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
+            readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
+            readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
+            otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
+            otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
+
             break;
         }
         if (line != "")
         {
+            totalMarks = stoi(matMarks) + stoi(sciMarks) + stoi(readMarks) + stoi(writeMarks) + stoi(otherMarks);
             cout << "\n" << left << setw(6) << line << setw(25) << studentName << setw(10)
                 << displayGender(*fullGender) << setw(9) << matMarks << setw(11) << sciMarks << setw(11)
-                << readMarks << setw(11) << writeMarks << setw(9) << otherMarks << learningProgress;
+                << readMarks << setw(11) << writeMarks << setw(9) << otherMarks << displayOverallProgress(totalMarks);
             cout << "\n-------------------------------------------------------------------------------------------------------------";
+            for (int i = 0; i < 4; i++)
+            {
+                getline(readFile, line, ',');
+            }
         }
         if (readFile.eof())
         {
@@ -226,6 +241,11 @@ void Admin::generateProgressionReports()
     cout << "\nClassroom    Full    Maths    Science    Writing    Reading    Other    Teacher    Parent’s Contact";
     cout << "\nNumber       Name                                                       Name       Number";
     cout << "\n---------------------------------------------------------------------------------------------------";
+
+    while (readFile.is_open())
+    {
+
+    }
 }
 // Display reports of students who are progressing
 void Admin::generateHelpReports()

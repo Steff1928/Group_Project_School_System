@@ -6,6 +6,8 @@
 extern Login login; 
 extern Parent parent;
 std::string displayGender(char gender); 
+std::string displayOverallProgress(int totalMarks);
+std::string displayMarkingProgress(int marks);
 // Declare the displayRegistrationScreen function for better accessibility in the main file
 // (We don't have to keep moving functions around)
 void displayRegistrationScreen(); 

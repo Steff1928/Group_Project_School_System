@@ -60,7 +60,7 @@ void Student::saveData(string line)
 
 	studentId = idCount;
 	writeClassroom << studentId << "," << fullName << "," << gender << "," << "M:" << math << "," << "S:" << science << "," << "W:" << writing << ","
-		<< "R:" << reading << "," << "O:" << other << "," << "1:" << learningProgress << "," << "2:n/a" << "3:n/a" << "4:n/a" << "\n" << "*";
+		<< "R:" << reading << "," << "O:" << other << "," << "1:" << learningProgress << ",2:n/a" << ",3:n/a" << ",4:n/a" << "\n" << "*";
 	
 	writeClassroom.close();
 

@@ -30,6 +30,27 @@ std::string displayGender(char gender)
     }
 }
 
+std::string displayOverallProgress(int totalMarks)
+{
+    if (totalMarks <= 250)
+    {
+        return "Needs Help";
+    }
+    else if (totalMarks > 251 && totalMarks < 375)
+    {
+        return "Progressing";
+    }
+    else if (totalMarks >= 375)
+    {
+        return "Achieved";
+    }
+}
+
+std::string displayMarkingProgress(int marks)
+{
+    return std::string();
+}
+
 // Display the upcoming/current event details on a seperate screen
 void eventDetails()
 {
