@@ -75,7 +75,7 @@ void Parent::displayParentScreen()
 	}
 }
 
-void readParent(ifstream& readParentFile, std::string& line, std::string& classNum, std::string& childName)
+void readParent(ifstream& readParentFile, std::string& line, std::string& classNum, std::string& childName, std::vector<Parent::Child> &childData, Parent::Child child)
 {
 	while (getline(readParentFile, line, '*'))
 	{
@@ -83,12 +83,23 @@ void readParent(ifstream& readParentFile, std::string& line, std::string& classN
 		if (line == login.savedUser)
 		{
 			getline(readParentFile, line);
-			getline(readParentFile, line, ',');
-			
-			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-			getline(readParentFile, classNum, ',');
-			childName = line;
-			break;
+			while (line != "*")
+			{
+				getline(readParentFile, line, ',');
+				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+				getline(readParentFile, classNum, ',');
+				childName = line;
+				if (childName == "*")
+				{
+					break;
+				}
+				child.childName = childName;
+				child.childClass = stoi(classNum);
+
+				childData.push_back(child);
+				getline(readParentFile, line);		
+			}
+		break;
 		}
 	}
 }
@@ -101,7 +112,6 @@ void Parent::readChildInfo(std::string& classNum, std::string& line, std::string
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 		line.erase(remove(line.begin(), line.end(), '*'), line.end());
-		getline(readClassFile, line, ',');
 		if (line == childName)
 		{
 			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
@@ -124,23 +134,26 @@ void Parent::readChildInfo(std::string& classNum, std::string& line, std::string
 		}
 	}
 	readClassFile.close();
-
+	
 }
 
 // Allow the parent user to view the data for each of there children
 void Parent::viewChildReport()
 {
+	Child child;
 	system("CLS");
 	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt");
 	string classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks;
-	
+	vector<Child> childData;
 	cout << "************\n";
 	cout << "Child Record\n";
 	cout << "************\n";
-	while (line != "\n*")
+	readParent(readParentFile, line, classNum, childName, childData, child);
+	for (int i = 0; i < size(childData); i++)
 	{
-		readParent(readParentFile, line, classNum, childName);
-		cout << "\nChild Name: " << childName << "\n";
+		cout << "\nChild Name: " << childData[i].childName << "\n";
+		classNum = to_string(childData[i].childClass);
+		childName = childData[i].childName;
 		readChildInfo(classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks);
 	}
 	readParentFile.close();

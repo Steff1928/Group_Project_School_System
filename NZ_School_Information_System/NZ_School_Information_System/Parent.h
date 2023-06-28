@@ -16,6 +16,7 @@ private:
 	std::string contactNum;
 	std::string userName;
 	std::string password;
+public:
 	// Initialise the child data within a nested structure, making it easier for us to count and store the data
 	// since parents can have multiple children
 	struct Child 
@@ -30,7 +31,7 @@ private:
 		Child();
 	};
 public:
-	int childAmount;
+	int childAmount = 0;
 	// Declare functions to be used in any source file 
 	void checkLineInFile(std::string& line, int lineNum);
 	void displayParentScreen();
