@@ -75,23 +75,19 @@ void Parent::displayParentScreen()
 	}
 }
 
-void Parent::readParent(std::string& line, std::string& classNum, std::string& childName)
+void readParent(ifstream& readParentFile, std::string& line, std::string& classNum, std::string& childName)
 {
-	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt");
 	while (getline(readParentFile, line, '*'))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 		if (line == login.savedUser)
 		{
-			for (int i = 0; i < 7; i++)
-			{
-				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-				getline(readParentFile, line, ',');
-			}
+			getline(readParentFile, line);
+			getline(readParentFile, line, ',');
+			
 			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 			getline(readParentFile, classNum, ',');
 			childName = line;
-			readParentFile.close();
 			break;
 		}
 	}
@@ -100,10 +96,12 @@ void Parent::readParent(std::string& line, std::string& classNum, std::string& c
 void Parent::readChildInfo(std::string& classNum, std::string& line, std::string& childName, std::string& gender, std::string& mathMarks, std::string& scienceMarks, std::string& readingMarks, std::string& writingMarks, std::string& otherMarks)
 {
 	ifstream readClassFile("Classes/room_" + classNum + ".txt");
+	const char* fullGender = gender.c_str();
 	while (getline(readClassFile, line, ','))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 		line.erase(remove(line.begin(), line.end(), '*'), line.end());
+		getline(readClassFile, line, ',');
 		if (line == childName)
 		{
 			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
@@ -113,33 +111,39 @@ void Parent::readChildInfo(std::string& classNum, std::string& line, std::string
 			getline(readClassFile, readingMarks, ',');
 			getline(readClassFile, writingMarks, ',');
 			getline(readClassFile, otherMarks, ',');
+
+			cout << "Gender: " << displayGender(*fullGender) << "\n\n";
+			cout << "Marks\n";
+			cout << "------------------\n";
+			cout << "Maths: " << "  " << mathMarks << "\n";
+			cout << "Science: " << scienceMarks << "\n";
+			cout << "Reading: " << readingMarks << "\n";
+			cout << "Writing: " << writingMarks << "\n";
+			cout << "Other: " << "  " << otherMarks << "\n\n";
 			break;
 		}
 	}
 	readClassFile.close();
-	const char* fullGender = gender.c_str();
-	cout << "Gender: " << displayGender(*fullGender) << "\n\n";
-	cout << "Marks\n";
-	cout << "------------------\n";
-	cout << "Maths: " << "  " << mathMarks << "\n";
-	cout << "Science: " << scienceMarks << "\n";
-	cout << "Reading: " << readingMarks << "\n";
-	cout << "Writing: " << writingMarks << "\n";
-	cout << "Other: " << "  " << otherMarks << "\n\n";
+
 }
 
 // Allow the parent user to view the data for each of there children
 void Parent::viewChildReport()
 {
 	system("CLS");
+	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt");
 	string classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks;
 	
 	cout << "************\n";
 	cout << "Child Record\n";
 	cout << "************\n";
-	readParent(line, classNum, childName);
-	cout << "\nChild Name: " << childName << "\n";
-	readChildInfo(classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks);
+	while (line != "\n*")
+	{
+		readParent(readParentFile, line, classNum, childName);
+		cout << "\nChild Name: " << childName << "\n";
+		readChildInfo(classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks);
+	}
+	readParentFile.close();
 	system("pause");
 }
 
@@ -234,12 +238,12 @@ void Parent::parentSignUp()
 			// to use them as delimeters and seperate the data into individual lines
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << ",";
 			// Loop through the child data and add everything from the vector into the file
-			for (int i = 0; i < size(childData); i++) 
+			for (unsigned int i = 0; i < size(childData); i++) 
 			{
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
 					"," << childData[i].emergencyContactNum << ",";
 			}
-			writeFile << "\n" << "*" << "\n";
+			writeFile << "\n" << "*," << "\n";
 			login.savedUser = userName; // Save the username so it is remembered by the program while the user is logged in
 			writeFile.close();
 			system("pause");

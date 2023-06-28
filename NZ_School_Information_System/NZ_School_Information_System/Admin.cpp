@@ -143,11 +143,15 @@ void Admin::viewParentRecords()
             {
                 getline(readFile, childName, ',');
                 childName.erase(remove(childName.begin(), childName.end(), '\n'), childName.end());
+                if (childName == "*")
+                {
+                    break;
+                }
                 getline(readFile, childClassroomNum, ',');
                 getline(readFile, emergencyContactName, ',');
                 getline(readFile, emergencyContactNum, ',');
 
-                if (line != "*")
+                if (childName != "*")
                 {
                     cout << childName << " " << childClassroomNum << " " << emergencyContactName << " " << emergencyContactNum << "\n";
                 }

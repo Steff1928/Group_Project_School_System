@@ -1,4 +1,4 @@
-*1,Stephen Prosser,M,100,75,73,84,75,1:Progressing,Achieved,3:n/a,:n/a,
+*1,Stephen Prosser,m,100,75,73,84,75,1:Progressing,Achieved,3:n/a,:n/a,
 *3,Tony Hawke,m,75,89,100,100,50,1:Progressing,2:n/a,3:n/a,:n/a,
 *4,Michael Jackson,o,50,10,29,32,85,1:Needs Help,2:n/a,3:n/a,:n/a,
 *5,Jeffery Dhalmer,o,29,45,69,38,45,1:Needs Help,2:n/a,3:n/a,:n/a,
