@@ -48,7 +48,18 @@ std::string displayOverallProgress(int totalMarks)
 
 std::string displayMarkingProgress(int marks)
 {
-    return std::string();
+    if (marks <= 50)
+    {
+        return "Needs Help";
+    }
+    else if (marks > 51 && marks < 75)
+    {
+        return "Progressing";
+    }
+    else if (marks >= 75)
+    {
+        return "Achieved";
+    }
 }
 
 // Display the upcoming/current event details on a seperate screen

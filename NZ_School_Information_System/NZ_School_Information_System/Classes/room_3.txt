@@ -1,4 +1,4 @@
 *7,Chris Rock,m,100,87,69,420,30,1:Achieved,2:n/a,3:n/a,4:n/a,
 *9,Will Smith,m,100,37,38,65,100,1:Progressing,2:n/a,3:n/a,4:n/a,
-*10,Johnny Cash,o,35,87,69,46,27,1:Needs Help,2:n/a,3:n/a,4:Achieved,
+*23,Michael Smithy,m,M:100,S:100,W:50,R:24,O:55,1:Progressing,2:n/a,3:n/a,4:n/a
 *
