@@ -69,32 +69,30 @@ void Admin::viewClassRecords()
 
     while (readFile.is_open())
     {
-        while (getline(readFile, line, ','))
-        {
-            line.erase(remove(line.begin(), line.end(), '*'), line.end());
-            line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+        getline(readFile, line, ',');
+        
+        line.erase(remove(line.begin(), line.end(), '*'), line.end());
+        line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 
-            getline(readFile, studentName, ',');
-            getline(readFile, gender, ',');
-            getline(readFile, matMarks, ',');
-            getline(readFile, sciMarks, ',');
-            getline(readFile, writeMarks, ',');
-            getline(readFile, readMarks, ',');
-            getline(readFile, otherMarks, ',');
+        getline(readFile, studentName, ',');
+        getline(readFile, gender, ',');
+        getline(readFile, matMarks, ',');
+        getline(readFile, sciMarks, ',');
+        getline(readFile, writeMarks, ',');
+        getline(readFile, readMarks, ',');
+        getline(readFile, otherMarks, ',');
 
-            matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
-            matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
-            sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
-            sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
-            writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
-            writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
-            readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
-            readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
-            otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
-            otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
+        matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
+        matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
+        sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
+        sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
+        writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
+        writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
+        readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
+        readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
+        otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
+        otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
 
-            break;
-        }
         if (line != "")
         {
             totalMarks = stoi(matMarks) + stoi(sciMarks) + stoi(readMarks) + stoi(writeMarks) + stoi(otherMarks);
@@ -135,19 +133,16 @@ void Admin::viewParentRecords()
 
     while (readFile.is_open())
     {
-        while (getline(readFile, line, ','))
-        {
-            line.erase(remove(line.begin(), line.end(), '*'), line.end());
-            line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+        getline(readFile, line, ',');
+        
+        line.erase(remove(line.begin(), line.end(), '*'), line.end());
+        line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 
-            getline(readFile, parentName, ',');
-            getline(readFile, gender, ',');
-            getline(readFile, dob, ',');
-            getline(readFile, email, ',');
-            getline(readFile, contactNum, ',');
-
-            break;
-        }
+        getline(readFile, parentName, ',');
+        getline(readFile, gender, ',');
+        getline(readFile, dob, ',');
+        getline(readFile, email, ',');
+        getline(readFile, contactNum, ',');
 
         if (line != "")
         {
@@ -170,6 +165,7 @@ void Admin::viewParentRecords()
                 {
                     cout << childName << " " << childClassroomNum << " " << emergencyContactName << " " << emergencyContactNum << "\n";
                 }
+                getline(readFile, line);
             }
 
             cout << "\n-----------------------------------------------------------------------------------------------------------------";
@@ -234,6 +230,8 @@ void Admin::generateReportsScreen()
 void Admin::generateProgressionReports()
 {
     ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
+    string line, path, teacherName, classroomNum;
+    string studentName, matProgress, sciProgress, writeProgress, readProgress, otherProgress;
     cout << "*****************************\n";
     cout << "Student Reports - Progressing\n";
     cout << "*****************************\n";
@@ -244,7 +242,37 @@ void Admin::generateProgressionReports()
 
     while (readFile.is_open())
     {
+        getline(readFile, line, ',');
+        getline(readFile, teacherName, ',');
 
+        for (int i = 0; i < 5; i++)
+        {
+            getline(readFile, classroomNum, ',');
+        }
+        
+        path = "Classes/room_" + classroomNum + ".txt";
+
+        readFile.close();
+        readFile.open(path);
+
+        getline(readFile, line, ',');
+        getline(readFile, studentName, ',');
+        getline(readFile, matProgress, ',');
+        getline(readFile, sciProgress, ',');
+        getline(readFile, writeProgress, ',');
+        getline(readFile, readProgress, ',');
+        getline(readFile, otherProgress, ',');
+
+        if (line != "")
+        {
+
+        }
+
+        
+
+
+
+        
     }
 }
 // Display reports of students who are progressing

@@ -651,9 +651,6 @@ void Teacher::teacherSignUp()
 				<< "," << teachingYear << "," << "\n" << "*";
 			login.savedUser = userName;
 			writeFile.close();
-			writeFile.open("Classes/room_numbers.txt");
-			writeFile << classroomNum << ",";
-			writeFile.close();
 			ofstream writeClassroom("Classes/room_" + to_string(classroomNum) + ".txt");
 
 			system("pause");
