@@ -1,3 +1,3 @@
 *19,Daniel Prosser,m,M:10,S:2,W:15,R:4,O:5,1:Needs Help,2:n/a,3:n/a,4:n/a,
-*22,Marcus Mirellius,m,M:59,S:32,W:11,R:2,O:13,1:Needs Help,2:n/a,3:n/a,4:n/a
+*22,Marcus Mirellius,m,M:59,S:32,W:11,R:2,O:13,1:Needs Help,2:n/a,3:n/a,4:n/a,
 *

@@ -94,7 +94,7 @@ void Teacher::recordsScreen()
 		recordsScreen();
 		break;
 	case 2:
-		editRecord(); // TODO: Make the editRecord function prompts and functionality
+		editRecord();
 		recordsScreen();
 		break;
 	case 3:
@@ -102,11 +102,11 @@ void Teacher::recordsScreen()
 		recordsScreen();
 		break;
 	case 4:
-		updateRecord(); // TODO: Make the updateRecord function prompts and functionality
+		updateRecord();
 		recordsScreen();
 		break;
 	case 5:
-		viewRecords(); // TODO: Make the viewRecord function prompts and functionality
+		viewRecords();
 		recordsScreen();
 		break;
 	case 6:
@@ -163,7 +163,7 @@ void Teacher::editRecord()
 	cout << "Student Records - Edit Record\n";
 	cout << "*****************************\n";
 
-	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
+	cout << "Class Number: " << line << "\n"; // Temp output to track classroom number.
 
 	cout << "\nEnter a Student ID to edit in your class: ";
 	getline(cin >> ws, id);
@@ -540,7 +540,8 @@ void Teacher::viewRecords()
 
 	if (line != "")
 	{
-		cout << "\nThere are a total of " << studentCount - 1 << " students in your class\n";
+		checkLineInTeacherFile(line, 7);
+		cout << "\nThere are a total of " << studentCount - 1 << " students in your class (Room " << line << ")\n";
 		cout << "\nID    Full Name                Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
 		cout << "\n-------------------------------------------------------------------------------------------------------------";
 

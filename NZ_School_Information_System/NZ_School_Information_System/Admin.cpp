@@ -23,10 +23,10 @@ void Admin::displayAdminScreen()
     switch (choice)
     {
     case 1:
-        viewClassRecords(); // TODO: Complete table for display the class records
+        viewClassRecords();
         break;
     case 2:
-        viewParentRecords(); // TODO: Complete table for display the parent records
+        viewParentRecords();
         break;
     case 3:
         generateReportsScreen(); 
@@ -218,7 +218,7 @@ void Admin::generateReportsScreen()
         break;
     case 2:
         // TODO: Students needing help report (perhaps extract in a function)
-        generateReportsScreen();
+        generateHelpReports();
         break;
     case 3:
         displayAdminScreen(); // Take the user back to the initial admin screen 
@@ -239,6 +239,7 @@ void Admin::generateProgressionReports()
     ifstream teacherFile("Sign_Up_And_Login_Details/teacher_registration.txt");
     string teacherLine, line, path, teacherName, classroomNum, parentContactNum;
     string studentName, matProgress, sciProgress, writeProgress, readProgress, otherProgress;
+    int totalMarks = 0;
 
     cout << "*****************************\n";
     cout << "Student Reports - Progressing\n";
@@ -280,42 +281,46 @@ void Admin::generateProgressionReports()
                 getline(classFile, readProgress, ',');
                 getline(classFile, otherProgress, ',');
 
+                matProgress.erase(remove(matProgress.begin(), matProgress.end(), 'M'), matProgress.end());
+                matProgress.erase(remove(matProgress.begin(), matProgress.end(), ':'), matProgress.end());
+                sciProgress.erase(remove(sciProgress.begin(), sciProgress.end(), 'S'), sciProgress.end());
+                sciProgress.erase(remove(sciProgress.begin(), sciProgress.end(), ':'), sciProgress.end());
+                writeProgress.erase(remove(writeProgress.begin(), writeProgress.end(), 'W'), writeProgress.end());
+                writeProgress.erase(remove(writeProgress.begin(), writeProgress.end(), ':'), writeProgress.end());
+                readProgress.erase(remove(readProgress.begin(), readProgress.end(), 'R'), readProgress.end());
+                readProgress.erase(remove(readProgress.begin(), readProgress.end(), ':'), readProgress.end());
+                otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), 'O'), otherProgress.end());
+                otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), ':'), otherProgress.end());
+
+                totalMarks = stoi(matProgress) + stoi(sciProgress) + stoi(writeProgress) + stoi(readProgress) + stoi(otherProgress);
+
                 parentFile.close();
                 parentFile.open("Sign_Up_And_Login_Details/parent_registration.txt");
 
                 if (line != "*")
                 {
-                    while (getline(parentFile, line, ','))
+                    if (totalMarks > 251 && totalMarks < 375)
                     {
-                        line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-                        if (studentName == line)
+                        while (getline(parentFile, line, ','))
                         {
-                            for (int i = 0; i < 4; i++)
+                            line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+                            if (studentName == line)
                             {
-                                getline(parentFile, line, ',');
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    getline(parentFile, line, ',');
+                                }
+                                parentContactNum = line;
+                                break;
                             }
-                            parentContactNum = line;
-                            break;
                         }
+
+                        cout << "\n" << classroomNum << " " << studentName << " " << displayMarkingProgress(stoi(matProgress))
+                            << " " << displayMarkingProgress(stoi(sciProgress)) << " " << displayMarkingProgress(stoi(writeProgress))
+                            << " " << displayMarkingProgress(stoi(readProgress)) << " " << displayMarkingProgress(stoi(otherProgress))
+                            << " " << teacherName << " " << parentContactNum;
+                        cout << "\n---------------------------------------------------------------------------------------------------";
                     }
-
-                    matProgress.erase(remove(matProgress.begin(), matProgress.end(), 'M'), matProgress.end());
-                    matProgress.erase(remove(matProgress.begin(), matProgress.end(), ':'), matProgress.end());
-                    sciProgress.erase(remove(sciProgress.begin(), sciProgress.end(), 'S'), sciProgress.end());
-                    sciProgress.erase(remove(sciProgress.begin(), sciProgress.end(), ':'), sciProgress.end());
-                    writeProgress.erase(remove(writeProgress.begin(), writeProgress.end(), 'W'), writeProgress.end());
-                    writeProgress.erase(remove(writeProgress.begin(), writeProgress.end(), ':'), writeProgress.end());
-                    readProgress.erase(remove(readProgress.begin(), readProgress.end(), 'R'), readProgress.end());
-                    readProgress.erase(remove(readProgress.begin(), readProgress.end(), ':'), readProgress.end());
-                    otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), 'O'), otherProgress.end());
-                    otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), ':'), otherProgress.end());
-
-                
-                    cout << "\n" << classroomNum << " " << studentName << " " << displayMarkingProgress(stoi(matProgress))
-                        << " " << displayMarkingProgress(stoi(sciProgress)) << " " << displayMarkingProgress(stoi(writeProgress))
-                        << " " << displayMarkingProgress(stoi(readProgress)) << " " << displayMarkingProgress(stoi(otherProgress))
-                        << " " << teacherName << " " << parentContactNum;
-                    cout << "\n---------------------------------------------------------------------------------------------------";
                     getline(classFile, line);
                 }
                 else
@@ -340,7 +345,114 @@ void Admin::generateProgressionReports()
 // Display reports of students who are progressing
 void Admin::generateHelpReports()
 {
+    system("CLS");
+    ifstream classFile;
+    ifstream parentFile("Sign_Up_And_Login_Details/parent_registration.txt");
+    ifstream teacherFile("Sign_Up_And_Login_Details/teacher_registration.txt");
+    string teacherLine, line, path, teacherName, classroomNum, parentContactNum;
+    string studentName, matProgress, sciProgress, writeProgress, readProgress, otherProgress;
+    int totalMarks = 0;
 
+    cout << "******************************\n";
+    cout << "Student Reports - Needing Help\n";
+    cout << "******************************\n";
+
+    /*if (line != "")
+    {*/
+    cout << "\nClassroom    Full    Maths    Science    Writing    Reading    Other    Teacher    Parent's Contact";
+    cout << "\nNumber       Name                                                       Name       Number";
+    cout << "\n---------------------------------------------------------------------------------------------------";
+
+    while (teacherFile.is_open())
+    {
+        getline(teacherFile, line, ',');
+        getline(teacherFile, teacherName, ',');
+
+        if (line != "\n*")
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                getline(teacherFile, classroomNum, ',');
+            }
+
+            path = "Classes/room_" + classroomNum + ".txt";
+
+            classFile.open(path);
+        }
+        while (classFile.is_open())
+        {
+            line.erase(remove(line.begin(), line.end(), '*'), line.end());
+            line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+
+            getline(classFile, line, ',');
+            getline(classFile, studentName, ',');
+            getline(classFile, line, ',');
+            getline(classFile, matProgress, ',');
+            getline(classFile, sciProgress, ',');
+            getline(classFile, writeProgress, ',');
+            getline(classFile, readProgress, ',');
+            getline(classFile, otherProgress, ',');
+
+            matProgress.erase(remove(matProgress.begin(), matProgress.end(), 'M'), matProgress.end());
+            matProgress.erase(remove(matProgress.begin(), matProgress.end(), ':'), matProgress.end());
+            sciProgress.erase(remove(sciProgress.begin(), sciProgress.end(), 'S'), sciProgress.end());
+            sciProgress.erase(remove(sciProgress.begin(), sciProgress.end(), ':'), sciProgress.end());
+            writeProgress.erase(remove(writeProgress.begin(), writeProgress.end(), 'W'), writeProgress.end());
+            writeProgress.erase(remove(writeProgress.begin(), writeProgress.end(), ':'), writeProgress.end());
+            readProgress.erase(remove(readProgress.begin(), readProgress.end(), 'R'), readProgress.end());
+            readProgress.erase(remove(readProgress.begin(), readProgress.end(), ':'), readProgress.end());
+            otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), 'O'), otherProgress.end());
+            otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), ':'), otherProgress.end());
+
+            totalMarks = stoi(matProgress) + stoi(sciProgress) + stoi(writeProgress) + stoi(readProgress) + stoi(otherProgress);
+
+            parentFile.close();
+            parentFile.open("Sign_Up_And_Login_Details/parent_registration.txt");
+
+            if (line != "*")
+            {
+                if (totalMarks <= 250)
+                {
+                    while (getline(parentFile, line, ','))
+                    {
+                        line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+                        if (studentName == line)
+                        {
+                            for (int i = 0; i < 4; i++)
+                            {
+                                getline(parentFile, line, ',');
+                            }
+                            parentContactNum = line;
+                            break;
+                        }
+                    }
+
+                    cout << "\n" << classroomNum << " " << studentName << " " << displayMarkingProgress(stoi(matProgress))
+                        << " " << displayMarkingProgress(stoi(sciProgress)) << " " << displayMarkingProgress(stoi(writeProgress))
+                        << " " << displayMarkingProgress(stoi(readProgress)) << " " << displayMarkingProgress(stoi(otherProgress))
+                        << " " << teacherName << " " << parentContactNum;
+                    cout << "\n---------------------------------------------------------------------------------------------------";
+                }
+                getline(classFile, line);
+            }
+            else
+            {
+                getline(teacherFile, line, ',');
+                classFile.close();
+                break;
+            }
+        }
+        if (teacherFile.eof())
+        {
+            teacherFile.close();
+            classFile.close();
+            parentFile.close();
+        }
+    }
+    //}
+    cout << "\n\n";
+    system("pause");
+    generateReportsScreen();
 }
 
 // Intialise data for the admin account (this will run on start-up)

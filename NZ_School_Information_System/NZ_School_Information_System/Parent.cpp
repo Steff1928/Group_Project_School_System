@@ -254,10 +254,10 @@ void Parent::parentSignUp()
 			for (unsigned int i = 0; i < size(childData); i++) 
 			{
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
-					"," << childData[i].emergencyContactNum << ",";
+					"," << childData[i].emergencyContactNum << "," << contactNum << ",";
 			}
 			writeFile << "\n" << "*," << "\n";
-			login.savedUser = userName; // Save the username so it is remembered by the program while the user is logged in
+			login.savedUser = "," + userName; // Save the username so it is remembered by the program while the user is logged in
 			writeFile.close();
 			system("pause");
 			displayParentScreen(); // Go to the parent screen once signed in

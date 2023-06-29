@@ -44,6 +44,7 @@ std::string displayOverallProgress(int totalMarks)
     {
         return "Achieved";
     }
+    return "N/A";
 }
 
 std::string displayMarkingProgress(int marks)
@@ -60,6 +61,7 @@ std::string displayMarkingProgress(int marks)
     {
         return "Achieved";
     }
+    return "N/A";
 }
 
 // Display the upcoming/current event details on a seperate screen
