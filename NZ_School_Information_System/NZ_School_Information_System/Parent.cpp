@@ -149,7 +149,7 @@ void Parent::viewChildReport()
 	cout << "Child Record\n";
 	cout << "************\n";
 	readParent(readParentFile, line, classNum, childName, childData, child);
-	for (int i = 0; i < size(childData); i++)
+	for (unsigned int i = 0; i < size(childData); i++)
 	{
 		cout << "\nChild Name: " << childData[i].childName << "\n";
 		classNum = to_string(childData[i].childClass);

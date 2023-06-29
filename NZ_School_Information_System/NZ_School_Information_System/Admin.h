@@ -19,8 +19,7 @@ public:
 	void viewClassRecords();
 	void viewParentRecords();
 	void generateReportsScreen();
-	void generateProgressionReports();
-	void generateHelpReports();
+	void generateReports(int min, int max, std::string reportType);
 	void initialiseAccount();
 	Admin();
 };

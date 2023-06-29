@@ -51,15 +51,15 @@ std::string displayMarkingProgress(int marks)
 {
     if (marks <= 50)
     {
-        return "Needs Help";
+        return "NH";
     }
     else if (marks > 51 && marks < 75)
     {
-        return "Progressing";
+        return "P";
     }
     else if (marks >= 75)
     {
-        return "Achieved";
+        return "A";
     }
     return "N/A";
 }
