@@ -652,8 +652,7 @@ void Teacher::viewRecords()
 	system("CLS");
 	int studentCount = 0;
 	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
-	string line, id, path, studentName, gender, matMarks, sciMarks, readMarks, writeMarks, otherMarks, learningProgress;
-	int totalMarks = 0;
+	string line, id, path;
 
 	while (getline(readFile, line, '*'))
 	{
@@ -671,7 +670,6 @@ void Teacher::viewRecords()
 
 	path = "Classes/room_" + line + ".txt";
 	readFile.open(path);
-	const char* fullGender = gender.c_str();
 
 	cout << "******************************\n";
 	cout << "Student Records - View Records\n";
@@ -699,6 +697,21 @@ void Teacher::viewRecords()
 
 	checkLineInTeacherFile(line, 7);
 	cout << "\nThere are a total of " << studentCount << " students in your class (Room " << line << ")\n";
+
+	getRecordData(readFile, line);
+	
+	cout << "\n\n";
+	system("pause");
+	recordsScreen();
+}
+
+// Get the record data for each student in the teachers class and display it
+void Teacher::getRecordData(std::ifstream& readFile, std::string& line)
+{
+	string studentName, gender, matMarks, sciMarks, readMarks, writeMarks, otherMarks, learningProgress;
+	int totalMarks = 0;
+	const char* fullGender = gender.c_str();
+
 	cout << "\nID    Full Name                Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
 	cout << "\n-------------------------------------------------------------------------------------------------------------";
 
@@ -747,9 +760,6 @@ void Teacher::viewRecords()
 			readFile.close();
 		}
 	}
-	cout << "\n\n";
-	system("pause");
-	recordsScreen();
 }
 
 // Function to manage teacher registration

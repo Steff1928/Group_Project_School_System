@@ -2,6 +2,7 @@
 #include <string>
 #include "Login.h"
 #include "Parent.h"
+#include "Teacher.h"
 
 // Intialise the Admin class to be able to view all data from registered users
 class Admin
@@ -11,6 +12,7 @@ private:
 	std::string userName;
 	std::string password;
 	Login login;
+	Teacher teacher;
 	int classroom;
 
 public:

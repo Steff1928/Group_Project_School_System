@@ -75,52 +75,9 @@ void Admin::viewClassRecords()
 
     cout << "\nStudent Records for Room " << classroom << ": \n";
 
-    cout << "\nID    Full Name                Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
-    cout << "\n-------------------------------------------------------------------------------------------------------------";
+    // Get data for the student records from the teacher source file as to not repeat code
+    teacher.getRecordData(readFile, line);
 
-    while (readFile.is_open())
-    {
-        getline(readFile, line, ',');
-        
-        line.erase(remove(line.begin(), line.end(), '*'), line.end());
-        line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-
-        getline(readFile, studentName, ',');
-        getline(readFile, gender, ',');
-        getline(readFile, matMarks, ',');
-        getline(readFile, sciMarks, ',');
-        getline(readFile, writeMarks, ',');
-        getline(readFile, readMarks, ',');
-        getline(readFile, otherMarks, ',');
-
-        matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
-        matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
-        sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
-        sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
-        writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
-        writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
-        readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
-        readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
-        otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
-        otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
-
-        if (line != "")
-        {
-            totalMarks = stoi(matMarks) + stoi(sciMarks) + stoi(readMarks) + stoi(writeMarks) + stoi(otherMarks);
-            cout << "\n" << left << setw(6) << line << setw(25) << studentName << setw(10)
-                << displayGender(*fullGender) << setw(9) << matMarks << setw(11) << sciMarks << setw(11)
-                << readMarks << setw(11) << writeMarks << setw(9) << otherMarks << displayOverallProgress(totalMarks);
-            cout << "\n-------------------------------------------------------------------------------------------------------------";
-            for (int i = 0; i < 4; i++)
-            {
-                getline(readFile, line, ',');
-            }
-        }
-        if (readFile.eof())
-        {
-            readFile.close();
-        }
-    }
     cout << "\n\n";
     system("pause");
     displayAdminScreen(); // Go back to the admin screen once finished
@@ -223,7 +180,7 @@ void Admin::generateReportsScreen()
         generateReports(251, 375, "Progressing ");
         break;
     case 2:
-        // Generates a report of student who need help
+        // Generates a report of students who need help
         generateReports(0, 250, "Needing Help");
         break;
     case 3:
