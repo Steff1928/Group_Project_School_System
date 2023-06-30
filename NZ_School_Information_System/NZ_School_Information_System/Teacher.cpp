@@ -128,6 +128,18 @@ void Teacher::addStudent()
 	return;
 }
 
+bool checkString(string numCheck)
+{
+	for (int i = 0; i < numCheck.length(); i++)
+	{
+		if (isdigit(numCheck[i]) == false)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 // Allow teachers to edit student records and modify data
 void Teacher::editRecord()
 {
@@ -225,9 +237,34 @@ void Teacher::editRecord()
 	{
 		detail[i] = tolower(detail[i]);
 	}
-
 	cout << "Change To: ";
-	getline(cin >> ws, newDetail);
+	while (true)
+	{
+		getline(cin >> ws, newDetail);
+	
+		if (detail == "maths" || detail == "science" || detail == "reading" || detail == "writing" || detail == "other")
+		{
+			if (checkString(newDetail))
+			{
+				if (stoi(newDetail) >= 0 && stoi(newDetail) <= 100)
+				{
+				break;
+				}
+				else
+				{
+					cout << "Please input a vaild number: ";
+				}
+			}
+			else
+			{
+				cout << "Please input a vaild number: ";
+			}
+		}
+		if (detail == "gender" || detail == "name")
+		{
+			break;
+		}
+	}
 
 	// Intialise variables for opening files, grabbing and replacing the data
 	ifstream infile;
