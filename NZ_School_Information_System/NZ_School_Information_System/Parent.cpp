@@ -122,6 +122,17 @@ void Parent::readChildInfo(std::string& classNum, std::string& line, std::string
 			getline(readClassFile, writingMarks, ',');
 			getline(readClassFile, otherMarks, ',');
 
+			mathMarks.erase(remove(mathMarks.begin(), mathMarks.end(), ':'), mathMarks.end());
+			mathMarks.erase(remove(mathMarks.begin(), mathMarks.end(), 'M'), mathMarks.end());
+			scienceMarks.erase(remove(scienceMarks.begin(), scienceMarks.end(), ':'), scienceMarks.end());
+			scienceMarks.erase(remove(scienceMarks.begin(), scienceMarks.end(), 'S'), scienceMarks.end());
+			readingMarks.erase(remove(readingMarks.begin(), readingMarks.end(), ':'), readingMarks.end());
+			readingMarks.erase(remove(readingMarks.begin(), readingMarks.end(), 'R'), readingMarks.end());
+			writingMarks.erase(remove(writingMarks.begin(), writingMarks.end(), ':'), writingMarks.end());
+			writingMarks.erase(remove(writingMarks.begin(), writingMarks.end(), 'W'), writingMarks.end());
+			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
+			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
+
 			cout << "Gender: " << displayGender(*fullGender) << "\n\n";
 			cout << "Marks\n";
 			cout << "------------------\n";
