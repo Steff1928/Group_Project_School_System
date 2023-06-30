@@ -39,7 +39,6 @@ void Admin::displayAdminScreen()
         break;
     default:
         inputFail();
-        cout << "Invalid option, please try again\n\n";
         system("pause");
         displayAdminScreen();
     }
@@ -60,9 +59,20 @@ void Admin::viewClassRecords()
     // Prompt the user to enter a room number and display all of the data from that room in a table format
     cout << "\nEnter a room number: ";
     cin >> classroom;
+
     path = "Classes/room_" + to_string(classroom) + ".txt";
     readFile.open(path);
+
     const char* fullGender = gender.c_str();
+
+    if (!readFile.is_open())
+    {
+        cout << "\nNo records available for this classroom yet.\n";
+        system("pause");
+        displayAdminScreen();
+        return;
+    }
+
     cout << "\nStudent Records for Room " << classroom << ": \n";
 
     cout << "\nID    Full Name                Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
@@ -221,7 +231,6 @@ void Admin::generateReportsScreen()
         break;
     default:
         inputFail();
-        cout << "Invalid option, please try again\n\n";
         system("pause");
         generateReportsScreen();
     }

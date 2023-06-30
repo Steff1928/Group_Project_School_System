@@ -70,7 +70,6 @@ void Parent::displayParentScreen()
 		break;
 	default:
 		inputFail();
-		cout << "Invalid option, please try again\n\n";
 		system("pause");
 		displayParentScreen();
 	}

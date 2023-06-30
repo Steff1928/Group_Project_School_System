@@ -63,7 +63,6 @@ void Teacher::displayTeacherScreen()
 		break;
 	default:
 		inputFail();
-		cout << "Invalid option, please try again\n\n";
 		system("pause");
 		displayTeacherScreen();
 	}
@@ -111,7 +110,6 @@ void Teacher::recordsScreen()
 		break;
 	default:
 		inputFail();
-		cout << "Invalid option, please try again\n\n";
 		system("pause");
 		recordsScreen();
 	}
@@ -328,7 +326,7 @@ void Teacher::editRecord()
 	remove(path.c_str());
 	if (rename("Classes/temp.txt", path.c_str()) != 0)
 	{
-		cout << "Record Removed"; // TEMP
+		cout << "ERROR: Failed to Remove Record"; // TEMP: Helps us fix errors easier
 	}
 
 	system("pause");
@@ -423,7 +421,7 @@ void Teacher::removeStudent()
 		remove(path.c_str());
 		if (rename("Classes/temp.txt", path.c_str()) != 0)
 		{
-			cout << "ERROR: Failed to Remove Record"; // TEMP
+			cout << "ERROR: Failed to Remove Record"; // TEMP: Helps us fix errors easier
 		}
 		cout << "\n" << name << " has been removed from your class.\n";
 	}
@@ -480,7 +478,7 @@ void Teacher::updateRecord()
 			if (line == id)
 			{
 				cout << "\nLearning Observations for " << name << "\n";
-				cout << "--------------------------------------\n";
+				cout << "------------------------------------------\n";
 				for (int i = 0; i < 6; i++)
 				{
 					getline(readFile, line, ',');
@@ -501,6 +499,7 @@ void Teacher::updateRecord()
 				termFour.erase(remove(termFour.begin(), termFour.end(), ':'), termFour.end());
 				termFour.erase(remove(termFour.begin(), termFour.end(), '4'), termFour.end());
 				cout << "Term 4: " << termFour << "\n";
+				cout << "------------------------------------------\n";
 				break;
 			}
 		}
@@ -515,81 +514,100 @@ void Teacher::updateRecord()
 	}
 	readFile.close();
 
-	cout << "\nChoose a Term Number (1 - 4): ";
-	cin >> termChoice;
-	cout << "Learning Progress (Achieved, Progressing, Needs Help): ";
-	getline(cin >> ws, learningProgress);
+	int choice;
 	ifstream infile(path);
 	string str_search;
 	string str_replace;
-	if (termChoice == "1")
-	{
-		str_search = "1:" + termOne;
-		str_replace = "1:" + learningProgress;
-		termChoice = "Term 1";
-	}
-	else if (termChoice == "2")
-	{
-		str_search = "2:" + termTwo;
-		str_replace = "2:" + learningProgress;
-		termChoice = "Term 2";
-	}
-	else if (termChoice == "3")
-	{
-		str_search = "3:" + termThree;
-		str_replace = "3:" + learningProgress;
-		termChoice = "Term 3";
-	}
-	else if (termChoice == "4")
-	{
-		str_search = "4:" + termFour;
-		str_replace = "4:" + learningProgress;
-		termChoice = "Term 4";
-	}
 	ofstream outfile("Classes/temp.txt");
 
-	while (getline(infile, strTemp, ','))
+	cout << "\n1. Record New/Update Observation"
+		<< "\n2. Back";
+	cout << "\n\nEnter corresponding number for selection: ";
+	cin >> choice;
+
+	switch (choice)
 	{
-		line = strTemp;
-		while (strTemp == "\n*" + id || strTemp == "*" + id)
+	case 1:
+		cout << "\nChoose a Term Number (1 - 4): ";
+		cin >> termChoice;
+		cout << "Learning Progress (Achieved, Progressing, Needs Help): ";
+		getline(cin >> ws, learningProgress);
+		if (termChoice == "1")
 		{
-			line += ",";
-			outfile << line;
-			getline(infile, line, ',');
-			if (line == str_search)
+			str_search = "1:" + termOne;
+			str_replace = "1:" + learningProgress;
+			termChoice = "Term 1";
+		}
+		else if (termChoice == "2")
+		{
+			str_search = "2:" + termTwo;
+			str_replace = "2:" + learningProgress;
+			termChoice = "Term 2";
+		}
+		else if (termChoice == "3")
+		{
+			str_search = "3:" + termThree;
+			str_replace = "3:" + learningProgress;
+			termChoice = "Term 3";
+		}
+		else if (termChoice == "4")
+		{
+			str_search = "4:" + termFour;
+			str_replace = "4:" + learningProgress;
+			termChoice = "Term 4";
+		}
+
+		while (getline(infile, strTemp, ','))
+		{
+			line = strTemp;
+			while (strTemp == "\n*" + id || strTemp == "*" + id)
 			{
-				strTemp = str_replace;
+				line += ",";
+				outfile << line;
+				getline(infile, line, ',');
+				if (line == str_search)
+				{
+					strTemp = str_replace;
+					break;
+				}
+			}
+			if (strTemp != "\n*")
+			{
+				strTemp += ",";
+			}
+			outfile << strTemp;
+			if (strTemp == "*" + id)
+			{
+				strTemp += "\n";
 				break;
 			}
 		}
-		if (strTemp != "\n*")
+		cout << "\n\nSuccessfully updated " << name << "'s learning progression to " << learningProgress
+			<< " for " << termChoice << ".\n";
+
+		infile.close();
+		outfile.close();
+
+		remove(path.c_str());
+
+		if (rename("Classes/temp.txt", path.c_str()) != 0)
 		{
-			strTemp += ",";
+			cout << "ERROR: Failed to Remove Record"; // TEMP: Helps us fix errors easier
 		}
-		outfile << strTemp;
-		if (strTemp == "*" + id)
-		{
-			strTemp += "\n";
-			break;
-		}
+
+		system("pause");
+		recordsScreen();
+		return;
+	case 2:
+		infile.close();
+		outfile.close();
+		recordsScreen();
+		return;
+	default:
+		inputFail();
+		system("pause");
+		updateRecord();
 	}
-	//cout << "\n\n" << termChoice << " has now been changed to " << learningProgress << ".\n";
-	cout << "\n\nSuccessfully updated " << name << "'s learning progression to " << learningProgress
-		<< " for " << termChoice << ".\n";
-
-	infile.close();
-	outfile.close();
-
-	remove(path.c_str());
-
-	if (rename("Classes/temp.txt", path.c_str()) != 0)
-	{
-		cout << "Record Removed"; // TEMP
-	}
-
-	system("pause");
-	recordsScreen();
-	return;
 }
 
 // Allow the teacher to view all the records of students in their class
@@ -625,67 +643,72 @@ void Teacher::viewRecords()
 
 	while (getline(readFile, line))
 	{
+		if (line == "*")
+		{
+			break;
+		}
 		studentCount++;
 	}
 	readFile.close();
 	readFile.open(path);
 
-	if (line != "")
+	if (studentCount == 0)
 	{
-		checkLineInTeacherFile(line, 7);
-		cout << "\nThere are a total of " << studentCount - 1 << " students in your class (Room " << line << ")\n";
-		cout << "\nID    Full Name                Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
-		cout << "\n-------------------------------------------------------------------------------------------------------------";
+		cout << "\nThere are no records to show, please first add some students to your class.\n";
+		system("pause");
+		recordsScreen();
+		return;
+	}
 
-		while (readFile.is_open())
+	checkLineInTeacherFile(line, 7);
+	cout << "\nThere are a total of " << studentCount << " students in your class (Room " << line << ")\n";
+	cout << "\nID    Full Name                Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
+	cout << "\n-------------------------------------------------------------------------------------------------------------";
+
+	while (readFile.is_open())
+	{
+		while (getline(readFile, line, ','))
 		{
-			while (getline(readFile, line, ','))
-			{
-				line.erase(remove(line.begin(), line.end(), '*'), line.end());
-				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+			line.erase(remove(line.begin(), line.end(), '*'), line.end());
+			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 
-				getline(readFile, studentName, ',');
-				getline(readFile, gender, ',');
-				getline(readFile, matMarks, ',');
-				getline(readFile, sciMarks, ',');
-				getline(readFile, writeMarks, ',');
-				getline(readFile, readMarks, ',');
-				getline(readFile, otherMarks, ',');
+			getline(readFile, studentName, ',');
+			getline(readFile, gender, ',');
+			getline(readFile, matMarks, ',');
+			getline(readFile, sciMarks, ',');
+			getline(readFile, writeMarks, ',');
+			getline(readFile, readMarks, ',');
+			getline(readFile, otherMarks, ',');
 
-				matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
-				matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
-				sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
-				sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
-				writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
-				writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
-				readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
-				readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
-				otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
-				otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
+			matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
+			matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
+			sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
+			sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
+			writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
+			writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
+			readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
+			readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
+			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
+			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
 
-				break;
-			}
-			if (line != "")
+			break;
+		}
+		if (line != "")
+		{
+			totalMarks = stoi(matMarks) + stoi(sciMarks) + stoi(readMarks) + stoi(writeMarks) + stoi(otherMarks);
+			cout << "\n" << left << setw(6) << line << setw(25) << studentName << setw(10)
+				<< displayGender(*fullGender) << setw(9) << matMarks << setw(11) << sciMarks << setw(11)
+				<< writeMarks << setw(11) << readMarks << setw(9) << otherMarks << displayOverallProgress(totalMarks);
+			cout << "\n-------------------------------------------------------------------------------------------------------------";
+			for (int i = 0; i < 4; i++)
 			{
-				totalMarks = stoi(matMarks) + stoi(sciMarks) + stoi(readMarks) + stoi(writeMarks) + stoi(otherMarks);
-				cout << "\n" << left << setw(6) << line << setw(25) << studentName << setw(10)
-					<< displayGender(*fullGender) << setw(9) << matMarks << setw(11) << sciMarks << setw(11)
-					<< writeMarks << setw(11) << readMarks << setw(9) << otherMarks << displayOverallProgress(totalMarks);
-				cout << "\n-------------------------------------------------------------------------------------------------------------";
-				for (int i = 0; i < 4; i++)
-				{
-					getline(readFile, line, ',');
-				}
-			}
-			if (readFile.eof())
-			{
-				readFile.close();
+				getline(readFile, line, ',');
 			}
 		}
-	}
-	else
-	{
-		cout << "\nThere are no records to show, please first add some students to your class.";
+		if (readFile.eof())
+		{
+			readFile.close();
+		}
 	}
 	cout << "\n\n";
 	system("pause");
@@ -747,6 +770,8 @@ void Teacher::teacherSignUp()
 			login.savedUser = userName;
 			writeFile.close();
 			ofstream writeClassroom("Classes/room_" + to_string(classroomNum) + ".txt");
+			writeClassroom << "*";
+			writeClassroom.close();
 
 			system("pause");
 			displayTeacherScreen();	

@@ -143,7 +143,6 @@ void displayIntroScreen()
     default:
         // For invalid input, manage errors with inputFail() and display a message to prompt the user to try again
         inputFail();
-        cout << "Invalid option, please try again\n\n"; 
         system("pause");
         displayIntroScreen();
     }
@@ -176,7 +175,6 @@ void displayRegistrationScreen()
         break;
     default:
         inputFail();
-        cout << "Invalid option, please try again\n\n";
         system("pause");
         displayRegistrationScreen();
     }
@@ -189,6 +187,11 @@ void inputFail()
     {
         cin.clear();
         cin.ignore(1000, '\n');
+        cout << "ERROR: Invalid input, please only enter numbers.\n\n";
+    }
+    else
+    {
+        cout << "Invalid option, please try again\n\n";
     }
 }
 
