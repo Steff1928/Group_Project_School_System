@@ -171,62 +171,82 @@ void Teacher::editRecord()
 	readFile.open(path);
 	while (getline(readFile, line, ','))
 	{
-		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		line.erase(remove(line.begin(), line.end(), '*'), line.end());
-
-		if (line == id)
+		if (!readFile.eof())
 		{
-			getline(readFile, studentName, ',');
-			getline(readFile, gender, ',');
-			getline(readFile, matMarks, ',');
-			getline(readFile, sciMarks, ',');
-			getline(readFile, writeMarks, ',');
-			getline(readFile, readMarks, ',');
-			getline(readFile, otherMarks, ',');
+			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+			line.erase(remove(line.begin(), line.end(), '*'), line.end());
 
-			// Display Record Data for Editing
-			cout << "\nStudent Name: " << studentName;
-			const char* fullGender = gender.c_str();
-			cout << "\nGender: " << displayGender(*fullGender);
-			cout << "\n\nMarks";
-			cout << "\n-----------------";
-			matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
-			matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
-			cout << "\nMaths: " << matMarks;
-			sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
-			sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
-			cout << "\nScience: " << sciMarks;
-			writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
-			writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
-			cout << "\nWriting: " << writeMarks;
-			readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
-			readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
-			cout << "\nReading: " << readMarks;
-			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
-			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
-			cout << "\nOther: " << otherMarks << "\n";
-			break;
+			if (line == id)
+			{
+				getline(readFile, studentName, ',');
+				getline(readFile, gender, ',');
+				getline(readFile, matMarks, ',');
+				getline(readFile, sciMarks, ',');
+				getline(readFile, writeMarks, ',');
+				getline(readFile, readMarks, ',');
+				getline(readFile, otherMarks, ',');
+
+				// Display Record Data for Editing
+				cout << "\nStudent Name: " << studentName;
+				const char* fullGender = gender.c_str();
+				cout << "\nGender: " << displayGender(*fullGender);
+				cout << "\n\nMarks";
+				cout << "\n-----------------";
+				matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
+				matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
+				cout << "\nMaths: " << matMarks;
+				sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
+				sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
+				cout << "\nScience: " << sciMarks;
+				writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
+				writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
+				cout << "\nWriting: " << writeMarks;
+				readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
+				readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
+				cout << "\nReading: " << readMarks;
+				otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
+				otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
+				cout << "\nOther: " << otherMarks << "\n";
+				break;
+			}
+		}
+		else
+		{
+			cout << "\nSorry, this student does not exist.\n";
+			readFile.close();
+			system("pause");
+			recordsScreen();
+			return;
 		}
 	}
 	readFile.close();
 
+	// Get the user to input a detail they want to modify and then the value they want to replace it with
 	cout << "\nEnter a detail to modify: ";
 	getline(cin >> ws, detail);
+	for (int i = 0; i < size(detail); i++) // Convert all the characters in the 'detail' string to lowercase
+	{
+		detail[i] = tolower(detail[i]);
+	}
+
 	cout << "Change To: ";
 	getline(cin >> ws, newDetail);
 
+	// Intialise variables for opening files, grabbing and replacing the data
 	ifstream infile;
 	infile.open(path);
 	string strSearch;
 	string strReplace;
 	string strTemp;
 
-	
+	// Find the detail using "if else" statements
 	if (detail == "name")
 	{
-		detail = "Student Full Name";
-		strSearch = studentName;
-		strReplace = newDetail;
+		cout << "\nSorry, but the students name is currently unmodifable.\n";
+		system("pause");
+		infile.close();
+		editRecord();
+		return;
 	}
 	else if (detail == "gender")
 	{
@@ -263,6 +283,14 @@ void Teacher::editRecord()
 		detail = "Other Mark";
 		strSearch = "O:" + otherMarks;
 		strReplace = "O:" + newDetail;
+	}
+	else
+	{
+		cout << "\nWe could not find the detail you were looking for, please try again.\n";
+		system("pause");
+		infile.close();
+		editRecord();
+		return;
 	}
 
 	ofstream outfile("Classes/temp.txt");
@@ -349,10 +377,21 @@ void Teacher::removeStudent()
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 		line.erase(remove(line.begin(), line.end(), '*'), line.end());
-		if (line == id)
+		if (!readFile.eof())
 		{
-			getline(readFile, name, ',');
-			break;
+			if (line == id)
+			{
+				getline(readFile, name, ',');
+				break;
+			}
+		}
+		else
+		{
+			cout << "\nSorry, this student does not exist.\n";
+			readFile.close();
+			system("pause");
+			recordsScreen();
+			return;
 		}
 	}
 	readFile.close();
@@ -382,7 +421,7 @@ void Teacher::removeStudent()
 		remove(path.c_str());
 		if (rename("Classes/temp.txt", path.c_str()) != 0)
 		{
-			cout << "Record Removed"; // TEMP
+			cout << "ERROR: Failed to Remove Record"; // TEMP
 		}
 		cout << "\n" << name << " has been removed from your class.\n";
 	}

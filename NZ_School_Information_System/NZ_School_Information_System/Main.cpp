@@ -182,7 +182,7 @@ void displayRegistrationScreen()
     }
 }
 
-// If the users input throws an error, run this function to clear it and continue 
+// If the users input throws an error in any menu, run this function to clear it and continue 
 void inputFail()
 {
     if (cin.fail())

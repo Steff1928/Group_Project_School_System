@@ -100,7 +100,7 @@ void readParent(ifstream& readParentFile, std::string& line, std::string& classN
 				childData.push_back(child);
 				getline(readParentFile, line);		
 			}
-		break;
+			break;
 		}
 	}
 }
