@@ -103,7 +103,6 @@ void Teacher::recordsScreen()
 		break;
 	case 5:
 		viewRecords();
-		recordsScreen();
 		break;
 	case 6:
 		displayTeacherScreen();
@@ -656,6 +655,7 @@ void Teacher::viewRecords()
 	{
 		cout << "\nThere are no records to show, please first add some students to your class.\n";
 		system("pause");
+		readFile.close();
 		recordsScreen();
 		return;
 	}
@@ -712,6 +712,7 @@ void Teacher::viewRecords()
 	}
 	cout << "\n\n";
 	system("pause");
+	recordsScreen();
 }
 
 // Function to manage teacher registration
