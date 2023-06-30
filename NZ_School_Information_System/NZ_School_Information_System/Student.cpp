@@ -76,6 +76,8 @@ void Student::saveData(string line)
 	writeCount.close();
 
 	cout << "Student details have been added to your class (Room " << line << ")\n";
+	system("pause");
+	teacher.recordsScreen();
 }
 
 // Intialise the values for Student

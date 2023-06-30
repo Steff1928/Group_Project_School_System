@@ -92,18 +92,15 @@ void Teacher::recordsScreen()
 	{
 	case 1:
 		addStudent();
-		recordsScreen();
 		break;
 	case 2:
 		editRecord();
 		break;
 	case 3:
 		removeStudent(); 
-		recordsScreen();
 		break;
 	case 4:
 		updateRecord();
-		recordsScreen();
 		break;
 	case 5:
 		viewRecords();
@@ -131,6 +128,7 @@ void Teacher::addStudent()
 	string line;
 	checkLineInTeacherFile(line, 7);
 	tempStudentData.saveData(line);
+	return;
 }
 
 // Allow teachers to edit student records and modify data
@@ -316,8 +314,9 @@ void Teacher::removeStudent()
 	system("CLS");
 	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
 	ofstream writeFile;
-	string line, id;
+	string line, id, name;
 	string path;
+	char confirmation;
 	while (getline(readFile, line, '*'))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
@@ -346,6 +345,19 @@ void Teacher::removeStudent()
 		return;
 	}
 	readFile.open(path);
+	while (getline(readFile, line, ','))
+	{
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		line.erase(remove(line.begin(), line.end(), '*'), line.end());
+		if (line == id)
+		{
+			getline(readFile, name, ',');
+			break;
+		}
+	}
+	readFile.close();
+
+	readFile.open(path);
 	writeFile.open("Classes/temp.txt");
 	while (getline(readFile, line, '*'))
 	{
@@ -355,14 +367,27 @@ void Teacher::removeStudent()
 			writeFile << "*" << line << endl;
 		}
 	}
-	readFile.close();
-	writeFile.close();
-	remove(path.c_str());
-	if (rename("Classes/temp.txt", path.c_str()) != 0)
+	cout << "\nAre you sure you want to remove " << name << " from your class? (y/n): ";
+	cin >> confirmation;
+	if (confirmation == 'n')
 	{
-		cout << "Record Removed"; // TEMP
+		recordsScreen();
+		return;
+	}
+	else
+	{
+		writeFile << "*";
+		readFile.close();
+		writeFile.close();
+		remove(path.c_str());
+		if (rename("Classes/temp.txt", path.c_str()) != 0)
+		{
+			cout << "Record Removed"; // TEMP
+		}
+		cout << "\n" << name << " has been removed from your class.\n";
 	}
 	system("pause");
+	recordsScreen();
 	return;
 }
 
@@ -394,8 +419,13 @@ void Teacher::updateRecord()
 	cout << "*******************************\n\n";
 	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
 
-	cout << "Enter a Student ID to update their learning progression: ";
+	cout << "Enter a Student ID to update their learning progression (or type 'exit' to go back): ";
 	getline(cin >> ws, id);
+	if (id == "exit")
+	{
+		recordsScreen();
+		return;
+	}
 	readFile.open(path);
 
 	while (getline(readFile, line, ','))
@@ -438,6 +468,7 @@ void Teacher::updateRecord()
 			cout << "\nSorry, this student does not exist.\n";
 			readFile.close();
 			system("pause");
+			recordsScreen();
 			return;
 		}
 	}
@@ -516,7 +547,8 @@ void Teacher::updateRecord()
 	}
 
 	system("pause");
-	
+	recordsScreen();
+	return;
 }
 
 // Allow the teacher to view all the records of students in their class

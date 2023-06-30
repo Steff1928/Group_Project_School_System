@@ -159,7 +159,7 @@ void Admin::viewParentRecords()
                 getline(readFile, childName, ',');
                 childName.erase(remove(childName.begin(), childName.end(), '\n'), childName.end());
 
-                if (childName == "*")
+                if (childName == "*" || childName == "")
                 {
                     break;
                 }
@@ -185,16 +185,6 @@ void Admin::viewParentRecords()
         }
     }
     
-    
-    /*cout << "\nDavid        Male      21/05/89      example@example.co.nz    02145761574     Stacy       5            Liam";
-    cout << "\nProsser                                                                       Morgan                   Anthony";
-    cout << "\n                                                                                                       0214597134\n";
-    cout << "\n                                                                              John        3            Mark";
-    cout << "\n                                                                              Doe                      Robinson";
-    cout << "\n                                                                                                       0213871295\n";
-    cout << "\n                                                                              Max         3            Jonathan";
-    cout << "\n                                                                              Douglas                  Brown";
-    cout << "\n                                                                                                       0278145936\n\n";*/
     cout << "\n\n";
     system("pause");
     displayAdminScreen(); // Go back to the admin screen once finished
