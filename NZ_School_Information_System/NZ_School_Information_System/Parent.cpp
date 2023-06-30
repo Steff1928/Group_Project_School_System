@@ -118,8 +118,8 @@ void Parent::readChildInfo(std::string& classNum, std::string& line, std::string
 			getline(readClassFile, gender, ',');
 			getline(readClassFile, mathMarks, ',');
 			getline(readClassFile, scienceMarks, ',');
-			getline(readClassFile, readingMarks, ',');
 			getline(readClassFile, writingMarks, ',');
+			getline(readClassFile, readingMarks, ',');
 			getline(readClassFile, otherMarks, ',');
 
 			mathMarks.erase(remove(mathMarks.begin(), mathMarks.end(), ':'), mathMarks.end());
