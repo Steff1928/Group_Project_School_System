@@ -249,6 +249,7 @@ void Parent::parentSignUp()
 			// Replace "cout" with the filename in write mode to write data to the file.
 			// Here we write each of the data seperated by commas (and an asterisk between username and password)
 			// to use them as delimeters and seperate the data into individual lines
+			writeFile << "\n" << "*," << "\n";
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << ",";
 			// Loop through the child data and add everything from the vector into the file
 			for (unsigned int i = 0; i < size(childData); i++) 
@@ -256,7 +257,6 @@ void Parent::parentSignUp()
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
 					"," << childData[i].emergencyContactNum << "," << contactNum << ",";
 			}
-			writeFile << "\n" << "*," << "\n";
 			login.savedUser = "," + userName; // Save the username so it is remembered by the program while the user is logged in
 			writeFile.close();
 			system("pause");

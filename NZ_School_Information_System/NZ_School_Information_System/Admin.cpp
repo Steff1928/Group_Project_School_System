@@ -122,16 +122,12 @@ void Admin::viewParentRecords()
     ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt");
     string line, parentName, gender, dob, email, contactNum;
     string childName, childClassroomNum, emergencyContactName, emergencyContactNum;
+    const char* fullGender = gender.c_str();
     int totalMarks = 0;
 
     cout << "**************\n";
     cout << "Parent Records\n";
     cout << "**************\n";
-
-    cout << "\nFull Name    Gender    DOB           Email                    Contact         Children    Children     Emergency";
-    cout << "\n                                                              Number          Names       Classroom    Contact";
-    cout << "\n                                                                                          Number(s)";
-    cout << "\n-----------------------------------------------------------------------------------------------------------------";
 
     getline(readFile, line, ',');
 
@@ -150,29 +146,37 @@ void Admin::viewParentRecords()
 
         if (line != "")
         {
-            cout << "\n" << parentName << " " << gender << " " << dob << " " << email << " " << contactNum;
-            
-            while (line != "")
+            cout << "\nFull Name          Gender          DOB           Email                         Contact Number";
+            cout << "\n---------------------------------------------------------------------------------------------";
+
+            cout << "\n" << left << setw(19) << parentName << setw(16) << displayGender(*fullGender) << setw(14) << dob << setw(30) 
+                << email << contactNum << "\n";
+            cout << "\nCHILD DATA:\n";
+
+            while (childName != "*")
             {
                 getline(readFile, childName, ',');
                 childName.erase(remove(childName.begin(), childName.end(), '\n'), childName.end());
+
                 if (childName == "*")
                 {
                     break;
                 }
+
                 getline(readFile, childClassroomNum, ',');
                 getline(readFile, emergencyContactName, ',');
                 getline(readFile, emergencyContactNum, ',');
-
                 if (childName != "*")
                 {
-                    cout << childName << " " << childClassroomNum << " " << emergencyContactName << " " << emergencyContactNum << "\n";
-
+                    cout << "\nName: " << childName
+                        << "\nClassroom Number: " << childClassroomNum
+                        << "\nEmergency Contact Name: " << emergencyContactName
+                        << "\nEmergency Contact Number: " << emergencyContactNum << "\n";
                 }
                 getline(readFile, line);
             }
-
-            cout << "\n-----------------------------------------------------------------------------------------------------------------";
+            cout << "\n";
+            childName = "";
         }
         if (readFile.eof())
         {

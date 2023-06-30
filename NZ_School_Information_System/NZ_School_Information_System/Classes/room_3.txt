@@ -2,4 +2,5 @@
 *9,Will Smith,m,100,37,38,65,100,1:Progressing,2:n/a,3:n/a,4:n/a,
 *23,Michael Smithy,m,M:100,S:100,W:50,R:24,O:55,1:Progressing,2:n/a,3:n/a,4:n/a,
 *26,Jeffery Dollars,m,M:29,S:5,W:12,R:73,O:4,1:Needs Help,2:n/a,3:n/a,4:n/a,
+*27,Johnny Man,m,M:79,S:15,W:233,R:521,O:5,1:Achieved,2:n/a,3:n/a,4:n/a,
 *
