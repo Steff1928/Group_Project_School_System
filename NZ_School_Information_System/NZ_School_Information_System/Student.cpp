@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include "Student.h"
+#include "Teacher.h"
 using namespace std;
 
 vector<Student> students;
@@ -19,8 +20,14 @@ void Student::getRecord()
 /// <param name="line">- Gets the designated class number from the teacher registration file to write the data in a class file</param>
 void Student::saveData(string line)
 {
-	cout << "\nStudent Name: ";
+	Teacher teacher;
+	cout << "\nStudent Name (or type 'exit' to go back): ";
 	getline(cin >> ws, fullName);
+	if (fullName == "exit")
+	{
+		teacher.recordsScreen();
+		return;
+	}
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
 	gender = tolower(gender);
@@ -61,12 +68,14 @@ void Student::saveData(string line)
 	studentId = idCount;
 	writeClassroom << studentId << "," << fullName << "," << gender << "," << "M:" << math << "," << "S:" << science << "," << "W:" << writing << ","
 		<< "R:" << reading << "," << "O:" << other << "," << "1:" << learningProgress << ",2:n/a" << ",3:n/a" << ",4:n/a" << ",\n" << "*";
-	
+
 	writeClassroom.close();
 
 	ofstream writeCount("student_count.txt");
 	writeCount << count;
 	writeCount.close();
+
+	cout << "Student details have been added to your class (Room " << line << ")\n";
 }
 
 // Intialise the values for Student

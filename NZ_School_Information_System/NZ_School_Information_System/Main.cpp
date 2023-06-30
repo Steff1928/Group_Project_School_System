@@ -141,7 +141,8 @@ void displayIntroScreen()
         cout << "Exiting Program... Goodbye!\n"; // Exit the program when the user enters 5
         exit(0);
     default:
-        // For invalid input, display an error message and prompt the user to try again
+        // For invalid input, manage errors with inputFail() and display a message to prompt the user to try again
+        inputFail();
         cout << "Invalid option, please try again\n\n"; 
         system("pause");
         displayIntroScreen();
@@ -174,8 +175,20 @@ void displayRegistrationScreen()
         displayIntroScreen(); // Display the previous screen if the user inputted 3
         break;
     default:
+        inputFail();
         cout << "Invalid option, please try again\n\n";
         system("pause");
+        displayRegistrationScreen();
+    }
+}
+
+// If the users input throws an error, run this function to clear it and continue 
+void inputFail()
+{
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(1000, '\n');
     }
 }
 

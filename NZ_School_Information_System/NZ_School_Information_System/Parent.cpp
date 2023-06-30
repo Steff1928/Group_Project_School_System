@@ -69,6 +69,7 @@ void Parent::displayParentScreen()
 		}
 		break;
 	default:
+		inputFail();
 		cout << "Invalid option, please try again\n\n";
 		system("pause");
 		displayParentScreen();
@@ -200,8 +201,12 @@ void Parent::parentSignUp()
 	cout << "*******************\n";
 	cout << "Parent Registration\n";
 	cout << "*******************\n";
-	cout << "\nFull name: ";
+	cout << "\nFull name (or type 'exit' to go back to the home screen): ";
 	getline(cin >> ws, fullName);
+	if (fullName == "exit") // Create an exit function if users don't want to continue signing up
+	{
+		return;
+	}
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
 	gender = tolower(gender);
@@ -268,6 +273,7 @@ void Parent::parentSignUp()
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
 					"," << childData[i].emergencyContactNum << "," << contactNum << ",";
 			}
+			writeFile << "\n" << "*," << "\n";
 			login.savedUser = "," + userName; // Save the username so it is remembered by the program while the user is logged in
 			writeFile.close();
 			system("pause");

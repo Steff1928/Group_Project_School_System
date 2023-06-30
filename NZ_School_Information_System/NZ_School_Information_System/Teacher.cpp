@@ -62,6 +62,7 @@ void Teacher::displayTeacherScreen()
 		}
 		break;
 	default:
+		inputFail();
 		cout << "Invalid option, please try again\n\n";
 		system("pause");
 		displayTeacherScreen();
@@ -95,7 +96,6 @@ void Teacher::recordsScreen()
 		break;
 	case 2:
 		editRecord();
-		recordsScreen();
 		break;
 	case 3:
 		removeStudent(); 
@@ -113,6 +113,7 @@ void Teacher::recordsScreen()
 		displayTeacherScreen();
 		break;
 	default:
+		inputFail();
 		cout << "Invalid option, please try again\n\n";
 		system("pause");
 		recordsScreen();
@@ -130,9 +131,6 @@ void Teacher::addStudent()
 	string line;
 	checkLineInTeacherFile(line, 7);
 	tempStudentData.saveData(line);
-
-	cout << "Student details have been added to your class (Room " << line << ")\n";
-	system("pause");
 }
 
 // Allow teachers to edit student records and modify data
@@ -165,8 +163,13 @@ void Teacher::editRecord()
 
 	cout << "Class Number: " << line << "\n"; // Temp output to track classroom number.
 
-	cout << "\nEnter a Student ID to edit in your class: ";
+	cout << "\nEnter a Student ID to edit in your class (or type 'exit' to go back): ";
 	getline(cin >> ws, id);
+	if (id == "exit")
+	{
+		recordsScreen();
+		return;
+	}
 	readFile.open(path);
 	while (getline(readFile, line, ','))
 	{
@@ -303,6 +306,7 @@ void Teacher::editRecord()
 	}
 
 	system("pause");
+	recordsScreen();
 	return;
 }
 
@@ -312,7 +316,7 @@ void Teacher::removeStudent()
 	system("CLS");
 	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
 	ofstream writeFile;
-	string line, name;
+	string line, id;
 	string path;
 	while (getline(readFile, line, '*'))
 	{
@@ -334,17 +338,21 @@ void Teacher::removeStudent()
 	cout << "Student Records - Delete Record\n";
 	cout << "*******************************\n\n";
 	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
-	cout << "Enter a student ID to remove from your class: ";
-	//cin >> studentID;
-	getline(cin >> ws, name);
+	cout << "Enter a student ID to remove from your class (or type 'exit' to go back): ";
+	getline(cin >> ws, id);
+	if (id == "exit")
+	{
+		recordsScreen();
+		return;
+	}
 	readFile.open(path);
 	writeFile.open("Classes/temp.txt");
 	while (getline(readFile, line, '*'))
 	{
-		if (line.substr(0, name.size()) != name)
+		if (line.substr(0, id.size()) != id)
 		{
 			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-			writeFile << "*" << line   << endl;
+			writeFile << "*" << line << endl;
 		}
 	}
 	readFile.close();
@@ -620,8 +628,12 @@ void Teacher::teacherSignUp()
 	cout << "********************\n";
 	cout << "Teacher Registration\n";
 	cout << "********************\n";
-	cout << "\nFull name: ";
+	cout << "\nFull name (or type 'exit' to go back to the home screen): ";
 	getline(cin >> ws, fullName);
+	if (fullName == "exit") // Create an exit function if users don't want to continue signing up
+	{
+		return;
+	}
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
 	gender = tolower(gender);

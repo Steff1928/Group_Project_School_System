@@ -38,6 +38,7 @@ void Admin::displayAdminScreen()
         }
         break;
     default:
+        inputFail();
         cout << "Invalid option, please try again\n\n";
         system("pause");
         displayAdminScreen();
@@ -229,6 +230,7 @@ void Admin::generateReportsScreen()
         displayAdminScreen(); // Take the user back to the initial admin screen 
         break;
     default:
+        inputFail();
         cout << "Invalid option, please try again\n\n";
         system("pause");
         generateReportsScreen();
