@@ -398,6 +398,8 @@ void Teacher::removeStudent()
 
 	readFile.open(path);
 	writeFile.open("Classes/temp.txt");
+	getline(readFile, line, '*');
+
 	while (getline(readFile, line, '*'))
 	{
 		if (line.substr(0, id.size()) != id)
