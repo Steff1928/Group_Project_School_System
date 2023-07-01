@@ -228,6 +228,18 @@ void Admin::generateReports(int min, int max, string reportType)
             path = "Classes/room_" + classroomNum + ".txt";
 
             classFile.open(path);
+            getline(classFile, line, ',');
+            if (line == "*")
+            {
+                system("CLS");
+                cout << "Not all records are available to show yet, please try again later\n";
+                classFile.close();
+                system("pause");
+                generateReportsScreen();
+                return;
+            }
+            classFile.close();
+            classFile.open(path);
         }
         while (classFile.is_open())
         {

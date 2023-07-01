@@ -476,9 +476,9 @@ void Teacher::removeStudent()
 		readFile.close();
 		writeFile.close();
 		remove(path.c_str());
-		if (rename("Classes/temp.txt", path.c_str()) != 0)
+		if (rename("Classes/temp.txt", path.c_str()) != 0) // LIAM: Not really sure how this works
 		{
-			cout << "ERROR: Failed to Remove Record"; // TEMP: Helps us fix errors easier if the record couldn't be deleted
+			cout << "ERROR: Failed to Remove Record\n"; // TEMP: Helps us fix errors easier if the record couldn't be deleted
 		}
 		cout << "\n" << name << " has been removed from your class.\n"; // Notification message
 	}
