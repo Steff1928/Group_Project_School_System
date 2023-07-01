@@ -162,8 +162,10 @@ void Login::userLogin()
 	cout << "\n";
 }
 
-// Display brief information that tells the user they've successfully logged out
-// This has a return value of bool to check if the user confirms that they logged out
+/// <summary>
+/// Display a screen with information telling the user they've successfully logged out
+/// </summary>
+/// <returns>A bool that return true of false depending of if the user confirms that they logged out</returns>
 bool Login::userLogout()
 {
 	char confirmAnswer;

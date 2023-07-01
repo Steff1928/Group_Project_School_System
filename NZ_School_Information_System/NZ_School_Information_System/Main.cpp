@@ -15,6 +15,11 @@ Teacher teacherUser;
 Login login; // Define the Login variable here to use the same instance in every source file
 Parent parent;
 
+/// <summary>
+/// Takes in the first letter of the users gender and returns the full word
+/// </summary>
+/// <param name="gender">- Gets the gender of the user</param>
+/// <returns>A string displaying the complete word</returns>
 std::string displayGender(char gender)
 {
     switch (gender)
@@ -30,6 +35,11 @@ std::string displayGender(char gender)
     }
 }
 
+/// <summary>
+/// Take in the students total marks and return a string stating their overal learning progress
+/// </summary>
+/// <param name="totalMarks">- Gets the student's total marks from each subject added up</param>
+/// <returns>A string with the complete word for learning progress</returns>
 std::string displayOverallProgress(int totalMarks)
 {
     if (totalMarks <= 250)
@@ -47,6 +57,11 @@ std::string displayOverallProgress(int totalMarks)
     return "N/A";
 }
 
+/// <summary>
+/// Take in the students marks and return a string stating their overal learning progress
+/// </summary>
+/// <param name="marks">- Gets the students marks for a subject</param>
+/// <returns>A string with the first character(s) of their learning progress </returns>
 std::string displayMarkingProgress(int marks)
 {
     if (marks <= 50)

@@ -140,9 +140,17 @@ void Parent::readChildInfo(std::string& classNum, std::string& line, std::string
 			cout << "Science: " << scienceMarks << "\n";
 			cout << "Reading: " << readingMarks << "\n";
 			cout << "Writing: " << writingMarks << "\n";
-			cout << "Other: " << "  " << otherMarks << "\n\n";
+			cout << "Other: " << "  " << otherMarks << "\n";
 			break;
 		}
+		if (line == "")
+		{
+			cout << "A report for " << childName << " has not been released from their teacher yet.\n";
+		}
+	}
+	if (!readClassFile.is_open())
+	{
+		cout << "The class " << childName << " is attending has not yet been registered into the system.\n";
 	}
 	readClassFile.close();
 	
@@ -151,6 +159,7 @@ void Parent::readChildInfo(std::string& classNum, std::string& line, std::string
 // Allow the parent user to view the data for each of there children
 void Parent::viewChildReport()
 {
+	// LIAM: Can you comment the child record function? I don't fully understand what you've done here, thanks!
 	Child child;
 	system("CLS");
 	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt");
@@ -168,6 +177,7 @@ void Parent::viewChildReport()
 		readChildInfo(classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks);
 	}
 	readParentFile.close();
+	cout << "\n";
 	system("pause");
 }
 
