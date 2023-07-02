@@ -218,6 +218,12 @@ int main()
 
     adminUser.initialiseAccount(); // Initialise login details for the admin user upon start-up
 
+    // Initialise parent and teacher registration files upon start up (make sure they exist)
+    ofstream parentFile("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app);
+    ofstream teacherFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
+    parentFile.close();
+    parentFile.close();
+
     while (true)
     {
         displayIntroScreen(); // Display program intro screen on start-up
