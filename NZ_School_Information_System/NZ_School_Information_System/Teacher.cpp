@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <sstream>
 #include <iomanip>
+#include <errno.h>
 #include "Teacher.h"
 #include "Main.h"
 
@@ -81,9 +82,9 @@ void Teacher::recordsScreen()
 
 	cout << "\n1. Add Student"
 		<< "\n2. Edit Record"
-		<< "\n3. Delete Record"
-		<< "\n4. Update Record"
-		<< "\n5. View Records"
+		<< "\n3. Update Record"
+		<< "\n4. View Records"
+		<< "\n5. Delete Record"
 		<< "\n6. Back\n";
 	cout << "\nEnter corresponding number for selection: ";
 	cin >> choice;
@@ -97,13 +98,13 @@ void Teacher::recordsScreen()
 		editRecord();
 		break;
 	case 3:
-		removeStudent(); 
+		updateRecord(); 
 		break;
 	case 4:
-		updateRecord();
+		viewRecords();
 		break;
 	case 5:
-		viewRecords();
+		removeStudent();
 		break;
 	case 6:
 		displayTeacherScreen();
@@ -154,6 +155,8 @@ void Teacher::editRecord()
 	ofstream writeFile;
 	
 	string line, id, path, studentName, gender, matMarks, sciMarks, readMarks, writeMarks, otherMarks, detail, newDetail;
+	const char* fullGender = gender.c_str();
+
 	while (getline(readFile, line, '*'))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
@@ -204,7 +207,6 @@ void Teacher::editRecord()
 
 				// Display Record Data for Editing
 				cout << "\nStudent Name: " << studentName;
-				const char* fullGender = gender.c_str();
 				cout << "\nGender: " << displayGender(*fullGender);
 				cout << "\n\nMarks";
 				cout << "\n-----------------";
@@ -300,7 +302,10 @@ void Teacher::editRecord()
 	{
 		detail = "Gender";
 		strSearch = gender;
-		strReplace = newDetail;
+		strReplace[0] = tolower(newDetail[0]);
+		strReplace = strReplace[0];
+		const char* newGender = strReplace.c_str();
+		newDetail = displayGender(*newGender);
 	}
 	else if (detail == "maths")
 	{
@@ -380,7 +385,7 @@ void Teacher::editRecord()
 	remove(path.c_str());
 	if (rename("Classes/temp.txt", path.c_str()) != 0)
 	{
-		cout << "ERROR: Failed to Remove Record"; // TEMP: Helps us fix errors easier
+		cout << "ERROR: " << _errno(); // TEMP: Helps us fix errors easier if the file could not be renamed
 	}
 
 	system("pause");
@@ -475,10 +480,11 @@ void Teacher::removeStudent()
 		writeFile << "*";
 		readFile.close();
 		writeFile.close();
+
 		remove(path.c_str());
 		if (rename("Classes/temp.txt", path.c_str()) != 0) // LIAM: Not really sure how this works
 		{
-			cout << "ERROR: Failed to Remove Record\n"; // TEMP: Helps us fix errors easier if the record couldn't be deleted
+			cout << "ERROR: " << _errno(); // TEMP: Helps us fix errors easier if the file could not be renamed
 		}
 		cout << "\n" << name << " has been removed from your class.\n"; // Notification message
 	}
@@ -661,10 +667,9 @@ void Teacher::updateRecord()
 
 		// Remove the previous class file and rename the "temp.txt" file back to the class file
 		remove(path.c_str());
-
 		if (rename("Classes/temp.txt", path.c_str()) != 0)
 		{
-			cout << "ERROR: Failed to Remove Record"; // TEMP: Helps us fix errors easier
+			cout << "ERROR: " << _errno(); // TEMP: Helps us fix errors easier if the file could not be renamed
 		}
 
 		system("pause");
