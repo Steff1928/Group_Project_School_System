@@ -865,6 +865,7 @@ void Teacher::teacherSignUp()
 		// If a classroom number match is not met above, break out of the infinite loop and continue the process
 		if (line != to_string(classroomNum)) 
 		{
+			readFile.close();
 			break;
 		}
 	}
