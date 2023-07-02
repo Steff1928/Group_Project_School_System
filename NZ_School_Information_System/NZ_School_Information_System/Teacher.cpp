@@ -350,7 +350,7 @@ void Teacher::editRecord()
 
 	while (getline(infile, strTemp, ','))
 	{
-		line = strTemp; // LIAM: Don't understand why we do this
+		line = strTemp; // this is so strTemp can be used to loop through and doesn't change when we individually add each new string to the temp file. STEPHEN 
 		while (strTemp == "\n*" + id || strTemp == "*" + id)
 		{
 			// Add a comma to the line so it writes into the data into the file the same it was before
@@ -369,7 +369,7 @@ void Teacher::editRecord()
 			strTemp += ",";
 		}
 		outfile << strTemp; // Write the data from strTemp into the file so it stays the same as before
-		if (strTemp == "*" + id) // LIAM: Don't understand what this does
+		if (strTemp == "*" + id) // when it reaches the end of the line in the file it creates a new line with the "*+ id". STEPHEN
 		{
 			strTemp += "\n";
 			break;
@@ -475,7 +475,7 @@ void Teacher::removeStudent()
 		writeFile.close();
 
 		remove(path.c_str());
-		if (rename("Classes/temp.txt", path.c_str()) != 0) // LIAM: Not really sure how this works
+		if (rename("Classes/temp.txt", path.c_str()) != 0) // Renames the temp file to the string path, if doesn't return 0 it will display the error message. STEPHEN
 		{
 			cout << "ERROR: " << _errno(); // TEMP: Helps us fix errors easier if the file could not be renamed
 		}
@@ -581,8 +581,8 @@ void Teacher::updateRecord()
 
 	int choice;
 	ifstream infile(path);
-	string str_search;
-	string str_replace;
+	string strSearch;
+	string strReplace;
 	ofstream outfile;
 	// Prompt the user to either update the progress or return back to the records screen
 	cout << "\n1. Record New/Update Observation"
@@ -604,23 +604,23 @@ void Teacher::updateRecord()
 		switch (stoi(termChoice))
 		{
 		case 1:
-			str_search = "1:" + termOne;
-			str_replace = "1:" + learningProgress;
+			strSearch = "1:" + termOne;
+			strReplace = "1:" + learningProgress;
 			termChoice = "Term 1";
 			break;
 		case 2:
-			str_search = "2:" + termTwo;
-			str_replace = "2:" + learningProgress;
+			strSearch = "2:" + termTwo;
+			strReplace = "2:" + learningProgress;
 			termChoice = "Term 2";
 			break;
 		case 3:
-			str_search = "3:" + termThree;
-			str_replace = "3:" + learningProgress;
+			strSearch = "3:" + termThree;
+			strReplace = "3:" + learningProgress;
 			termChoice = "Term 3";
 			break;
 		case 4:
-			str_search = "4:" + termFour;
-			str_replace = "4:" + learningProgress;
+			strSearch = "4:" + termFour;
+			strReplace = "4:" + learningProgress;
 			termChoice = "Term 4";
 			break;
 		default: // If there are no matches, notify the user the term doesn't exist and ask them to enter an id again
@@ -632,7 +632,7 @@ void Teacher::updateRecord()
 			return;
 		}
 
-		// LIAM: Don't really understand what the below does
+		// loops through file saving current line as a string then writes it to a new file when it finds a match for strSearch it replaces it with the new string from strReplace.
 		while (getline(infile, strTemp, ','))
 		{
 			line = strTemp;
@@ -641,9 +641,9 @@ void Teacher::updateRecord()
 				line += ",";
 				outfile << line;
 				getline(infile, line, ',');
-				if (line == str_search)
+				if (line == strSearch)
 				{
-					strTemp = str_replace;
+					strTemp = strReplace;
 					break;
 				}
 			}
