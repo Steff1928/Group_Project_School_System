@@ -452,24 +452,26 @@ void Teacher::removeStudent()
 	}
 	// Close the file and open it again to force the program to go back to the beginning of the file
 	readFile.close(); 
-	readFile.open(path);
-	// Get the first asterisk in the file so that it isn't written into the first line
-	getline(readFile, line, '*'); 
-	while (getline(readFile, line, '*'))
-	{
-		// Keep writing lines back into the temp until the id is equal to the one the user wants to delete
-		if (line.substr(0, id.size()) != id)
-		{
-			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-			writeFile << "*" << line << endl;
-		}
-	}
+
 	// Confirm the users choice and if the user says so, return back to the teacher records screen
 	cout << "\nAre you sure you want to remove " << name << " from your class? (y/n): "; 
 	cin >> confirmation;
 	if (confirmation == 'y')
 	{
-		writeFile.open("Classes/temp.txt");// Open a temporary to file to write data to with updated values
+		readFile.open(path);
+		writeFile.open("Classes/temp.txt"); // Open a temporary to file to write data to with updated values
+
+		// Get the first asterisk in the file so that it isn't written into the first line
+		getline(readFile, line, '*');
+		while (getline(readFile, line, '*'))
+		{
+			// Keep writing lines back into the temp until the id is equal to the one the user wants to delete
+			if (line.substr(0, id.size()) != id)
+			{
+				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+				writeFile << "*" << line << endl;
+			}
+		}
 		writeFile << "*";
 		readFile.close();
 		writeFile.close();
