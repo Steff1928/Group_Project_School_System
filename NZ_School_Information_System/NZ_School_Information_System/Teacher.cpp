@@ -842,12 +842,12 @@ void Teacher::teacherSignUp()
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
 	gender = tolower(gender);
-	cout << "DOB (dd/mm/yy): ";
+	cout << "DOB (dd/mm/yyyy): ";
 	cin >> dob;
 	cout << "Email: ";
 	cin >> email;
 	cout << "Contact Number: ";
-	cin >> contactNum;
+	getline(cin >> ws, contactNum); // Allows spaces between numbers
 	cout << "Assigned Classroom Number: ";
 	while (true) // Create an infinite loop to that runs until a unique classroom number is entered
 	{
