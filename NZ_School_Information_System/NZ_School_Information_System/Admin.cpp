@@ -65,13 +65,19 @@ void Admin::viewClassRecords()
 
     const char* fullGender = gender.c_str();
 
-    if (!readFile.is_open())
+    // If the file exists, get the line and check if it's equal to just an asterisk or check if the file doesn't exist
+    // and notify the user accordingly.
+    getline(readFile, line, ',');
+    if (!readFile.is_open() || line == "*")
     {
         cout << "\nNo records available for this classroom yet.\n";
         system("pause");
         displayAdminScreen();
         return;
     }
+    // Close and reopen the file to start from the beginning
+    readFile.close();
+    readFile.open(path);
 
     cout << "\nStudent Records for Room " << classroom << ": \n";
 
@@ -212,7 +218,8 @@ void Admin::generateReports(int min, int max, string reportType)
     cout << "\nClassroom    Full              Maths    Science    Writing    Reading    Other    Teacher           Parent's Contact";
     cout << "\nNumber       Name                                                                 Name              Number";
     cout << "\n--------------------------------------------------------------------------------------------------------------------";
-
+    
+    // LIAM: Can't figure out how to do error checking if no reports can be generated
     while (teacherFile.is_open())
     {
         getline(teacherFile, line, ',');
@@ -227,18 +234,6 @@ void Admin::generateReports(int min, int max, string reportType)
 
             path = "Classes/room_" + classroomNum + ".txt";
 
-            classFile.open(path);
-            getline(classFile, line, ',');
-            if (line == "*")
-            {
-                system("CLS");
-                cout << "Not all records are available to show yet, please try again later\n";
-                classFile.close();
-                system("pause");
-                generateReportsScreen();
-                return;
-            }
-            classFile.close();
             classFile.open(path);
         }
         while (classFile.is_open())

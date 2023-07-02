@@ -31,7 +31,7 @@ std::string displayGender(char gender)
     case 'o':
         return "Other";
     default:
-        return "N/A";
+        return "N/A"; // Return value if an error occured
     }
 }
 
@@ -54,7 +54,7 @@ std::string displayOverallProgress(int totalMarks)
     {
         return "Achieved";
     }
-    return "N/A";
+    return "N/A"; // Return value if an error occured
 }
 
 /// <summary>
@@ -76,7 +76,7 @@ std::string displayMarkingProgress(int marks)
     {
         return "A";
     }
-    return "N/A";
+    return "N/A"; // Return value if an error occured
 }
 
 // Display the upcoming/current event details on a seperate screen

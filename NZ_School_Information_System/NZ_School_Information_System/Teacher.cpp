@@ -350,7 +350,8 @@ void Teacher::editRecord()
 
 	while (getline(infile, strTemp, ','))
 	{
-		line = strTemp; // this is so strTemp can be used to loop through and doesn't change when we individually add each new string to the temp file. STEPHEN 
+		// this is so strTemp can be used to loop through and doesn't change when we individually add each new string to the temp file 
+		line = strTemp; 
 		while (strTemp == "\n*" + id || strTemp == "*" + id)
 		{
 			// Add a comma to the line so it writes into the data into the file the same it was before
@@ -369,7 +370,7 @@ void Teacher::editRecord()
 			strTemp += ",";
 		}
 		outfile << strTemp; // Write the data from strTemp into the file so it stays the same as before
-		if (strTemp == "*" + id) // when it reaches the end of the line in the file it creates a new line with the "*+ id". STEPHEN
+		if (strTemp == "*" + id) // when it reaches the end of the line in the file it creates a new line with the "*+ id".
 		{
 			strTemp += "\n";
 			break;
@@ -477,7 +478,8 @@ void Teacher::removeStudent()
 		writeFile.close();
 
 		remove(path.c_str());
-		if (rename("Classes/temp.txt", path.c_str()) != 0) // Renames the temp file to the string path, if doesn't return 0 it will display the error message. STEPHEN
+		// Renames the temp file to the string path, if doesn't return 0 it will display the error message
+		if (rename("Classes/temp.txt", path.c_str()) != 0) 
 		{
 			cout << "ERROR: " << _errno(); // TEMP: Helps us fix errors easier if the file could not be renamed
 		}
@@ -825,6 +827,7 @@ void Teacher::teacherSignUp()
 {
 	system("CLS");
 	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
+	string line;
 	
 	// Prompt the user to enter all the inital data for teacher registration
 	cout << "********************\n";
@@ -846,7 +849,25 @@ void Teacher::teacherSignUp()
 	cout << "Contact Number: ";
 	cin >> contactNum;
 	cout << "Assigned Classroom Number: ";
-	cin >> classroomNum;
+	while (true) // Create an infinite loop to that runs until a unique classroom number is entered
+	{
+		cin >> classroomNum;
+		ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
+		// Keep getting the line until a classroom number match is met in the file or until the end of file is reached
+		while (getline(readFile, line, ',')) 
+		{
+			if (line == to_string(classroomNum)) // If a classroom number match if found, notify the user the classroom is taken
+			{
+				cout << "This classroom number is already taken, please enter another classroom number: ";
+				break;
+			}
+		}
+		// If a classroom number match is not met above, break out of the infinite loop and continue the process
+		if (line != to_string(classroomNum)) 
+		{
+			break;
+		}
+	}
 	cout << "Assigned Year Group: ";
 	getline(cin >> ws, teachingYear);
 	cout << "\n\n";
