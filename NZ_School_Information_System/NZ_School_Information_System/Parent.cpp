@@ -224,7 +224,7 @@ void Parent::parentSignUp()
 	cout << "Email: ";
 	cin >> email;
 	cout << "Contact Number: ";
-	cin >> contactNum;
+	getline(cin >> ws , contactNum);
 	cout << "\n\n";
 
 	system("pause");
@@ -248,7 +248,7 @@ void Parent::parentSignUp()
 		cout << "Emergency Contact Caregiver's Full Name: ";
 		getline(cin >> ws, child.emergencyContactName);
 		cout << "Emergency Contact Number: ";
-		cin >> child.emergencyContactNum;
+		getline(cin >> ws, child.emergencyContactNum);
 		cout << "\n";
 		childData.push_back({ child.childName,child.childClass,child.emergencyContactName,child.emergencyContactNum });
 	}

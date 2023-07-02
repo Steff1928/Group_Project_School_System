@@ -448,10 +448,8 @@ void Teacher::removeStudent()
 	// Close the file and open it again to force the program to go back to the beginning of the file
 	readFile.close(); 
 	readFile.open(path);
-	writeFile.open("Classes/temp.txt"); // Open a temporary to file to write data to with updated values
 	// Get the first asterisk in the file so that it isn't written into the first line
 	getline(readFile, line, '*'); 
-
 	while (getline(readFile, line, '*'))
 	{
 		// Keep writing lines back into the temp until the id is equal to the one the user wants to delete
@@ -464,14 +462,9 @@ void Teacher::removeStudent()
 	// Confirm the users choice and if the user says so, return back to the teacher records screen
 	cout << "\nAre you sure you want to remove " << name << " from your class? (y/n): "; 
 	cin >> confirmation;
-	if (confirmation == 'n')
+	if (confirmation == 'y')
 	{
-		recordsScreen();
-		return;
-	}
-	// If the user says yes, don't write the deleted student into the file and rename the temp file back to the class file
-	else 
-	{
+		writeFile.open("Classes/temp.txt");// Open a temporary to file to write data to with updated values
 		writeFile << "*";
 		readFile.close();
 		writeFile.close();
@@ -481,10 +474,17 @@ void Teacher::removeStudent()
 			cout << "ERROR: Failed to Remove Record\n"; // TEMP: Helps us fix errors easier if the record couldn't be deleted
 		}
 		cout << "\n" << name << " has been removed from your class.\n"; // Notification message
+		system("pause");
+		recordsScreen();
+		return;
 	}
-	system("pause");
-	recordsScreen();
-	return;
+	// If the user says yes, don't write the deleted student into the file and rename the temp file back to the class file
+	else 
+	{
+		recordsScreen();
+		return;
+	}
+
 }
 
 // Allow teachers to add new/update a students learning progress for each term
@@ -577,8 +577,7 @@ void Teacher::updateRecord()
 	ifstream infile(path);
 	string str_search;
 	string str_replace;
-	ofstream outfile("Classes/temp.txt");
-
+	ofstream outfile;
 	// Prompt the user to either update the progress or return back to the records screen
 	cout << "\n1. Record New/Update Observation"
 		<< "\n2. Back";
@@ -590,6 +589,7 @@ void Teacher::updateRecord()
 	case 1:
 		// Take in input for the users term choice, switch on the term, and replace the learning observation 
 		// for that term.
+		outfile.open("Classes/temp.txt");
 		cout << "\nChoose a Term Number (1 - 4): ";
 		cin >> termChoice;
 		cout << "Learning Progress (Achieved, Progressing, Needs Help): ";
