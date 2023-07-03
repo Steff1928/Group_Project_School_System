@@ -10,19 +10,19 @@ class Parent
 private:
 	// Define variables to be used exclusively for parent registration
 	std::string fullName;
-	char gender = 0;
+	char gender;
+	int childAmount;
 	std::string dob;
 	std::string email;
 	std::string contactNum;
 	std::string userName;
 	std::string password;
-public:
 	// Initialise the child data within a nested structure, making it easier for us to count and store the data
 	// since parents can have multiple children
 	struct Child 
 	{
 		std::string childName;
-		int childClass = 0;
+		int childClass;
 		std::string emergencyContactName;
 		std::string emergencyContactNum;
 		// Add a constructors to initilaise all the values for the child data
@@ -31,10 +31,10 @@ public:
 		Child();
 	};
 public:
-	int childAmount = 0;
 	// Declare functions to be used in any source file 
-	void checkLineInFile(std::string& line, int lineNum);
+	void checkLineInFile(std::string& line, const int lineNum);
 	void displayParentScreen();
+	void readParent(std::ifstream& readParentFile, std::string& line, std::string& classNum, std::string& childName, std::vector<Parent::Child>& childData, Parent::Child child);
 	void viewChildReport();
 	void readChildInfo(std::string& classNum, std::string& line, std::string& childName, std::string& gender, std::string& mathMarks, std::string& scienceMarks, std::string& readingMarks, std::string& writingMarks, std::string& otherMarks);
 	void viewNotices();

@@ -9,8 +9,9 @@ class Admin
 {
 private:
 	// Define variables to be used exclusively for admin purposes
-	std::string userName;
-	std::string password;
+	// Ensure the admin username and password cannot be changed after program start up with "const"
+	const std::string userName = "admin"; 
+	const std::string password = "admin";
 	Login login;
 	Teacher teacher;
 	int classroom;
@@ -21,8 +22,7 @@ public:
 	void viewClassRecords();
 	void viewParentRecords();
 	void generateReportsScreen();
-	void generateReports(int min, int max, std::string reportType);
+	void generateReports(const int min, const int max, const std::string reportType);
 	void initialiseAccount();
 	Admin();
 };
-

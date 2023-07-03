@@ -16,11 +16,11 @@ Login login; // Define the Login variable here to use the same instance in every
 Parent parent;
 
 /// <summary>
-/// Takes in the first letter of the users gender and returns the full word
+/// Takes in the first letter of the user's gender and returns the full word
 /// </summary>
 /// <param name="gender">- Gets the gender of the user</param>
 /// <returns>A string displaying the complete word</returns>
-std::string displayGender(char gender)
+std::string displayGender(const char gender)
 {
     switch (gender)
     {
@@ -31,7 +31,7 @@ std::string displayGender(char gender)
     case 'o':
         return "Other";
     default:
-        return "N/A"; // Return value if an error occured
+        return "N/A"; // Return an "N/A" value if an error occured
     }
 }
 
@@ -39,8 +39,8 @@ std::string displayGender(char gender)
 /// Take in the students total marks and return a string stating their overal learning progress
 /// </summary>
 /// <param name="totalMarks">- Gets the student's total marks from each subject added up</param>
-/// <returns>A string with the complete word for learning progress</returns>
-std::string displayOverallProgress(int totalMarks)
+/// <returns>A string with the complete word for the students learning progress</returns>
+std::string displayOverallProgress(const int totalMarks)
 {
     if (totalMarks <= 250)
     {
@@ -54,7 +54,7 @@ std::string displayOverallProgress(int totalMarks)
     {
         return "Achieved";
     }
-    return "N/A"; // Return value if an error occured
+    return "N/A"; // Return an "N/A" value if an error occured
 }
 
 /// <summary>
@@ -62,7 +62,7 @@ std::string displayOverallProgress(int totalMarks)
 /// </summary>
 /// <param name="marks">- Gets the students marks for a subject</param>
 /// <returns>A string with the first character(s) of their learning progress </returns>
-std::string displayMarkingProgress(int marks)
+std::string displayMarkingProgress(const int marks)
 {
     if (marks <= 50)
     {
@@ -76,7 +76,7 @@ std::string displayMarkingProgress(int marks)
     {
         return "A";
     }
-    return "N/A"; // Return value if an error occured
+    return "N/A"; // Return an "N/A" value if an error occured
 }
 
 // Display the upcoming/current event details on a seperate screen
@@ -195,7 +195,7 @@ void displayRegistrationScreen()
     }
 }
 
-// If the users input throws an error in any menu, run this function to clear it and continue 
+// If the users input throws an error in any menu, run this function to clear it and continue
 void inputFail()
 {
     if (cin.fail())

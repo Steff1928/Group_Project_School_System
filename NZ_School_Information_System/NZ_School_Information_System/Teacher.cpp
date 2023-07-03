@@ -16,7 +16,7 @@ using namespace std;
 /// </summary>
 /// <param name="line"> - A string to hold the current line in the file</param>
 /// <param name="lineNum"> - Tells the program which line to read out</param>
-void Teacher::checkLineInTeacherFile(string& line, int lineNum)
+void Teacher::checkLineInTeacherFile(string& line, const int lineNum)
 {
 	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
 	while (getline(readFile, line, '*'))
@@ -177,7 +177,7 @@ void Teacher::editRecord()
 	cout << "Student Records - Edit Record\n";
 	cout << "*****************************\n";
 
-	cout << "Class Number: " << line << "\n"; // Temp output to track classroom number.
+	cout << "\nClass Number: " << line; // Temp output to track classroom number.
 
 	cout << "\nEnter a Student ID to edit in your class (or type 'exit' to go back): ";
 	getline(cin >> ws, id);
@@ -931,5 +931,6 @@ Teacher::Teacher(std::string _fullName, char _gender, std::string _dob, std::str
 // Default constructor (currently not needed to be used)
 Teacher::Teacher()
 {
-
+	classroomNum = 0;
+	gender = 0;
 }

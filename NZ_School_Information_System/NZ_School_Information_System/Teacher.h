@@ -9,18 +9,18 @@ class Teacher
 private:
 	// Define variables, exclusively used for teacher registration
 	std::string fullName;
-	char gender = 0;
+	char gender;
 	std::string dob;
 	std::string email;
 	std::string contactNum;
-	int classroomNum = 0;
+	int classroomNum;
 	std::string teachingYear;
 	Student tempStudentData;
 	std::string userName;
 	std::string password; 
 public:
 	// Declare functions to be used elsewhere when deemed necessary
-	void checkLineInTeacherFile(std::string& line, int lineNum);
+	void checkLineInTeacherFile(std::string& line, const int lineNum);
 	void displayTeacherScreen();
 	void recordsScreen();
 	void addStudent();

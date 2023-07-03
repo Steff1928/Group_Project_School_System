@@ -4,6 +4,7 @@
 #include <iomanip>
 #include "Admin.h"
 #include "Main.h"
+
 using namespace std;
 
 // Display restricted options for users logged in as an administrator
@@ -199,8 +200,13 @@ void Admin::generateReportsScreen()
     }
 }
 
-// Display reports of students who need help
-void Admin::generateReports(int min, int max, string reportType)
+/// <summary>
+/// Display reports of students who need help
+/// </summary>
+/// <param name="min">- The minimum value the program evaluates to decide on a report type</param>
+/// <param name="max">- The maximum value the program evaluates to decide on a report type</param>
+/// <param name="reportType">- The type type of report displayed as a string</param>
+void Admin::generateReports(const int min, const int max, const string reportType)
 {
     system("CLS");
 
@@ -219,7 +225,7 @@ void Admin::generateReports(int min, int max, string reportType)
     cout << "\nNumber       Name                                                                 Name              Number";
     cout << "\n--------------------------------------------------------------------------------------------------------------------";
     
-    // LIAM: Can't figure out how to do error checking if no reports can be generated
+    // LIAM: Can't figure out how to do error checking if no reports can be generated, gonna come back to this
     while (teacherFile.is_open())
     {
         getline(teacherFile, line, ',');
@@ -323,7 +329,5 @@ void Admin::initialiseAccount()
 
 Admin::Admin()
 {
-    // Initialise admin login details
-    userName = "admin";
-    password = "admin";
+    classroom = 0;
 }

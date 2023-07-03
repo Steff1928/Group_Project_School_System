@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "Parent.h"
 #include "Main.h"
+
 using namespace std;
 
 /// <summary>
@@ -12,7 +13,7 @@ using namespace std;
 /// </summary>
 /// <param name="line"> - Holds the data for the current line in the file</param>
 /// <param name="lineNum"> - Tells the program which line to read out</param>
-void Parent::checkLineInFile(std::string& line, int lineNum)
+void Parent::checkLineInFile(std::string& line, const int lineNum)
 {
 	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Opens a file in read mode 
 	// Loops through the designated file storing each value in "line"
@@ -74,21 +75,29 @@ void Parent::displayParentScreen()
 		displayParentScreen();
 	}
 }
-
-void readParent(ifstream& readParentFile, std::string& line, std::string& classNum, std::string& childName, std::vector<Parent::Child> &childData, Parent::Child child)
+/// <summary>
+/// Read lines in the parent file to get the child name(s) for the logged in parent user and add it to a vector of childData
+/// </summary>
+/// <param name="readParentFile"></param>
+/// <param name="lineInFile"></param>
+/// <param name="classNum"></param>
+/// <param name="childName"></param>
+/// <param name="childData"></param>
+/// <param name="child"></param>
+void Parent::readParent(std::ifstream& readParentFile, std::string& lineInFile, std::string& classNum, std::string& childName, std::vector<Parent::Child>& childData, Parent::Child child)
 {
-	while (getline(readParentFile, line, '*'))
+	while (getline(readParentFile, lineInFile, '*'))
 	{
-		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		if (line == login.savedUser)
+		lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
+		if (lineInFile == login.savedUser)
 		{
-			getline(readParentFile, line);
-			while (line != "*")
+			getline(readParentFile, lineInFile);
+			while (lineInFile != "*")
 			{
-				getline(readParentFile, line, ',');
-				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+				getline(readParentFile, lineInFile, ',');
+				lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
 				getline(readParentFile, classNum, ',');
-				childName = line;
+				childName = lineInFile;
 				if (childName == "*" || childName == "")
 				{
 					break;
@@ -97,24 +106,36 @@ void readParent(ifstream& readParentFile, std::string& line, std::string& classN
 				child.childClass = stoi(classNum);
 
 				childData.push_back(child);
-				getline(readParentFile, line);		
+				getline(readParentFile, lineInFile);		
 			}
 			break;
 		}
 	}
 }
 
-void Parent::readChildInfo(std::string& classNum, std::string& line, std::string& childName, std::string& gender, std::string& mathMarks, std::string& scienceMarks, std::string& readingMarks, std::string& writingMarks, std::string& otherMarks)
+/// <summary>
+/// Opens and reads the data from the logged in parent's child's classroom file and displays it to the console
+/// </summary>
+/// <param name="classNum"></param>
+/// <param name="lineInFile"></param>
+/// <param name="childName"></param>
+/// <param name="gender"></param>
+/// <param name="mathMarks"></param>
+/// <param name="scienceMarks"></param>
+/// <param name="readingMarks"></param>
+/// <param name="writingMarks"></param>
+/// <param name="otherMarks"></param>
+void Parent::readChildInfo(std::string& classNum, std::string& lineInFile, std::string& childName, std::string& gender, std::string& mathMarks, std::string& scienceMarks, std::string& readingMarks, std::string& writingMarks, std::string& otherMarks)
 {
 	ifstream readClassFile("Classes/room_" + classNum + ".txt");
 	const char* fullGender = gender.c_str();
-	while (getline(readClassFile, line, ','))
+	while (getline(readClassFile, lineInFile, ','))
 	{
-		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		line.erase(remove(line.begin(), line.end(), '*'), line.end());
-		if (line == childName)
+		lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
+		lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '*'), lineInFile.end());
+		if (lineInFile == childName)
 		{
-			line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+			lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
 			getline(readClassFile, gender, ',');
 			getline(readClassFile, mathMarks, ',');
 			getline(readClassFile, scienceMarks, ',');
@@ -143,7 +164,7 @@ void Parent::readChildInfo(std::string& classNum, std::string& line, std::string
 			cout << "Other: " << "  " << otherMarks << "\n";
 			break;
 		}
-		if (line == "")
+		if (lineInFile == "")
 		{
 			cout << "A report for " << childName << " has not been released from their teacher yet.\n";
 		}
@@ -201,7 +222,6 @@ void Parent::parentSignUp()
 {
 	Child child;
 	vector<Child> childData; // Take in a vector of type Child to store multiple children in one parent registration
-	string userInput;
 
 	system("CLS");
 	ofstream writeFile("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app);
@@ -250,6 +270,7 @@ void Parent::parentSignUp()
 		cout << "Emergency Contact Number: ";
 		getline(cin >> ws, child.emergencyContactNum);
 		cout << "\n";
+		// LIAM: Could you not just go: "childData.push_back(child)" instead of what you've done below?
 		childData.push_back({ child.childName,child.childClass,child.emergencyContactName,child.emergencyContactNum });
 	}
 	system("pause");
@@ -298,7 +319,7 @@ void Parent::parentSignUp()
 	writeFile.close();
 }
 
-// Initialise all the values
+// Initialise the values for the Parent class
 Parent::Parent(std::string _fullName, char _gender, std::string _dob, std::string _email, std::string _contactNum, std::string _userName)
 {
 	fullName = _fullName;
@@ -309,11 +330,14 @@ Parent::Parent(std::string _fullName, char _gender, std::string _dob, std::strin
 	userName = _userName;
 }
 
+// Default constructor for Parent
 Parent::Parent()
 {
-
+	gender = 0;
+	childAmount = 0;
 }
 
+// Initialise the values for the Child struct
 Parent::Child::Child(std::string _childName, int _childClass, std::string _emergencyContactName, 
 	std::string _emergencyContactNum)
 {
@@ -323,7 +347,8 @@ Parent::Child::Child(std::string _childName, int _childClass, std::string _emerg
 	emergencyContactNum = _emergencyContactNum;
 }
 
+// Default constructor for Child in Parent
 Parent::Child::Child()
 {
-
+	childClass = 0;
 }

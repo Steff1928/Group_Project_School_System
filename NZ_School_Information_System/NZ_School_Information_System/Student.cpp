@@ -4,21 +4,15 @@
 #include <fstream>
 #include "Student.h"
 #include "Teacher.h"
+
 using namespace std;
-
-vector<Student> students;
-
-void Student::getRecord()
-{
-	
-}
 
 /// <summary>
 /// Prompt the user to enter data for a student and save it to a class file.
 /// (This will be called when a teacher wants to add a student so their data will be saved to that class)
 /// </summary>
 /// <param name="line">- Gets the designated class number from the teacher registration file to write the data in a class file</param>
-void Student::saveData(string line)
+void Student::saveData(const string line)
 {
 	Teacher teacher;
 	cout << "\nStudent Name (or type 'exit' to go back): ";
@@ -75,7 +69,7 @@ void Student::saveData(string line)
 	writeCount << count;
 	writeCount.close();
 
-	cout << "Student details have been added to your class (Room " << line << ")\n";
+	cout << "\nStudent details have been added to your class (Room " << line << ")\n";
 	system("pause");
 	teacher.recordsScreen();
 }

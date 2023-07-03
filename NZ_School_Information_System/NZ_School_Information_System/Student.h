@@ -17,8 +17,6 @@ private:
 	int studentId;
 public:
 	// Define functions to be used outside of this source file, as well as in it
-	void getRecord();
-	void saveData(std::string line);
+	void saveData(const std::string line);
 	Student();
 };
-
