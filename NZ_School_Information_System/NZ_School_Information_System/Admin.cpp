@@ -218,7 +218,7 @@ void Admin::generateReports(const int min, const int max, const string reportTyp
     ifstream classFile; // Define a file variable to look in the designated class file
     ifstream parentFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Open the parent file
     ifstream teacherFile("Sign_Up_And_Login_Details/teacher_registration.txt"); // Open the teacher file
-    // Variables to store data from the teacher file and the line to look through it
+    // Variables to store data from the teacher file, the line to look through it and the path of the file
     string teacherLine, line, path, teacherName, classroomNum, parentContactNum;
     // Variables to store the learning progress for a student in each subject
     string studentName, matProgress, sciProgress, writeProgress, readProgress, otherProgress;
@@ -228,9 +228,9 @@ void Admin::generateReports(const int min, const int max, const string reportTyp
     cout << "Student Reports - " << reportType << "           --------------------------------------------------\n";
     cout << "******************************\n";
 
-    cout << "\nClassroom    Full              Maths    Science    Writing    Reading    Other    Teacher           Parent's Contact";
-    cout << "\nNumber       Name                                                                 Name              Number";
-    cout << "\n--------------------------------------------------------------------------------------------------------------------";
+    cout << "\nClassroom    Full                Maths    Science    Writing    Reading    Other    Teacher           Parent's Contact";
+    cout << "\nNumber       Name                                                                   Name              Number";
+    cout << "\n----------------------------------------------------------------------------------------------------------------------";
     
     // LIAM: Can't figure out how to do error checking if no reports can be generated, gonna come back to this
     // While the teacher file is open, look through each teacher for their name and classroom number and get the student
@@ -315,11 +315,11 @@ void Admin::generateReports(const int min, const int max, const string reportTyp
                     }
 
                     // Display all of the data in a table like format using setw() to manage spacing
-                    cout << "\n" << left << setw(13) << classroomNum << setw(18) << studentName << setw(9) << displayMarkingProgress(stoi(matProgress))
+                    cout << "\n" << left << setw(13) << classroomNum << setw(20) << studentName << setw(9) << displayMarkingProgress(stoi(matProgress))
                         << setw(11) << displayMarkingProgress(stoi(sciProgress)) << setw(11) << displayMarkingProgress(stoi(writeProgress))
                         << setw(11) << displayMarkingProgress(stoi(readProgress)) << setw(9) << displayMarkingProgress(stoi(otherProgress))
                         << setw(18) << teacherName << parentContactNum;
-                    cout << "\n--------------------------------------------------------------------------------------------------------------------";
+                    cout << "\n----------------------------------------------------------------------------------------------------------------------";
                 }
                 getline(classFile, line); // Get the next line to avoid the learning observations in the file being outputted
             }

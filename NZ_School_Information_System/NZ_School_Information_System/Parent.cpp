@@ -235,7 +235,7 @@ void Parent::parentSignUp()
 	vector<Child> childData; // Take in a vector of type Child to store multiple children in one parent registration
 
 	system("CLS");
-	ofstream writeFile("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app);
+	ofstream writeFile("Sign_Up_And_Login_Details/parent_registration.txt", ios_base::app); // Open the parent file in append mode
 
 	// Initial personal details
 	cout << "*******************\n";

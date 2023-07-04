@@ -14,18 +14,18 @@ using namespace std;
 /// <param name="lineNum"> - Tells the program which line to read out</param>
 void Teacher::checkLineInTeacherFile(string& line, const int lineNum)
 {
-	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
-	while (getline(readFile, line, '*'))
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt"); // Open the teacher file
+	while (getline(readFile, line, '*')) // Loop through each line to find a match for the logged in user
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		if (line == login.savedUser)
+		if (line == login.savedUser) // If a match is found for logged in user, loop through the data in the line
 		{
 			for (int i = 0; i < lineNum; i++) // Fixed number used here to loop to a certain line we require in a file
 			{
 				getline(readFile, line, ',');
 			}
-			readFile.close();
-			break;
+			readFile.close(); // Close the file once finished
+			break; // Break out of the loop
 		}
 	}
 }
@@ -35,7 +35,6 @@ void Teacher::displayTeacherScreen()
 {
 	system("CLS");
 	int choice;
-
 	string line;
 
 	checkLineInTeacherFile(line, 2); // Get the value of line from the file to display the name of the teacher in the home screen
@@ -85,7 +84,7 @@ void Teacher::recordsScreen()
 	cout << "\nEnter corresponding number for selection: ";
 	cin >> choice;
 
-	switch (choice)
+	switch (choice) // Depending on the key pressed, run the designated function by switching on "choice"
 	{
 	case 1:
 		addStudent();
@@ -105,7 +104,7 @@ void Teacher::recordsScreen()
 	case 6:
 		displayTeacherScreen();
 		break;
-	default:
+	default: // Manage invalid inputs if a case match is not found with "default"
 		inputFail();
 		system("pause");
 		recordsScreen();
@@ -121,7 +120,7 @@ void Teacher::addStudent()
 	cout << "*****************************\n";
 
 	string line;
-	checkLineInTeacherFile(line, 7);
+	checkLineInTeacherFile(line, 7); // Run the checkLineInTeacherFile() function to get the class number
 	tempStudentData.saveData(line); // Access the student source file to grab the required data
 	return;
 }
@@ -129,12 +128,13 @@ void Teacher::addStudent()
 /// <summary>
 /// Run through each character in a string and check to see if any characters are digits
 /// </summary>
-/// <param name="numCheck">- The string the program should check digits in</param>
+/// <param name="numCheck">- The string the program should check for digits in</param>
 /// <returns>A bool that returns true or false depending on if there were any digits in the string</returns>
 bool checkString(string numCheck)
 {
-	for (int i = 0; i < numCheck.length(); i++)
+	for (int i = 0; i < numCheck.length(); i++) // Loop through to the length of a string
 	{
+		// If there are no digits in the string, return false, else return true
 		if (isdigit(numCheck[i]) == false)
 		{
 			return false;
@@ -147,11 +147,12 @@ bool checkString(string numCheck)
 void Teacher::editRecord()
 {
 	system("CLS");
-	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
-	ofstream writeFile;
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt"); // Open the teacher file
+	ofstream writeFile; // Variable for writing into a file
 	
+	// Variables to store data from the student's class file, the line to look through it, and the path of the file
 	string line, id, path, studentName, gender, matMarks, sciMarks, readMarks, writeMarks, otherMarks, detail, newDetail;
-	const char* fullGender = gender.c_str();
+	const char* fullGender = gender.c_str(); // Stores the full word for gender as a pointer of const char*
 
 	while (getline(readFile, line, '*'))
 	{
@@ -167,7 +168,7 @@ void Teacher::editRecord()
 		}
 	}
 
-	path = "Classes/room_" + line + ".txt"; // Assign the classroom to path
+	path = "Classes/room_" + line + ".txt"; // Assign the classroom number to path
 
 	cout << "*****************************\n";
 	cout << "Student Records - Edit Record\n";
@@ -182,6 +183,7 @@ void Teacher::editRecord()
 		recordsScreen();
 		return;
 	}
+	// Open the file in path and loop through it until a match for id is found
 	readFile.open(path);
 	while (getline(readFile, line, ','))
 	{
@@ -252,14 +254,15 @@ void Teacher::editRecord()
 	{
 		getline(cin >> ws, newDetail); // Take in input for the edited value
 	
-		// Check if the detail the user wants to change is a mark and ensure the new value entered is in between
-		// 0 and 100.
+		// Check if the detail the user wants to change is a mark and ensure the new value entered is between 0 and 100.
 		if (detail == "maths" || detail == "science" || detail == "reading" || detail == "writing" || detail == "other")
 		{
 			if (checkString(newDetail))
 			{
 				if (stoi(newDetail) >= 0 && stoi(newDetail) <= 100)
+				{
 					break;
+				}
 				else // Check if the user entered a value that was not between 0 and 100 and notify the user
 				{
 					cout << "Please enter a number between 0 and 100: ";
@@ -348,11 +351,11 @@ void Teacher::editRecord()
 		line = strTemp; 
 		while (strTemp == "\n*" + id || strTemp == "*" + id)
 		{
-			// Add a comma to the line so it writes into the data into the file the same it was before
+			// Add a comma to the line so it writes the data into the file the same it was before
 			line += ",";
 			outfile << line;
 			getline(infile, line, ',');
-			// If a match is found in the file, replace the value with the new value and break out of the loop
+			// If a match is found in the file, replace the old value with the new value and break out of the loop
 			if (line == strSearch) 
 			{
 				strTemp = strReplace;
@@ -378,11 +381,12 @@ void Teacher::editRecord()
 	remove(path.c_str());
 	if (rename("Classes/temp.txt", path.c_str()) == 0)
 	{
-		cout << "\n\n" << detail << " has now been changed to " << newDetail << ".\n";
+		// Notification message if renaming the file was successful
+		cout << "\n\n" << detail << " has now been changed to " << newDetail << ".\n"; 
 	}
 	else
 	{
-		cout << "\n\nERROR: File could not be renamed"; // Helps us fix errors easier if the file could not be renamed
+		cout << "\n\nERROR: File could not be renamed\n"; // Helps us fix errors easier if the file could not be renamed
 	}
 
 	system("pause");
@@ -394,11 +398,12 @@ void Teacher::editRecord()
 void Teacher::removeStudent()
 {
 	system("CLS");
-	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
-	ofstream writeFile;
-	string line, id, name; 
-	string path;
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt"); // Open the teacher file
+	ofstream writeFile; // Variable for writing into a file
+	string line, id, name; // Strings for getting the id and name in the file and the general line in file
+	string path; // Path of file
 	char confirmation;
+
 	// Look through the teacher file to find the teacher who logged in and get their class number
 	while (getline(readFile, line, '*'))
 	{
@@ -414,18 +419,21 @@ void Teacher::removeStudent()
 		}
 	}
 	path = "Classes/room_" + line + ".txt"; // Set the path variable to the designated classroom file
+
 	cout << "*******************************\n";
 	cout << "Student Records - Delete Record\n";
 	cout << "*******************************\n\n";
-	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
+
+	cout << "Class Number: " << line << "\n"; // Temp output to track classroom number.
 	cout << "Enter a student ID to remove from your class (or type 'exit' to go back): ";
 	getline(cin >> ws, id);
 	if (id == "exit") // Allow the user to go back to the records screen
 	{
 		recordsScreen();
-		return;
+		return; // Returns an empty value from this function
 	}
-	readFile.open(path); // Open the file in the set path
+	// Open the file in the set path and loop through it until an id match is found
+	readFile.open(path); 
 	while (getline(readFile, line, ','))
 	{
 		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
@@ -447,61 +455,63 @@ void Teacher::removeStudent()
 			return;
 		}
 	}
-	// Close the file and open it again to force the program to go back to the beginning of the file
+	// Close the file when finished
 	readFile.close(); 
 
 	// Confirm the users choice and if the user says so, return back to the teacher records screen
 	cout << "\nAre you sure you want to remove " << name << " from your class? (y/n): "; 
 	cin >> confirmation;
+
+	// If the user says yes, don't write the deleted student into the file and rename the temp file back to the class file
 	if (confirmation == 'y')
 	{
-		readFile.open(path);
-		writeFile.open("Classes/temp.txt"); // Open a temporary to file to write data to with updated values
+		readFile.open(path); // Open the file in path again to force the program back to the beginning of its contents
+		writeFile.open("Classes/temp.txt"); // Open a temporary file to write data into with updated values
 
 		// Get the first asterisk in the file so that it isn't written into the first line
 		getline(readFile, line, '*');
 		while (getline(readFile, line, '*'))
 		{
-			// Keep writing lines back into the temp until the id is equal to the one the user wants to delete
+			// Keep writing lines back into the temp file until the id is equal to the one the user wants to delete
 			if (line.substr(0, id.size()) != id)
 			{
 				line.erase(remove(line.begin(), line.end(), '\n'), line.end());
 				writeFile << "*" << line << endl;
 			}
 		}
-		writeFile << "*";
+		writeFile << "*"; // Write an asterisk into the last line to fit with the file structure
+		// Close all files when finished
 		readFile.close();
 		writeFile.close();
 
 		remove(path.c_str());
-		// Renames the temp file to the string path, if doesn't return 0 it will display the error message
+		// Renames the temp file to the string path, if it doesn't return 0 it will display the error message
 		if (rename("Classes/temp.txt", path.c_str()) == 0) 
 		{
-			cout << "\n" << name << " has been removed from your class.\n"; // Notification message
+			cout << "\n" << name << " has been removed from your class.\n"; // Notification message if renaming the file was successful
 		}
 		else
 		{
-			cout << "\nERROR: File could not be renamed"; // TEMP: Helps us fix errors easier if the file could not be renamed
+			cout << "\nERROR: File could not be renamed\n"; // Helps us fix errors easier if the file could not be renamed
 		}
 		system("pause");
 		recordsScreen();
 		return;
 	}
-	// If the user says yes, don't write the deleted student into the file and rename the temp file back to the class file
-	else 
+	else // If the user says no, make no changes and go back to the records screen
 	{
 		recordsScreen();
 		return;
 	}
-
 }
 
 // Allow teachers to add new/update a students learning progress for each term
 void Teacher::updateRecord()
 {
 	system("CLS");
-	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
-	ofstream writeFile;
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt"); // Open the teacher file
+	ofstream writeFile; // Create a variable for writing into a file
+	// Variables to store learning observation data from the student's class file
 	string line, id, path, name, termChoice, learningProgress, termOne, termTwo, termThree, termFour, strTemp;
 	// Look through the teacher file to find the teacher who logged in and get their class number
 	while (getline(readFile, line, '*'))
@@ -523,18 +533,18 @@ void Teacher::updateRecord()
 	cout << "*******************************\n";
 	cout << "Student Records - Update Record\n";
 	cout << "*******************************\n\n";
-	cout << "Class Number: " << line << "\n"; // Temp output to track classroom number.
 
+	cout << "Class Number: " << line << "\n"; // Temp output to track classroom number.
 	cout << "Enter a Student ID to update their learning progression (or type 'exit' to go back): ";
 	getline(cin >> ws, id);
 	if (id == "exit") // Allow the user to go back if they change their mind
 	{
 		recordsScreen();
-		return;
+		return; // Return an empty value
 	}
-	readFile.open(path);  // Open the file in path
-
-	while (getline(readFile, line, ',')) // Look through the classroom file to find an id match for the student
+	// Open the file in path and look through the classroom file to find an id match for the student
+	readFile.open(path); 
+	while (getline(readFile, line, ',')) 
 	{
 		if (!readFile.eof())
 		{
@@ -582,14 +592,13 @@ void Teacher::updateRecord()
 	}
 	readFile.close(); // Close the file when finished
 
-	int choice;
-	
 	// Create a file and open it in the designated class so the program can look for its data
 	ifstream infile(path);
 	string strSearch; // A string used to search for the old data
 	string strReplace; // A string used to replace the old data with the new data
 	ofstream outfile; // Write the new data into a temp file
 
+	int choice;
 	// Prompt the user to either update the progress or return back to the records screen
 	cout << "\n1. Record New/Update Observation"
 		<< "\n2. Back";
@@ -603,7 +612,6 @@ void Teacher::updateRecord()
 		// for that term.
 		outfile.open("Classes/temp.txt");
 		cout << "\nChoose a Term Number (1 - 4): ";
-
 		// Check if term number is between 1 and 4 and is not a string
 		while (true)
 		{
@@ -650,7 +658,6 @@ void Teacher::updateRecord()
 			termChoice = "Term 4";
 			break;
 		}
-
 		// loops through file saving current line as a string then writes it to a new file when it finds a match for strSearch
 		// it replaces it with the new string from strReplace.
 		while (getline(infile, strTemp, ','))
@@ -686,26 +693,28 @@ void Teacher::updateRecord()
 		remove(path.c_str());
 		if (rename("Classes/temp.txt", path.c_str()) == 0)
 		{
+			// Notification message if renaming the file was successful
 			cout << "\n\nSuccessfully updated " << name << "'s learning progression to " << learningProgress
 				<< " for " << termChoice << ".\n";
 		}
 		else
 		{
 			cout << "\n\nERROR: File could not be renamed\n"; // Helps us fix errors easier if the file could not be renamed
-
 		}
 		system("pause");
 		recordsScreen();
 		return;
 	case 2: // If the user entered 2 for back, go back to the records screen
+		// Close all files before returning so "rename" does not fail
 		infile.close();
-		outfile.close(); // Close temp file here so it doesn't remain open when it needs be renamed
+		outfile.close();
 		recordsScreen();
 		return;
 	default: // If there was no choice match, manage conversion errors with inputFail() and display error message accordingly
 		inputFail();
+		// Close all files before returning so "rename" does not fail
 		infile.close();
-		outfile.close(); // Close temp file here so it doesn't remain open when it needs be renamed
+		outfile.close();
 		system("pause");
 		updateRecord();
 	}
@@ -715,9 +724,9 @@ void Teacher::updateRecord()
 void Teacher::viewRecords()
 {
 	system("CLS");
-	int studentCount = 0;
-	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
-	string line, id, path;
+	int studentCount = 0; // Manage number of students registered in the class
+	ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt"); // Open teacher file
+	string line, id, path; // Variables to hold the line in file, student id and path of file
 
 	// Look through the teacher file to find the teacher who logged in and get their class number
 	while (getline(readFile, line, '*'))
@@ -734,14 +743,15 @@ void Teacher::viewRecords()
 		}
 	}
 
-	path = "Classes/room_" + line + ".txt"; // Set the path to the designated classroom file
+	// Assing the classroom number to the path and open the file in path
+	path = "Classes/room_" + line + ".txt"; 
 	readFile.open(path);
 
 	cout << "******************************\n";
 	cout << "Student Records - View Records\n";
 	cout << "******************************\n";
 
-	// Increase the student count as long as the program doesn't find a single "*" taking up a line
+	// Increase the student count as long as the program doesn't find a standalone "*" taking up a line
 	while (getline(readFile, line))
 	{
 		if (line == "*")
@@ -750,7 +760,8 @@ void Teacher::viewRecords()
 		}
 		studentCount++;
 	}
-	readFile.close();
+	// Close and reopen the file to force the program back to the start
+	readFile.close(); 
 	readFile.open(path);
 
 	// If the program couldn't find any students, notify the user there are no records to show and return to the records screen.
@@ -771,6 +782,7 @@ void Teacher::viewRecords()
 	getRecordData(readFile, line);
 	
 	cout << "\n\n";
+	readFile.close(); // Close the file when finished
 	system("pause");
 	recordsScreen();
 }
@@ -782,9 +794,10 @@ void Teacher::viewRecords()
 /// <param name="line"> - Takes in a string to read the data into</param>
 void Teacher::getRecordData(std::ifstream& readFile, std::string& line)
 {
+	// Variables to store data from the student's class file
 	string studentName, gender, matMarks, sciMarks, readMarks, writeMarks, otherMarks, learningProgress;
-	int totalMarks = 0;
-	const char* fullGender = gender.c_str();
+	int totalMarks = 0; // Stores the total marks added up from each subject
+	const char* fullGender = gender.c_str(); // Stores gender as a full word of a pointer of const char*
 
 	// Print out the different categories to the console
 	cout << "\nID    Full Name                Gender    Maths    Science    Writing    Reading    Other    Learning Progress";
@@ -792,7 +805,7 @@ void Teacher::getRecordData(std::ifstream& readFile, std::string& line)
 
 	while (readFile.is_open())
 	{
-		getline(readFile, line, ','); // Skip the idea so the next line starts from the student name
+		getline(readFile, line, ','); // Skip the first line so the next line starts from the student name
 		
 		// Remove unecessary characters the program shouldn't read out
 		line.erase(remove(line.begin(), line.end(), '*'), line.end());
@@ -830,7 +843,7 @@ void Teacher::getRecordData(std::ifstream& readFile, std::string& line)
 			cout << "\n-------------------------------------------------------------------------------------------------------------";
 			for (int i = 0; i < 4; i++)
 			{
-				getline(readFile, line, ','); // Keep getting lines until the next idea to skip term observations
+				getline(readFile, line, ','); // Keep getting lines until the next student to skip term observations
 			}
 		}
 		if (readFile.eof()) // If the file is at the end of it's contents, close it so no more data will be displayed
@@ -844,8 +857,8 @@ void Teacher::getRecordData(std::ifstream& readFile, std::string& line)
 void Teacher::teacherSignUp()
 {
 	system("CLS");
-	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app); // Open the teacher file
-	string line;
+	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app); // Open the teacher file in append mode
+	string line; // Line to store data from in the file
 	
 	// Prompt the user to enter all the inital data for teacher registration
 	cout << "********************\n";
@@ -868,7 +881,7 @@ void Teacher::teacherSignUp()
 	cout << "Contact Number: ";
 	getline(cin >> ws, contactNum);
 	cout << "Assigned Classroom Number: ";
-	while (true) // Create an infinite loop to that runs until a unique classroom number is entered
+	while (true) // Create an infinite loop that runs until a unique classroom number is entered
 	{
 		cin >> classroomNum;
 		ifstream readFile("Sign_Up_And_Login_Details/teacher_registration.txt");
@@ -910,18 +923,20 @@ void Teacher::teacherSignUp()
 		cin >> confirmPassword;
 		if (password == confirmPassword) // Only save the data if confirm password matches the initial password
 		{
+			// Notify user they signed up correctly and write all the data into the file
 			cout << "Successfully signed up as a teacher!\n\n";
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," 
 				<< dob << "," << email << "," << contactNum << "," << classroomNum
 				<< "," << teachingYear << "," << "\n" << "*";
 			login.savedUser = userName;
-			writeFile.close();
+			writeFile.close(); // Close the file when finished
+			// Open the classroom file to write an initial asterisk into the file and then close it
 			ofstream writeClassroom("Classes/room_" + to_string(classroomNum) + ".txt");
 			writeClassroom << "*";
-			writeClassroom.close();
+			writeClassroom.close(); 
 
 			system("pause");
-			displayTeacherScreen();	
+			displayTeacherScreen();	// Take the user to the teacher screen when signed up
 			break;
 		}
 		else 

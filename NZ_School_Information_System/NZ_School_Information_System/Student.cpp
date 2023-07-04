@@ -45,7 +45,7 @@ void Student::saveData(const string line)
 	cout << "Learning Progress (Achieved/Progressing/Needs Help): ";
 	getline(cin >> ws, learningProgress);
 
-	// Create an open a new classroom file to store the new student data (number depends on teachers classroom)
+	// Create an open a new classroom file (in append mode) to store the new student data (number depends on teachers classroom)
 	ofstream writeClassroom;
 	writeClassroom.open("Classes/room_" + line + ".txt", ios_base::app);
 

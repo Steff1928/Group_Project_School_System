@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <ctime> // Allows access to the time library
+#include <ctime> // Allows manipulation of date and time info
 #include "Login.h"
 #include "Teacher.h"
 #include "Admin.h"
@@ -36,12 +36,13 @@ void Login::manageLoginAttempts(bool& loginAgain)
 // Manage login data to take users to their required screen
 void Login::userLogin()
 {
-	// Initialise variables to be used when carrying out actions in the login
-	char confirmAnswer;
+	char confirmAnswer; // Confimration variable
+	// Variables for opening the teacher, parent and admin login/registration files
 	ifstream readTeacher;
 	ifstream readAdmin;
 	ifstream readParent;
 
+	// Objects
 	Teacher teacherLogin;
 	Admin adminLogin;
 	Parent parentLogin;
@@ -76,7 +77,7 @@ void Login::userLogin()
 			seconds = 10.0f - static_cast<time_t>((clock() - start) / 1000);
 		}
 
-		if (seconds <= 0)
+		if (seconds <= 0) // Reset timer when seconds goes below 0 and unlock the users account
 		{
 			start = 0;
 			seconds = 10.0f;
@@ -132,7 +133,7 @@ void Login::userLogin()
 					{
 						cout << "\nSuccessfully logged in!\n\n";
 						loginAttempts = 3;
-						savedUser = "," + userName;
+						savedUser = "," + userName; // Add a comma onto username for parent so it is read and compared properly in the file
 						system("pause");
 						parentLogin.displayParentScreen();
 						readParent.close();
@@ -153,6 +154,7 @@ void Login::userLogin()
 		{
 			cout << "Attempt to login again? (y/n): ";
 			cin >> confirmAnswer;
+			// Close every file since the program has finished with them for now
 			readTeacher.close();
 			readAdmin.close();
 			readParent.close();

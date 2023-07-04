@@ -118,6 +118,7 @@ void termDates()
 void displayIntroScreen()
 {
     system("CLS");
+
     // Declare a choice variable for everytime the program takes input from the user to select an option in a menu
     // This allows the program to peform an action based on their input
     int choice; 
