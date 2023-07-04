@@ -46,7 +46,7 @@ std::string displayOverallProgress(const int totalMarks)
     {
         return "Needs Help";
     }
-    else if (totalMarks > 251 && totalMarks < 375)
+    else if (totalMarks > 250 && totalMarks < 375)
     {
         return "Progressing";
     }
@@ -68,7 +68,7 @@ std::string displayMarkingProgress(const int marks)
     {
         return "NH";
     }
-    else if (marks > 51 && marks < 75)
+    else if (marks > 50 && marks < 75)
     {
         return "P";
     }

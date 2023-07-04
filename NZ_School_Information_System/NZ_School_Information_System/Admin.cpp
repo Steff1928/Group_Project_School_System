@@ -161,10 +161,14 @@ void Admin::viewParentRecords()
         if (readFile.eof()) // Close the file once its at the end of its contents
         {
             readFile.close();
+            cout << "\n";
         }
     }
+    if (line == "") // If the line comes up empty in the parent file, notify the user 
+    {
+        cout << "No parent records to show.\n";
+    }
     
-    cout << "\n\n";
     system("pause");
     displayAdminScreen(); // Go back to the admin screen once finished
 }
@@ -228,16 +232,49 @@ void Admin::generateReports(const int min, const int max, const string reportTyp
     cout << "Student Reports - " << reportType << "           --------------------------------------------------\n";
     cout << "******************************\n";
 
+    // While not at the end of the teacher file, loop through every teacher to find their class and check to see if their class
+    // is empty.
+    while (!teacherFile.eof()) 
+    {
+        line = "";
+        if (line != "\n*")
+        {
+            for (int i = 0; i < 7; i++) // Loop through each value to get classroomNum
+            {
+                getline(teacherFile, classroomNum, ',');
+            }
+            path = "Classes/room_" + classroomNum + ".txt"; // Assign classroomNum value to path
+            classFile.open(path); // Open classFile in path
+            getline(classFile, line, ','); // Get the first line in the designated class file to check if it's empty
+            if (line != "*") // If the line is not equal to a standalone asterisk, break, else keep looping through
+            {
+                break;
+            }
+            getline(teacherFile, line, ','); // Use getline here to skip to the next teacher
+            classFile.close(); // Close classFile so it can be reopened in the next class
+        }
+    }
+    // Close the files when the program has finished checking through them
+    classFile.close();
+    teacherFile.close();
+    if (line == "") // If the line is empty, notify the user there were no reports to show
+    {
+        cout << "\nNo available reports to show from any class.\n";
+        system("pause");
+        generateReportsScreen();
+        return;
+    }
+
     cout << "\nClassroom    Full                Maths    Science    Writing    Reading    Other    Teacher           Parent's Contact";
     cout << "\nNumber       Name                                                                   Name              Number";
     cout << "\n----------------------------------------------------------------------------------------------------------------------";
     
-    // LIAM: Can't figure out how to do error checking if no reports can be generated, gonna come back to this
     // While the teacher file is open, look through each teacher for their name and classroom number and get the student
     // data from that classroom, plus their parents phone number.
+    teacherFile.open("Sign_Up_And_Login_Details/teacher_registration.txt");
     while (teacherFile.is_open()) 
     {
-        // Skip the username and password and get the value of teacherName
+        // Skip the username and password and get the value of teacherName from the file
         getline(teacherFile, line, ',');
         getline(teacherFile, teacherName, ','); 
 
@@ -281,8 +318,10 @@ void Admin::generateReports(const int min, const int max, const string reportTyp
             otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), ':'), otherProgress.end());
 
             // Add up the marks from each subject and store it in totalMarks
-            totalMarks = stoi(matProgress) + stoi(sciProgress) + stoi(writeProgress) + stoi(readProgress) + stoi(otherProgress);
-
+            if (line != "*")
+            {
+                totalMarks = stoi(matProgress) + stoi(sciProgress) + stoi(writeProgress) + stoi(readProgress) + stoi(otherProgress);
+            }
             // If it already has a value, reset parentContactNum to empty and reopen the parent file to find the correct
             // contact number.
             parentContactNum = "";
