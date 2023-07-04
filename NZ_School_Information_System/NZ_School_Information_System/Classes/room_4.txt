@@ -1,3 +1,3 @@
-*19,George Bush,m,M:75,S:95,W:79,R:4,O:5,1:Needs Help,2:n/a,3:n/a,4:n/a,
+*19,George Bush,m,M:75,S:95,W:79,R:50,O:75,1:Needs Help,2:Progressing,3:Achieved,4:n/a,
 *22,Marcus Mirellius,m,M:59,S:32,W:11,R:2,O:23,1:Needs Help,2:n/a,3:n/a,4:n/a,
 *

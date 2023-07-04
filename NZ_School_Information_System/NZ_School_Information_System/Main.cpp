@@ -1,11 +1,11 @@
-#include <iostream>
-#include <filesystem>
-#include <fstream>
-#include "Admin.h"
+#include <iostream> // Including library for input and output commands to the console
+#include <filesystem> // Including file directory system
+#include <fstream> // Including library to use files
+#include "Admin.h" // Including header files from other sources if necessary
 #include "Teacher.h"
 #include "Main.h"
 
-using namespace std;
+using namespace std; // Using the standard "std" namespace as to use less code
 
 // Initilise user and login objects to use there source files
 Admin adminUser;
@@ -188,8 +188,8 @@ void displayRegistrationScreen()
     case 3:
         displayIntroScreen(); // Display the previous screen if the user inputted 3
         break;
-    default:
-        inputFail();
+    default: // Use "default" to manage invalid inputs 
+        inputFail(); 
         system("pause");
         displayRegistrationScreen();
     }

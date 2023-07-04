@@ -4,7 +4,7 @@
 #include <vector>
 
 // Intialise the Parent class to store all the data for parent registration and details for their children
-// attending the school
+// attending the school.
 class Parent
 {
 private:
@@ -18,7 +18,7 @@ private:
 	std::string userName;
 	std::string password;
 	// Initialise the child data within a nested structure, making it easier for us to count and store the data
-	// since parents can have multiple children
+	// since parents can have multiple children.
 	struct Child 
 	{
 		std::string childName;

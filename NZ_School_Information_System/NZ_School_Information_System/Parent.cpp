@@ -1,8 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <vector>
-#include <algorithm>
+#include <string> // Include the string library to gain access to various string properties
+#include <vector> // Include vector library to gain acccess to vectors and additional properties
 #include "Parent.h"
 #include "Main.h"
 
@@ -41,7 +40,7 @@ void Parent::displayParentScreen()
 	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt");
 	string line;
 
-	checkLineInFile(line, 2); // Run the function to get the value of "fullName" in the file to display it later
+	checkLineInFile(line, 2); // Run the function to get the value of the teachers "fullName" in the file to display it below
 
 	int choice;
 	system("CLS");
@@ -53,14 +52,14 @@ void Parent::displayParentScreen()
 		 << "3. Logout\n";
 	cout << "\nEnter corresponding number for the selection: ";
 	cin >> choice;
-	switch (choice) 
+	switch (choice) // Depending on the key pressed, run the designated function by switching on "choice"
 	{
 	case 1:
-		viewChildReport(); // TODO: Add data from file to the child report
+		viewChildReport();
 		displayParentScreen();
 		break;
 	case 2:
-		viewNotices(); // TODO: Add notices
+		viewNotices();
 		displayParentScreen();
 		break;
 	case 3:
@@ -69,7 +68,7 @@ void Parent::displayParentScreen()
 			displayParentScreen();
 		}
 		break;
-	default:
+	default: // Manage invalid inputs if a case match is not found with "default"
 		inputFail();
 		system("pause");
 		displayParentScreen();
@@ -86,29 +85,32 @@ void Parent::displayParentScreen()
 /// <param name="child"></param>
 void Parent::readParent(std::ifstream& readParentFile, std::string& lineInFile, std::string& classNum, std::string& childName, std::vector<Parent::Child>& childData, Parent::Child child)
 {
-	while (getline(readParentFile, lineInFile, '*'))
+	while (getline(readParentFile, lineInFile, '*')) // Loop through parent file to find a match for the logged in user
 	{
 		lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
+		// If match is found, get the next line and ensure the line is not equal to an asterisk
 		if (lineInFile == login.savedUser)
 		{
 			getline(readParentFile, lineInFile);
-			while (lineInFile != "*")
+			while (lineInFile != "*") // If not equal to an asterisk, get the next line and assign to childName
 			{
 				getline(readParentFile, lineInFile, ',');
 				lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
-				getline(readParentFile, classNum, ',');
+				getline(readParentFile, classNum, ','); // Get the line after childName and assign it to classNum
 				childName = lineInFile;
-				if (childName == "*" || childName == "")
+				// Break out of the loop if standalone asterisks or empty lines are found in childName
+				if (childName == "*" || childName == "") 
 				{
 					break;
 				}
+				// Push both childName and childClass into a vector of type Child in Parent
 				child.childName = childName;
 				child.childClass = stoi(classNum);
 
 				childData.push_back(child);
 				getline(readParentFile, lineInFile);		
 			}
-			break;
+			break; // Break out of the loop when finished
 		}
 	}
 }
@@ -127,13 +129,15 @@ void Parent::readParent(std::ifstream& readParentFile, std::string& lineInFile, 
 /// <param name="otherMarks"></param>
 void Parent::readChildInfo(std::string& classNum, std::string& lineInFile, std::string& childName, std::string& gender, std::string& mathMarks, std::string& scienceMarks, std::string& readingMarks, std::string& writingMarks, std::string& otherMarks)
 {
-	ifstream readClassFile("Classes/room_" + classNum + ".txt");
-	const char* fullGender = gender.c_str();
-	while (getline(readClassFile, lineInFile, ','))
+	ifstream readClassFile("Classes/room_" + classNum + ".txt"); // Open a file of the child's classroom number
+	const char* fullGender = gender.c_str(); // Store gender as a fullword of a pointer of const char in fullGender
+
+	while (getline(readClassFile, lineInFile, ',')) // Loop through class file to find a match for childName
 	{
 		lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
 		lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '*'), lineInFile.end());
-		if (lineInFile == childName)
+		// If a match is found, get the following lines and store them in designated variables
+		if (lineInFile == childName) 
 		{
 			lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
 			getline(readClassFile, gender, ',');
@@ -143,6 +147,7 @@ void Parent::readChildInfo(std::string& classNum, std::string& lineInFile, std::
 			getline(readClassFile, readingMarks, ',');
 			getline(readClassFile, otherMarks, ',');
 
+			// Remove unecessary characters from the mark variables
 			mathMarks.erase(remove(mathMarks.begin(), mathMarks.end(), ':'), mathMarks.end());
 			mathMarks.erase(remove(mathMarks.begin(), mathMarks.end(), 'M'), mathMarks.end());
 			scienceMarks.erase(remove(scienceMarks.begin(), scienceMarks.end(), ':'), scienceMarks.end());
@@ -154,50 +159,56 @@ void Parent::readChildInfo(std::string& classNum, std::string& lineInFile, std::
 			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
 			otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
 
-			cout << "Gender: " << displayGender(*fullGender) << "\n\n";
-			cout << "Marks\n";
+			cout << "Gender: " << displayGender(*fullGender) << "\n\n"; // Displaying gender as a full word with displayGender()
+			cout << "Marks\n"; // Display the child's marks
 			cout << "------------------\n";
 			cout << "Maths: " << "  " << mathMarks << "\n";
 			cout << "Science: " << scienceMarks << "\n";
 			cout << "Reading: " << readingMarks << "\n";
 			cout << "Writing: " << writingMarks << "\n";
 			cout << "Other: " << "  " << otherMarks << "\n";
-			break;
+			break; // Break out of the loop when done
 		}
-		if (lineInFile == "")
+		if (lineInFile == "") // If the line came up empty in the class file, notify the user accordingly
 		{
 			cout << "A report for " << childName << " has not been released from their teacher yet.\n";
 		}
 	}
-	if (!readClassFile.is_open())
+	if (!readClassFile.is_open()) // If the class file could not be opened, notify the user accordingly
 	{
 		cout << "The class " << childName << " is attending has not yet been registered into the system.\n";
 	}
-	readClassFile.close();
+	readClassFile.close(); // Close the class file when finished
 	
 }
 
 // Allow the parent user to view the data for each of there children
 void Parent::viewChildReport()
 {
-	// LIAM: Can you comment the child record function? I don't fully understand what you've done here, thanks!
 	Child child;
 	system("CLS");
-	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt");
+	ifstream readParentFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Open the parent file
+	// Variables to store the child's data and line in file
 	string classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks;
-	vector<Child> childData;
+	vector<Child> childData; // Vector of type child to hold childData accordingly
+
 	cout << "************\n";
 	cout << "Child Record\n";
 	cout << "************\n";
+
+	// Run the readParent() function to get the childs name
 	readParent(readParentFile, line, classNum, childName, childData, child);
-	for (unsigned int i = 0; i < size(childData); i++)
+
+	// Loop through the size of the vector to keep outputting the parent's children and store data
+	for (unsigned int i = 0; i < size(childData); i++) 
 	{
 		cout << "\nChild Name: " << childData[i].childName << "\n";
-		classNum = to_string(childData[i].childClass);
-		childName = childData[i].childName;
+		classNum = to_string(childData[i].childClass); // Assign childClass from the vector to classNum locally
+		childName = childData[i].childName; // Assign childName from the vector to childName locally
+		// Run the readChildInfo() function to get the child's details from their class
 		readChildInfo(classNum, line, childName, gender, mathMarks, scienceMarks, readingMarks, writingMarks, otherMarks);
 	}
-	readParentFile.close();
+	readParentFile.close(); // Close the file when finished
 	cout << "\n";
 	system("pause");
 }
@@ -231,15 +242,16 @@ void Parent::parentSignUp()
 	cout << "Parent Registration\n";
 	cout << "*******************\n";
 	cout << "\nFull name (or type 'exit' to go back to the home screen): ";
-	getline(cin >> ws, fullName);
+	getline(cin >> ws, fullName); // Use getline to allow the user to enter a string with spaces (doesn't seperate strings)
 	if (fullName == "exit") // Create an exit function if users don't want to continue signing up
 	{
-		return;
+		return; // Returns an empty value from this function
 	}
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
-	gender = tolower(gender);
-	cout << "DOB (dd/mm/yy): ";
+	gender = tolower(gender); // Convert uppercase to lowercase in gender if necessary
+
+	cout << "DOB (dd/mm/yyyy): ";
 	cin >> dob;
 	cout << "Email: ";
 	cin >> email;
@@ -257,12 +269,12 @@ void Parent::parentSignUp()
 	cout << "\nNumber of children attending Yoobee: ";
 	cin >> childAmount; // Prompt the user to input the number of children they have
 
-	// Loop up to till the number of children they have and prompt the user to enter information for each child
+	// Loop up to the number of children they have and prompt the user to enter information for each child
 	for (int i = 0; i < childAmount; i++)
 	{
 		cout << "\nChild " << i + 1 << "\n";
 		cout << "Child's full name: ";
-		getline(cin >> ws, child.childName); // Use getline to allow the user to enter a string with spaces (doesn't seperate strings)
+		getline(cin >> ws, child.childName); 
 		cout << "Child's classroom number: ";
 		cin >> child.childClass;
 		cout << "Emergency Contact Caregiver's Full Name: ";
@@ -270,11 +282,11 @@ void Parent::parentSignUp()
 		cout << "Emergency Contact Number: ";
 		getline(cin >> ws, child.emergencyContactNum);
 		cout << "\n";
-		// LIAM: Could you not just go: "childData.push_back(child)" instead of what you've done below?
-		childData.push_back({ child.childName,child.childClass,child.emergencyContactName,child.emergencyContactNum });
+		childData.push_back(child); // Push all the child data into a vector so each child can be added to the file later
 	}
 	system("pause");
 
+	// Account details
 	while (true) // Loop through this screen until the password and confirm password matches
 	{
 		system("CLS");
@@ -285,38 +297,39 @@ void Parent::parentSignUp()
 		cin >> userName;
 		cout << "Password: ";
 		cin >> password;
+
 		string confirmPassword;
 		cout << "Confirm Password: ";
 		cin >> confirmPassword;
 		if (password == confirmPassword) // Only register the user if there password and confirm password matches
 		{
-			cout << "Successfully signed up as a parent!\n\n";
+			cout << "Successfully signed up as a parent!\n\n"; // Notify the user they've successfully signed up
 			
-			// Replace "cout" with the filename in write mode to write data to the file.
-			// Here we write each of the data seperated by commas (and an asterisk between username and password)
-			// to use them as delimeters and seperate the data into individual lines
-			writeFile << "*," << "\n";
+			writeFile << "*," << "\n"; // Write an asterisk and "\n" character intially to seperate parent data from each other
+			// Write the rest of the data into the file, using "*" and "," as delimiters
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << ",";
-			// Loop through the child data and add everything from the vector into the file
+			
+			// Loop through the child data and add everything from the vector into the file, seperating lines with commas
 			for (unsigned int i = 0; i < size(childData); i++) 
 			{
+				// contactNum at the end of each child is so it's easier for us to find and use this value later
 				writeFile << "\n" << childData[i].childName << "," << childData[i].childClass << "," << childData[i].emergencyContactName <<
 					"," << childData[i].emergencyContactNum << "," << contactNum << ",";
 			}
-			writeFile << "\n";
+			writeFile << "\n"; // End with a "new line" character so the next parent registered can be added onto a new line
 			login.savedUser = "," + userName; // Save the username so it is remembered by the program while the user is logged in
-			writeFile.close();
+			writeFile.close(); // Close the file when finished in the loop
 			system("pause");
 			displayParentScreen(); // Go to the parent screen once signed in
-			break;
+			break; // Break out of the loop when the user signs out
 		}
-		else
+		else // Run this statment if confirm password and password do not match
 		{
 			cout << "Confirm Password is not the same as Password, please re-enter account info\n\n";
 			system("pause");
 		}
 	}
-	writeFile.close();
+	writeFile.close(); // Close the file here if it has not been closed already
 }
 
 // Initialise the values for the Parent class

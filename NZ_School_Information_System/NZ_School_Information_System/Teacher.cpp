@@ -1,11 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <filesystem>
-#include <algorithm>
-#include <sstream>
 #include <iomanip>
-#include <errno.h>
 #include "Teacher.h"
 #include "Main.h"
 
@@ -171,7 +167,7 @@ void Teacher::editRecord()
 		}
 	}
 
-	path = "Classes/room_" + line + ".txt";
+	path = "Classes/room_" + line + ".txt"; // Assign the classroom to path
 
 	cout << "*****************************\n";
 	cout << "Student Records - Edit Record\n";
@@ -205,7 +201,7 @@ void Teacher::editRecord()
 				getline(readFile, readMarks, ',');
 				getline(readFile, otherMarks, ',');
 
-				// Display Record Data for Editing
+				// Display Record Data for Editing (apart from studentName)
 				cout << "\nStudent Name: " << studentName;
 				cout << "\nGender: " << displayGender(*fullGender);
 				cout << "\n\nMarks";
@@ -263,9 +259,7 @@ void Teacher::editRecord()
 			if (checkString(newDetail))
 			{
 				if (stoi(newDetail) >= 0 && stoi(newDetail) <= 100)
-				{
-				break;
-				}
+					break;
 				else // Check if the user entered a value that was not between 0 and 100 and notify the user
 				{
 					cout << "Please enter a number between 0 and 100: ";
@@ -273,10 +267,10 @@ void Teacher::editRecord()
 			}
 			else // Check if the user entered a string instead of a number and notify the user
 			{
-				cout << "Please input numbers only: ";
+				cout << "ERROR: Invalid option, please try again: ";
 			}
 		}
-		else // If the user didn't want to edit a students marks, break out of the loop
+		else // If the user didn't enter a mark to edit, break out of the loop
 		{
 			break;
 		}
@@ -376,17 +370,19 @@ void Teacher::editRecord()
 			break;
 		}
 	}
-	cout << "\n\n" << detail << " has now been changed to " << newDetail << ".\n";
-
 	// Close the files after we're done using them
 	infile.close();
 	outfile.close();
 
 	// Remove the previous class file and rename the new "temp.txt" file to the class file
 	remove(path.c_str());
-	if (rename("Classes/temp.txt", path.c_str()) != 0)
+	if (rename("Classes/temp.txt", path.c_str()) == 0)
 	{
-		cout << "ERROR: " << _errno(); // TEMP: Helps us fix errors easier if the file could not be renamed
+		cout << "\n\n" << detail << " has now been changed to " << newDetail << ".\n";
+	}
+	else
+	{
+		cout << "\n\nERROR: File could not be renamed"; // Helps us fix errors easier if the file could not be renamed
 	}
 
 	system("pause");
@@ -479,11 +475,14 @@ void Teacher::removeStudent()
 
 		remove(path.c_str());
 		// Renames the temp file to the string path, if doesn't return 0 it will display the error message
-		if (rename("Classes/temp.txt", path.c_str()) != 0) 
+		if (rename("Classes/temp.txt", path.c_str()) == 0) 
 		{
-			cout << "ERROR: " << _errno(); // TEMP: Helps us fix errors easier if the file could not be renamed
+			cout << "\n" << name << " has been removed from your class.\n"; // Notification message
 		}
-		cout << "\n" << name << " has been removed from your class.\n"; // Notification message
+		else
+		{
+			cout << "\nERROR: File could not be renamed"; // TEMP: Helps us fix errors easier if the file could not be renamed
+		}
 		system("pause");
 		recordsScreen();
 		return;
@@ -524,7 +523,7 @@ void Teacher::updateRecord()
 	cout << "*******************************\n";
 	cout << "Student Records - Update Record\n";
 	cout << "*******************************\n\n";
-	cout << "Class Number: " << line << "\n"; //Temp output to track classroom number.
+	cout << "Class Number: " << line << "\n"; // Temp output to track classroom number.
 
 	cout << "Enter a Student ID to update their learning progression (or type 'exit' to go back): ";
 	getline(cin >> ws, id);
@@ -533,9 +532,9 @@ void Teacher::updateRecord()
 		recordsScreen();
 		return;
 	}
-	readFile.open(path); 
+	readFile.open(path);  // Open the file in path
 
-	while (getline(readFile, line, ','))
+	while (getline(readFile, line, ',')) // Look through the classroom file to find an id match for the student
 	{
 		if (!readFile.eof())
 		{
@@ -569,7 +568,7 @@ void Teacher::updateRecord()
 				termFour.erase(remove(termFour.begin(), termFour.end(), '4'), termFour.end());
 				cout << "Term 4: " << termFour << "\n";
 				cout << "------------------------------------------\n";
-				break;
+				break; // Break out of the loop when finished
 			}
 		}
 		else // If an id match is not found, notify the user the student doesn't exist
@@ -581,27 +580,50 @@ void Teacher::updateRecord()
 			return;
 		}
 	}
-	readFile.close();
+	readFile.close(); // Close the file when finished
 
 	int choice;
+	
+	// Create a file and open it in the designated class so the program can look for its data
 	ifstream infile(path);
-	string strSearch;
-	string strReplace;
-	ofstream outfile;
+	string strSearch; // A string used to search for the old data
+	string strReplace; // A string used to replace the old data with the new data
+	ofstream outfile; // Write the new data into a temp file
+
 	// Prompt the user to either update the progress or return back to the records screen
 	cout << "\n1. Record New/Update Observation"
 		<< "\n2. Back";
 	cout << "\n\nEnter corresponding number for selection: ";
 	cin >> choice;
 
-	switch (choice)
+	switch (choice) // Depending on the key pressed, run the designated function by switching on "choice"
 	{
 	case 1:
 		// Take in input for the users term choice, switch on the term, and replace the learning observation 
 		// for that term.
 		outfile.open("Classes/temp.txt");
 		cout << "\nChoose a Term Number (1 - 4): ";
-		cin >> termChoice;
+
+		// Check if term number is between 1 and 4 and is not a string
+		while (true)
+		{
+			cin >> termChoice; // Keep prompting the user to enter a termChoice until a valid answer is entered
+			if (checkString(termChoice)) // Check if any digits are in termChoice
+			{
+				if (stoi(termChoice) > 0 && stoi(termChoice) < 5) 
+				{
+					break; // If digits are in term choice and the number is between 1 and 4, break and continue the process
+				}
+				else // If the number entered is not between 1 and 4, notify the user to try again
+				{
+					cout << "That term doesn't exist, please try again: ";
+				}
+			}
+			else // If no digits are found in termChoice, notify the user to try again
+			{
+				cout << "ERROR: Invalid option, please try again: ";
+			}
+		}
 		cout << "Learning Progress (Achieved, Progressing, Needs Help): ";
 		getline(cin >> ws, learningProgress);
 
@@ -627,16 +649,10 @@ void Teacher::updateRecord()
 			strReplace = "4:" + learningProgress;
 			termChoice = "Term 4";
 			break;
-		default: // If there are no matches, notify the user the term doesn't exist and ask them to enter an id again
-			cout << "\nThat term doesn't exist, please try again.\n";
-			system("pause");
-			infile.close();
-			outfile.close();
-			updateRecord();
-			return;
 		}
 
-		// loops through file saving current line as a string then writes it to a new file when it finds a match for strSearch it replaces it with the new string from strReplace.
+		// loops through file saving current line as a string then writes it to a new file when it finds a match for strSearch
+		// it replaces it with the new string from strReplace.
 		while (getline(infile, strTemp, ','))
 		{
 			line = strTemp;
@@ -662,30 +678,34 @@ void Teacher::updateRecord()
 				break;
 			}
 		}
-		cout << "\n\nSuccessfully updated " << name << "'s learning progression to " << learningProgress
-			<< " for " << termChoice << ".\n";
-
 		// Close the files once we're done using them
 		infile.close();
 		outfile.close();
 
 		// Remove the previous class file and rename the "temp.txt" file back to the class file
 		remove(path.c_str());
-		if (rename("Classes/temp.txt", path.c_str()) != 0)
+		if (rename("Classes/temp.txt", path.c_str()) == 0)
 		{
-			cout << "ERROR: " << _errno(); // TEMP: Helps us fix errors easier if the file could not be renamed
+			cout << "\n\nSuccessfully updated " << name << "'s learning progression to " << learningProgress
+				<< " for " << termChoice << ".\n";
 		}
+		else
+		{
+			cout << "\n\nERROR: File could not be renamed\n"; // Helps us fix errors easier if the file could not be renamed
 
+		}
 		system("pause");
 		recordsScreen();
 		return;
 	case 2: // If the user entered 2 for back, go back to the records screen
 		infile.close();
-		outfile.close();
+		outfile.close(); // Close temp file here so it doesn't remain open when it needs be renamed
 		recordsScreen();
 		return;
 	default: // If there was no choice match, manage conversion errors with inputFail() and display error message accordingly
 		inputFail();
+		infile.close();
+		outfile.close(); // Close temp file here so it doesn't remain open when it needs be renamed
 		system("pause");
 		updateRecord();
 	}
@@ -722,7 +742,6 @@ void Teacher::viewRecords()
 	cout << "******************************\n";
 
 	// Increase the student count as long as the program doesn't find a single "*" taking up a line
-	// ("*" is one of our delimiters).
 	while (getline(readFile, line))
 	{
 		if (line == "*")
@@ -734,8 +753,7 @@ void Teacher::viewRecords()
 	readFile.close();
 	readFile.open(path);
 
-	// If the program couldn't find any students, notify the user there are no records to show and return to the 
-	// records screen.
+	// If the program couldn't find any students, notify the user there are no records to show and return to the records screen.
 	if (studentCount == 0) 
 	{
 		cout << "\nThere are no records to show, please first add some students to your class.\n";
@@ -749,7 +767,7 @@ void Teacher::viewRecords()
 	checkLineInTeacherFile(line, 7);
 	cout << "\nThere are a total of " << studentCount << " students in your class (Room " << line << ")\n";
 
-	// Run the getRecordData() to get all the student data and display it in a table
+	// Run the getRecordData() function to get all the student data and display it in a table
 	getRecordData(readFile, line);
 	
 	cout << "\n\n";
@@ -826,7 +844,7 @@ void Teacher::getRecordData(std::ifstream& readFile, std::string& line)
 void Teacher::teacherSignUp()
 {
 	system("CLS");
-	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app);
+	ofstream writeFile("Sign_Up_And_Login_Details/teacher_registration.txt", ios_base::app); // Open the teacher file
 	string line;
 	
 	// Prompt the user to enter all the inital data for teacher registration
@@ -834,20 +852,21 @@ void Teacher::teacherSignUp()
 	cout << "Teacher Registration\n";
 	cout << "********************\n";
 	cout << "\nFull name (or type 'exit' to go back to the home screen): ";
-	getline(cin >> ws, fullName);
+	getline(cin >> ws, fullName); // Use getline to allow spaces between words
 	if (fullName == "exit") // Create an exit function if users don't want to continue signing up
 	{
-		return;
+		return; // Returns an empty value from this function
 	}
 	cout << "Gender (m = male, f = female, o = other): ";
 	cin >> gender;
-	gender = tolower(gender);
+	gender = tolower(gender); // Convert gender to lowercase if necessary
+
 	cout << "DOB (dd/mm/yyyy): ";
 	cin >> dob;
 	cout << "Email: ";
 	cin >> email;
 	cout << "Contact Number: ";
-	getline(cin >> ws, contactNum); // Allows spaces between numbers
+	getline(cin >> ws, contactNum);
 	cout << "Assigned Classroom Number: ";
 	while (true) // Create an infinite loop to that runs until a unique classroom number is entered
 	{

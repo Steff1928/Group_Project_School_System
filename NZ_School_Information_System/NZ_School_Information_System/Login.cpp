@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <Windows.h>
-#include <ctime>
-#include <algorithm>
+#include <ctime> // Allows access to the time library
 #include "Login.h"
 #include "Teacher.h"
 #include "Admin.h"
