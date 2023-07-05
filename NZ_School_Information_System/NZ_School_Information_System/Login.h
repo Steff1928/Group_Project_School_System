@@ -17,6 +17,7 @@ public:
 	// Define attributes that can be used elsewhere aswell as the login source file
 	std::string savedUser;
 	void manageLoginAttempts(bool& loginAgain);
+	void getMatchInFile(std::ifstream& readTeacher, std::string& line, std::string& entry, Teacher& teacherLogin);
 	void userLogin();
 	bool userLogout();
 };

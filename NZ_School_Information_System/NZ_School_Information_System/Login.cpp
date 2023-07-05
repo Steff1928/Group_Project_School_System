@@ -33,6 +33,29 @@ void Login::manageLoginAttempts(bool& loginAgain)
 	loginAgain = true;
 }
 
+void Login::getMatchInFile(std::ifstream& readFile, std::string& line, std::string& entry, Teacher& teacherLogin)
+{
+	// If there is a match in the "teacher_registration" file, login as a teacher
+	while (getline(readFile, line, ','))
+	{
+		// Remove any \n or * characters so they are not read by the compiler when checking for valid matches
+		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+		line.erase(remove(line.begin(), line.end(), '*'), line.end());
+		if (line == entry)
+		{
+			cout << "\nSuccessfully logged in!\n\n";
+			loginAttempts = 3; // Set login attempts back to 3 so the user isn't punished for logging in correctly
+			savedUser = userName; // Set the logged in username to a variable to save that data from the user
+			system("pause");
+			// Display the designated user screen if a match in a file is confirmed
+			// Once the user is finished in their account, close the file and break out of the loop
+			teacherLogin.displayTeacherScreen(); 
+			readFile.close();
+			break;
+		}
+	}
+}
+
 // Manage login data to take users to their required screen
 void Login::userLogin()
 {
@@ -89,24 +112,7 @@ void Login::userLogin()
 		{
 			if (!(readTeacher.eof() && readAdmin.eof() && readParent.eof()) && loginAttempts > 0)
 			{
-				// If there is a match in the "teacher_registration" file, login as a teacher
-				while (getline(readTeacher, line, ','))
-				{
-					// Remove any \n or * characters so they are not read by the compiler when checking for valid matches
-					line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-					line.erase(remove(line.begin(), line.end(), '*'), line.end());
-					if (line == entry)
-					{
-						cout << "\nSuccessfully logged in!\n\n";
-						loginAttempts = 3; // Set login attempts back to 3 so the user isn't punished for logging in correctly
-						savedUser = userName; // Set the logged in username to a variable to save that data from the user
-						system("pause");
-						teacherLogin.displayTeacherScreen(); // Display the designated user screen if a match in a file is confirmed
-						// One the user is finished in their account, close the file and break out of the loop
-						readTeacher.close(); 
-						break;
-					}
-				}
+				getMatchInFile(readTeacher, line, entry, teacherLogin);
 				// If there is a match in the "admin_login" file, login as an admin
 				while (getline(readAdmin, line, ','))
 				{
