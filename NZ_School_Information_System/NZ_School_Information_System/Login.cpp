@@ -84,11 +84,10 @@ void Login::userLogin()
 			beginTimer = false;
 			loginAttempts = 3;
 		}
-
 		// Read through each registration/login file for each user to search for a match
 		while (readTeacher.is_open() && readAdmin.is_open() && readParent.is_open())
 		{
-			if (!readTeacher.eof() && !readAdmin.eof() && !readParent.eof() && loginAttempts > 0)
+			if (!(readTeacher.eof() && readAdmin.eof() && readParent.eof()) && loginAttempts > 0)
 			{
 				// If there is a match in the "teacher_registration" file, login as a teacher
 				while (getline(readTeacher, line, ','))

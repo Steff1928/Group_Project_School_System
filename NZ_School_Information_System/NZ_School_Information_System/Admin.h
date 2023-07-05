@@ -19,10 +19,10 @@ private:
 public:
 	// Declare functions to be used in any source file
 	void displayAdminScreen();
-	void viewClassRecords();
-	void viewParentRecords();
+	void displayClassRecords();
+	void displayParentRecords();
 	void generateReportsScreen();
-	void generateReports(const int min, const int max, const std::string reportType);
+	void generateAndDisplayReports(const int min, const int max, const std::string reportType);
 	void initialiseAccount();
 	Admin();
 };

@@ -6,6 +6,7 @@ class Login
 {
 private:
 	// Define variables exclusively to manage the login functions
+
 	std::string userName;
 	std::string password; 
 	int loginAttempts = 3;

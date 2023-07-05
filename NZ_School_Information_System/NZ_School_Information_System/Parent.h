@@ -34,7 +34,7 @@ public:
 	// Declare functions to be used in any source file 
 	void checkLineInFile(std::string& line, const int lineNum);
 	void displayParentScreen();
-	void readParent(std::ifstream& readParentFile, std::string& line, std::string& classNum, std::string& childName, std::vector<Parent::Child>& childData, Parent::Child child);
+	void readLineInParent(std::ifstream& readParentFile, std::string& line, std::string& classNum, std::string& childName, std::vector<Parent::Child>& childData, Parent::Child child);
 	void viewChildReport();
 	void readChildInfo(std::string& classNum, std::string& line, std::string& childName, std::string& gender, std::string& mathMarks, std::string& scienceMarks, std::string& readingMarks, std::string& writingMarks, std::string& otherMarks);
 	void viewNotices();

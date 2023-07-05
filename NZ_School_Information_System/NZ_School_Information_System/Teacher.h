@@ -27,7 +27,7 @@ public:
 	void editRecord();
 	void removeStudent();
 	void updateRecord();
-	void viewRecords();
+	void displayRecords();
 	void getRecordData(std::ifstream& readFile, std::string& line);
 	void teacherSignUp();
 	Teacher(std::string _fullName, char _gender, std::string _dob, std::string _email, 

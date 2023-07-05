@@ -35,9 +35,10 @@ void Teacher::displayTeacherScreen()
 {
 	system("CLS");
 	int choice;
-	string line;
 
-	checkLineInTeacherFile(line, 2); // Get the value of line from the file to display the name of the teacher in the home screen
+	// Get the value of line from the file to display the name of the teacher in the home screen
+	string line;
+	checkLineInTeacherFile(line, 2);
 
 	cout << "************************************           Welcome: " << line << "\n";
 	cout << "Yoobee Portal - Logged in as Teacher           --------------------------\n";
@@ -96,7 +97,7 @@ void Teacher::recordsScreen()
 		updateRecord(); 
 		break;
 	case 4:
-		viewRecords();
+		displayRecords();
 		break;
 	case 5:
 		removeStudent();
@@ -721,7 +722,7 @@ void Teacher::updateRecord()
 }
 
 // Allow the teacher to view all the records of students in their class
-void Teacher::viewRecords()
+void Teacher::displayRecords()
 {
 	system("CLS");
 	int studentCount = 0; // Manage number of students registered in the class

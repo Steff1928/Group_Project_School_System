@@ -24,10 +24,10 @@ void Admin::displayAdminScreen()
     switch (choice) // Depending on the key pressed, run the designated function by switching on "choice"
     {
     case 1:
-        viewClassRecords();
+        displayClassRecords();
         break;
     case 2:
-        viewParentRecords();
+        displayParentRecords();
         break;
     case 3:
         generateReportsScreen(); 
@@ -46,7 +46,7 @@ void Admin::displayAdminScreen()
 }
 
 // Display all the student records from a selected class
-void Admin::viewClassRecords()
+void Admin::displayClassRecords()
 {
     system("CLS");
     ifstream readFile; // Define a file variable for looking in a class
@@ -66,7 +66,7 @@ void Admin::viewClassRecords()
     path = "Classes/room_" + to_string(classroom) + ".txt"; 
     readFile.open(path);
 
-    const char* fullGender = gender.c_str();
+    const char* fullGender = gender.c_str(); // Store gender as a full word of a pointer of type const char*
 
     // Get the line and check if it's equal to just an asterisk or if the file doesn't exist
     // and notify the user accordingly.
@@ -94,7 +94,7 @@ void Admin::viewClassRecords()
 }
 
 // Display all of the records for parents who are registered in the system
-void Admin::viewParentRecords()
+void Admin::displayParentRecords()
 {
     system("CLS");
     ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Open the parent file
@@ -106,7 +106,7 @@ void Admin::viewParentRecords()
     cout << "Parent Records\n";
     cout << "**************\n";
 
-    getline(readFile, line, ','); // Get the first line to avoid it being an asterisk
+    getline(readFile, line, ','); // Get the first line to avoid a singular asterisk
 
     while (readFile.is_open()) 
     {
@@ -168,7 +168,6 @@ void Admin::viewParentRecords()
     {
         cout << "No parent records to show.\n";
     }
-    
     system("pause");
     displayAdminScreen(); // Go back to the admin screen once finished
 }
@@ -193,11 +192,11 @@ void Admin::generateReportsScreen()
     case 1:
         // Generates a report of student who are in the progressing state
         system("CLS");
-        generateReports(251, 375, "Progressing ");
+        generateAndDisplayReports(251, 375, "Progressing ");
         break;
     case 2:
         // Generates a report of students who need help
-        generateReports(0, 250, "Needing Help");
+        generateAndDisplayReports(0, 250, "Needing Help");
         break;
     case 3:
         displayAdminScreen(); // Take the user back to the initial admin screen 
@@ -210,22 +209,21 @@ void Admin::generateReportsScreen()
 }
 
 /// <summary>
-/// Display reports of students who need help
+/// Display reports of students of either students who are progressing or need help
 /// </summary>
 /// <param name="min">- The minimum value the program evaluates to decide on a report type</param>
 /// <param name="max">- The maximum value the program evaluates to decide on a report type</param>
 /// <param name="reportType">- The type type of report displayed as a string</param>
-void Admin::generateReports(const int min, const int max, const string reportType)
+void Admin::generateAndDisplayReports(const int min, const int max, const string reportType)
 {
     system("CLS");
-
     ifstream classFile; // Define a file variable to look in the designated class file
     ifstream parentFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Open the parent file
     ifstream teacherFile("Sign_Up_And_Login_Details/teacher_registration.txt"); // Open the teacher file
     // Variables to store data from the teacher file, the line to look through it and the path of the file
     string teacherLine, line, path, teacherName, classroomNum, parentContactNum;
     // Variables to store the learning progress for a student in each subject
-    string studentName, matProgress, sciProgress, writeProgress, readProgress, otherProgress;
+    string studentName, matMarks, sciMarks, writeMarks, readMarks, otherMarks;
     int totalMarks = 0; // The total marks from each subject out of 500
 
     cout << "******************************           A = Achieved    P = Progressing    NH = Needs Help\n";
@@ -236,8 +234,8 @@ void Admin::generateReports(const int min, const int max, const string reportTyp
     // is empty.
     while (!teacherFile.eof()) 
     {
-        line = "";
-        if (line != "\n*")
+        line = ""; // Reset the value of line to empty (if necessary)
+        if (line != "\n*") 
         {
             for (int i = 0; i < 7; i++) // Loop through each value to get classroomNum
             {
@@ -299,28 +297,28 @@ void Admin::generateReports(const int min, const int max, const string reportTyp
             getline(classFile, line, ',');
             getline(classFile, studentName, ',');
             getline(classFile, line, ',');
-            getline(classFile, matProgress, ',');
-            getline(classFile, sciProgress, ',');
-            getline(classFile, writeProgress, ',');
-            getline(classFile, readProgress, ',');
-            getline(classFile, otherProgress, ',');
+            getline(classFile, matMarks, ',');
+            getline(classFile, sciMarks, ',');
+            getline(classFile, writeMarks, ',');
+            getline(classFile, readMarks, ',');
+            getline(classFile, otherMarks, ',');
 
             // Remove unimportant data from the progress variables
-            matProgress.erase(remove(matProgress.begin(), matProgress.end(), 'M'), matProgress.end());
-            matProgress.erase(remove(matProgress.begin(), matProgress.end(), ':'), matProgress.end());
-            sciProgress.erase(remove(sciProgress.begin(), sciProgress.end(), 'S'), sciProgress.end());
-            sciProgress.erase(remove(sciProgress.begin(), sciProgress.end(), ':'), sciProgress.end());
-            writeProgress.erase(remove(writeProgress.begin(), writeProgress.end(), 'W'), writeProgress.end());
-            writeProgress.erase(remove(writeProgress.begin(), writeProgress.end(), ':'), writeProgress.end());
-            readProgress.erase(remove(readProgress.begin(), readProgress.end(), 'R'), readProgress.end());
-            readProgress.erase(remove(readProgress.begin(), readProgress.end(), ':'), readProgress.end());
-            otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), 'O'), otherProgress.end());
-            otherProgress.erase(remove(otherProgress.begin(), otherProgress.end(), ':'), otherProgress.end());
+            matMarks.erase(remove(matMarks.begin(), matMarks.end(), 'M'), matMarks.end());
+            matMarks.erase(remove(matMarks.begin(), matMarks.end(), ':'), matMarks.end());
+            sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), 'S'), sciMarks.end());
+            sciMarks.erase(remove(sciMarks.begin(), sciMarks.end(), ':'), sciMarks.end());
+            writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), 'W'), writeMarks.end());
+            writeMarks.erase(remove(writeMarks.begin(), writeMarks.end(), ':'), writeMarks.end());
+            readMarks.erase(remove(readMarks.begin(), readMarks.end(), 'R'), readMarks.end());
+            readMarks.erase(remove(readMarks.begin(), readMarks.end(), ':'), readMarks.end());
+            otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), 'O'), otherMarks.end());
+            otherMarks.erase(remove(otherMarks.begin(), otherMarks.end(), ':'), otherMarks.end());
 
             // Add up the marks from each subject and store it in totalMarks
             if (line != "*")
             {
-                totalMarks = stoi(matProgress) + stoi(sciProgress) + stoi(writeProgress) + stoi(readProgress) + stoi(otherProgress);
+                totalMarks = stoi(matMarks) + stoi(sciMarks) + stoi(writeMarks) + stoi(readMarks) + stoi(otherMarks);
             }
             // If it already has a value, reset parentContactNum to empty and reopen the parent file to find the correct
             // contact number.
@@ -354,9 +352,9 @@ void Admin::generateReports(const int min, const int max, const string reportTyp
                     }
 
                     // Display all of the data in a table like format using setw() to manage spacing
-                    cout << "\n" << left << setw(13) << classroomNum << setw(20) << studentName << setw(9) << displayMarkingProgress(stoi(matProgress))
-                        << setw(11) << displayMarkingProgress(stoi(sciProgress)) << setw(11) << displayMarkingProgress(stoi(writeProgress))
-                        << setw(11) << displayMarkingProgress(stoi(readProgress)) << setw(9) << displayMarkingProgress(stoi(otherProgress))
+                    cout << "\n" << left << setw(13) << classroomNum << setw(20) << studentName << setw(9) << displayMarkingProgress(stoi(matMarks))
+                        << setw(11) << displayMarkingProgress(stoi(sciMarks)) << setw(11) << displayMarkingProgress(stoi(writeMarks))
+                        << setw(11) << displayMarkingProgress(stoi(readMarks)) << setw(9) << displayMarkingProgress(stoi(otherMarks))
                         << setw(18) << teacherName << parentContactNum;
                     cout << "\n----------------------------------------------------------------------------------------------------------------------";
                 }

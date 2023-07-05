@@ -14,7 +14,7 @@ using namespace std;
 /// <param name="lineNum"> - Tells the program which line to read out</param>
 void Parent::checkLineInFile(std::string& line, const int lineNum)
 {
-	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Opens a file in read mode 
+	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Open the parent file
 	// Loops through the designated file storing each value in "line"
 	// (Use "*" as a delimeter so it is not read by the program
 	while (getline(readFile, line, '*')) 
@@ -37,10 +37,12 @@ void Parent::checkLineInFile(std::string& line, const int lineNum)
 // Display restricted options for users logged in as a parent
 void Parent::displayParentScreen()
 {
-	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt");
+	ifstream readFile("Sign_Up_And_Login_Details/parent_registration.txt"); // Open the parent file
+	
+	// Define a string to run the function to get the value of the teachers "fullName" in the file to display it in the
+	// parent home screen.
 	string line;
-
-	checkLineInFile(line, 2); // Run the function to get the value of the teachers "fullName" in the file to display it below
+	checkLineInFile(line, 2); 
 
 	int choice;
 	system("CLS");
@@ -83,7 +85,7 @@ void Parent::displayParentScreen()
 /// <param name="childName"></param>
 /// <param name="childData"></param>
 /// <param name="child"></param>
-void Parent::readParent(std::ifstream& readParentFile, std::string& lineInFile, std::string& classNum, std::string& childName, std::vector<Parent::Child>& childData, Parent::Child child)
+void Parent::readLineInParent(std::ifstream& readParentFile, std::string& lineInFile, std::string& classNum, std::string& childName, std::vector<Parent::Child>& childData, Parent::Child child)
 {
 	while (getline(readParentFile, lineInFile, '*')) // Loop through parent file to find a match for the logged in user
 	{
@@ -197,7 +199,7 @@ void Parent::viewChildReport()
 	cout << "************\n";
 
 	// Run the readParent() function to get the childs name
-	readParent(readParentFile, line, classNum, childName, childData, child);
+	readLineInParent(readParentFile, line, classNum, childName, childData, child);
 
 	// Loop through the size of the vector to keep outputting the parent's children and store data
 	for (unsigned int i = 0; i < size(childData); i++) 
@@ -282,7 +284,7 @@ void Parent::parentSignUp()
 		cout << "Emergency Contact Number: ";
 		getline(cin >> ws, child.emergencyContactNum);
 		cout << "\n";
-		childData.push_back(child); // Push all the child data into a vector so each child can be added to the file later
+		childData.push_back(child); // Push all the child data into a vector so each child can be added to the file
 	}
 	system("pause");
 
@@ -309,7 +311,7 @@ void Parent::parentSignUp()
 			// Write the rest of the data into the file, using "*" and "," as delimiters
 			writeFile << userName << "*" << password << "," << fullName << "," << gender << "," << dob << "," << email << "," << contactNum << ",";
 			
-			// Loop through the child data and add everything from the vector into the file, seperating lines with commas
+			// Loop through the size of childData and add everything from the vector into the file, seperating lines with commas
 			for (unsigned int i = 0; i < size(childData); i++) 
 			{
 				// contactNum at the end of each child is so it's easier for us to find and use this value later
