@@ -348,7 +348,7 @@ void Teacher::editRecord()
 
 	while (getline(infile, strTemp, ','))
 	{
-		// this is so strTemp can be used to loop through and doesn't change when we individually add each new string to the temp file 
+		// This is so strTemp can be used to loop through and doesn't change when we individually add each new string to the temp file 
 		line = strTemp; 
 		while (strTemp == "\n*" + id || strTemp == "*" + id)
 		{
@@ -368,7 +368,7 @@ void Teacher::editRecord()
 			strTemp += ",";
 		}
 		outfile << strTemp; // Write the data from strTemp into the file so it stays the same as before
-		if (strTemp == "*" + id) // when it reaches the end of the line in the file it creates a new line with the "*+ id".
+		if (strTemp == "*" + id) // When it reaches the end of the line in the file it creates a new line with the "*+ id".
 		{
 			strTemp += "\n";
 			break;
@@ -541,7 +541,7 @@ void Teacher::updateRecord()
 	if (id == "exit") // Allow the user to go back if they change their mind
 	{
 		recordsScreen();
-		return; // Return an empty value
+		return; // Return an empty value from this function
 	}
 	// Open the file in path and look through the classroom file to find an id match for the student
 	readFile.open(path); 

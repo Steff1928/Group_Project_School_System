@@ -14,15 +14,15 @@ using namespace std;
 /// <param name="loginAgain"> - Boolean to determine whether a prompt should be given to the user to login again </param>
 void Login::manageLoginAttempts(bool& loginAgain)
 {
-	loginAttempts--;
+	loginAttempts--; // Decrement login attempts
 
-	if (loginAttempts <= 0 && start == 0)
+	if (loginAttempts <= 0 && start == 0) // If the user has no login attempts left and start is at its default, start the timer
 	{
 		start = clock();
 		beginTimer = true;
 	}
-
-	if (loginAttempts > 0)
+	// If the user has more than 3 login attempts left, notify the user to try again, else notify them they have been locked out
+	if (loginAttempts > 0) 
 	{
 		cout << "\nInvalid username or password\n\n";
 	}
@@ -30,7 +30,7 @@ void Login::manageLoginAttempts(bool& loginAgain)
 	{
 		cout << "\nToo many failed attempts, you have been locked out for " << seconds << " seconds.\n";
 	}
-	loginAgain = true;
+	loginAgain = true; // Set loginAgain to true to prompt the user accordingly
 }
 
 /// <summary>

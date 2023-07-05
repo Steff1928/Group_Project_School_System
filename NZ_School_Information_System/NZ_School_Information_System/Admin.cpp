@@ -33,7 +33,7 @@ void Admin::displayAdminScreen()
         generateReportsScreen(); 
         break;
     case 4:
-        if (!login.userLogout()) // Get the value of userLogout and if false, don't logout and re-display the parent screen
+        if (!login.userLogout()) // Get the value of userLogout and if false, don't logout and re-display the admin screen
         {
             displayAdminScreen();
         }
