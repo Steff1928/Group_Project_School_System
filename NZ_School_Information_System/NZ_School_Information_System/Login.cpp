@@ -33,9 +33,9 @@ void Login::manageLoginAttempts(bool& loginAgain)
 	loginAgain = true;
 }
 
-void Login::getMatchInFile(std::ifstream& readFile, std::string& line, std::string& entry, Teacher& teacherLogin)
+bool Login::getMatchInFile(std::ifstream& readFile, std::string& line, std::string entry)
 {
-	// If there is a match in the "teacher_registration" file, login as a teacher
+	// If there is a match in the current file, login as a that user
 	while (getline(readFile, line, ','))
 	{
 		// Remove any \n or * characters so they are not read by the compiler when checking for valid matches
@@ -47,13 +47,10 @@ void Login::getMatchInFile(std::ifstream& readFile, std::string& line, std::stri
 			loginAttempts = 3; // Set login attempts back to 3 so the user isn't punished for logging in correctly
 			savedUser = userName; // Set the logged in username to a variable to save that data from the user
 			system("pause");
-			// Display the designated user screen if a match in a file is confirmed
-			// Once the user is finished in their account, close the file and break out of the loop
-			teacherLogin.displayTeacherScreen(); 
-			readFile.close();
-			break;
+			return true;
 		}
 	}
+	return false;
 }
 
 // Manage login data to take users to their required screen
@@ -107,43 +104,32 @@ void Login::userLogin()
 			beginTimer = false;
 			loginAttempts = 3;
 		}
+
 		// Read through each registration/login file for each user to search for a match
 		while (readTeacher.is_open() && readAdmin.is_open() && readParent.is_open())
 		{
 			if (!(readTeacher.eof() && readAdmin.eof() && readParent.eof()) && loginAttempts > 0)
 			{
-				getMatchInFile(readTeacher, line, entry, teacherLogin);
-				// If there is a match in the "admin_login" file, login as an admin
-				while (getline(readAdmin, line, ','))
+				if (getMatchInFile(readTeacher, line, entry)) // Check to see if the user is logging in as a teacher
 				{
-					line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-					line.erase(remove(line.begin(), line.end(), '*'), line.end());
-					if (line == entry)
-					{
-						cout << "\nSuccessfully logged in!\n\n";
-						loginAttempts = 3;
-						savedUser = userName;
-						system("pause");
-						adminLogin.displayAdminScreen();
-						readAdmin.close();
-						break;
-					}
+					// Display the designated user screen if a match in a file is confirmed
+					// Once the user is finished in their account, close the file and break out of the loop
+					teacherLogin.displayTeacherScreen(); 
+					readTeacher.close();
+					break;
 				}
-				// If there is a match in the "parent_registration" file, login as a parent
-				while (getline(readParent, line, ','))
+				if (getMatchInFile(readAdmin, line, entry)) // Check to see if the user is logging in as an admin
 				{
-					line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-					line.erase(remove(line.begin(), line.end(), '*'), line.end());
-					if (line == entry)
-					{
-						cout << "\nSuccessfully logged in!\n\n";
-						loginAttempts = 3;
-						savedUser = "," + userName; // Add a comma onto username for parent so it is read and compared properly in the file
-						system("pause");
-						parentLogin.displayParentScreen();
-						readParent.close();
-						break;
-					}
+					adminLogin.displayAdminScreen();
+					readAdmin.close();
+					break;
+				}
+				userName = "," + userName; // Add a comma onto username so the parent name is read properly (since it's intitially delimited with a "*,")
+				if (getMatchInFile(readParent, line, entry)) // Check to see if the user is logging in as a parent
+				{
+					parentLogin.displayParentScreen();
+					readParent.close();
+					break;
 				}
 			}
 			// If there are no matches in any file, run the manageLoginAttempts function to control the users login attempts
