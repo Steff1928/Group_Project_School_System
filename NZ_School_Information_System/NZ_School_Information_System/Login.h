@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "Teacher.h"
 
 // Initialise the Login class for managing and comparing inputted data to data in files
 class Login

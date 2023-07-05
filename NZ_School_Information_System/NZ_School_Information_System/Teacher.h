@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include "Student.h"
-#include "Login.h"
 
 // Intialise the Teacher class for teacher registration and classroom initialisation
 class Teacher

@@ -33,15 +33,22 @@ void Login::manageLoginAttempts(bool& loginAgain)
 	loginAgain = true;
 }
 
-bool Login::getMatchInFile(std::ifstream& readFile, std::string& line, std::string entry)
+/// <summary>
+/// Searches for a match for login and username in a selected file
+/// </summary>
+/// <param name="readFile">- The file the program should look for a match in</param>
+/// <param name="lineInFile">- A string to get each line in the file</param>
+/// <param name="entry">- The users attempt to login combining both username and password</param>
+/// <returns>A boolean value depending if the user was successful or not to login</returns>
+bool Login::getMatchInFile(std::ifstream& readFile, std::string& lineInFile, std::string entry)
 {
-	// If there is a match in the current file, login as a that user
-	while (getline(readFile, line, ','))
+	// If there is a match in the current file, login as that user
+	while (getline(readFile, lineInFile, ','))
 	{
 		// Remove any \n or * characters so they are not read by the compiler when checking for valid matches
-		line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-		line.erase(remove(line.begin(), line.end(), '*'), line.end());
-		if (line == entry)
+		lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '\n'), lineInFile.end());
+		lineInFile.erase(remove(lineInFile.begin(), lineInFile.end(), '*'), lineInFile.end());
+		if (lineInFile == entry)
 		{
 			cout << "\nSuccessfully logged in!\n\n";
 			loginAttempts = 3; // Set login attempts back to 3 so the user isn't punished for logging in correctly
@@ -150,7 +157,7 @@ void Login::userLogin()
 			readAdmin.close();
 			readParent.close();
 		}
-	} while (confirmAnswer == 'y'); // If the user says yes, end the loop
+	} while (confirmAnswer == 'y'); // If the user says no, end the loop
 	cout << "\n";
 }
 
