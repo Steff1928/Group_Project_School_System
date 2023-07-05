@@ -1,6 +1,6 @@
-*1,Johnny Dawson,m,M:85,S:75,W:73,R:84,O:75,1:Progressing,2:Progressing,3:Achieved,4:Achieved,
+*1,Johnny Dawson,m,M:90,S:75,W:73,R:84,O:75,1:Progressing,2:Progressing,3:Achieved,4:Achieved,
 *5,Nicer Name,m,M:50,S:45,W:69,R:38,O:45,1:Needs Help,2:Progressing,3:Achieved,4:n/a,
-*6,Mark Smith,m,M:55,S:50,W:67,R:83,O:52,1:Achieved,2:Needs Help,3:Progressing,4:n/a,
+*6,Mark Smith,o,M:55,S:50,W:67,R:83,O:52,1:Achieved,2:Needs Help,3:Progressing,4:n/a,
 *21,Stephy McGraire,f,M:80,S:89,W:68,R:79,O:50,1:Achieved,2:n/a,3:n/a,4:n/a,
 *43,Claire Munroe,f,M:79,S:91,W:51,R:47,O:12,1:Progressing,2:n/a,3:n/a,4:n/a,
 *

@@ -389,6 +389,7 @@ void Admin::initialiseAccount()
     writeFile.close();
 }
 
+// Default constructor
 Admin::Admin()
 {
     classroom = 0;

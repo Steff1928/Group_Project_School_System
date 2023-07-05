@@ -39,7 +39,7 @@ void Login::manageLoginAttempts(bool& loginAgain)
 /// <param name="readFile">- The file the program should look for a match in</param>
 /// <param name="lineInFile">- A string to get each line in the file</param>
 /// <param name="entry">- The users attempt to login combining both username and password</param>
-/// <returns>A boolean value depending if the user was successful or not to login</returns>
+/// <returns>A boolean value depending if the user was successful or not to login in the current file</returns>
 bool Login::getMatchInFile(std::ifstream& readFile, std::string& lineInFile, std::string entry)
 {
 	// If there is a match in the current file, login as that user
@@ -60,7 +60,7 @@ bool Login::getMatchInFile(std::ifstream& readFile, std::string& lineInFile, std
 	return false;
 }
 
-// Manage login data to take users to their required screen
+// Manage login data to take users to their required screen and manage invalid attempts
 void Login::userLogin()
 {
 	char confirmAnswer; // Confimration variable
@@ -104,7 +104,7 @@ void Login::userLogin()
 			seconds = 10.0f - static_cast<time_t>((clock() - start) / 1000);
 		}
 
-		if (seconds <= 0) // Reset timer when seconds goes below 0 and unlock the users account
+		if (seconds <= 0) // Reset timer when seconds goes below 0 and unlock the users account by setting important values back to their defaults
 		{
 			start = 0;
 			seconds = 10.0f;
@@ -112,10 +112,14 @@ void Login::userLogin()
 			loginAttempts = 3;
 		}
 
+		bool filesAreOpen = readTeacher.is_open() && readAdmin.is_open() && readParent.is_open(); // Boolean to check if each login/registration file is open
+		bool endOfFiles = readTeacher.eof() && readAdmin.eof() && readParent.eof(); // Boolean to check if each login/registration file is at the end of its contents
+
 		// Read through each registration/login file for each user to search for a match
-		while (readTeacher.is_open() && readAdmin.is_open() && readParent.is_open())
+		while (filesAreOpen) // Ensure the loop can only run if each file is open
 		{
-			if (!(readTeacher.eof() && readAdmin.eof() && readParent.eof()) && loginAttempts > 0)
+			// Ensure the program only checks the files if they are not at the end of their contents and login attempts is greater than 0
+			if (!endOfFiles && loginAttempts > 0) 
 			{
 				if (getMatchInFile(readTeacher, line, entry)) // Check to see if the user is logging in as a teacher
 				{
@@ -131,17 +135,19 @@ void Login::userLogin()
 					readAdmin.close();
 					break;
 				}
-				userName = "," + userName; // Add a comma onto username so the parent name is read properly (since it's intitially delimited with a "*,")
+				userName = "," + userName; // Add a comma onto username so the parent name is read properly (since it's intitially delimited with "*,")
 				if (getMatchInFile(readParent, line, entry)) // Check to see if the user is logging in as a parent
 				{
 					parentLogin.displayParentScreen();
 					readParent.close();
 					break;
 				}
+				endOfFiles = true; // Set endOfFiles to true since the program should have now finished reading through each file
 			}
 			// If there are no matches in any file, run the manageLoginAttempts function to control the users login attempts
 			else 
 			{
+				filesAreOpen = false; // Set filesAreOpen to false to signify they should be closed
 				manageLoginAttempts(loginAgain);
 				break;
 			}

@@ -288,13 +288,13 @@ void Teacher::editRecord()
 	string strTemp; // A string to store data in temporarily before it is written back into a file
 
 	// Find the detail using "if else" statements
-	if (detail == "name") // If the user change the students name, notify them it cannot be done
+	if (detail == "name") // If the user attempts to change the students name, notify them it cannot be done
 	{
 		cout << "\nSorry, but the students name is currently unmodifable.\n";
 		system("pause");
 		infile.close();
 		editRecord();
-		return; // Add return keywords here to stop the program from coming back here if the user logs out
+		return; // Return an empty value to stop the program from coming back here if the user logs out
 	}
 	else if (detail == "gender")
 	{
@@ -633,10 +633,12 @@ void Teacher::updateRecord()
 				cout << "ERROR: Invalid option, please try again: ";
 			}
 		}
+		// Prompt user to enter a new learning progress
 		cout << "Learning Progress (Achieved, Progressing, Needs Help): ";
 		getline(cin >> ws, learningProgress);
 
-		switch (stoi(termChoice))
+		// Switch on termChoice to confirm the users action and set strSearch, strReplace and termChoice to their designated values
+		switch (stoi(termChoice)) 
 		{
 		case 1:
 			strSearch = "1:" + termOne;
@@ -659,7 +661,7 @@ void Teacher::updateRecord()
 			termChoice = "Term 4";
 			break;
 		}
-		// loops through file saving current line as a string then writes it to a new file when it finds a match for strSearch
+		// Loops through file saving current line as a string then writes it to a new file when it finds a match for strSearch,
 		// it replaces it with the new string from strReplace.
 		while (getline(infile, strTemp, ','))
 		{
@@ -963,7 +965,7 @@ Teacher::Teacher(std::string _fullName, char _gender, std::string _dob, std::str
 	password = _password;
 }
 
-// Default constructor (currently not needed to be used)
+// Default constructor
 Teacher::Teacher()
 {
 	classroomNum = 0;
